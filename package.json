@@ -1,0 +1,39 @@
+{
+  "name": "YunNet_Backend_v3",
+  "version": "3.0.0",
+  "main": "index.js",
+  "author": "YoMin Su",
+  "license": "MIT",
+  "scripts": {
+    "tsc": "tsc",
+    "clean": "sh ./scripts/clean.sh",
+    "test": "yarn build:tsc && jest",
+    "test:watch": "yarn test -- --watchAll",
+    "test:codecov": "yarn test -- --coverage",
+    "build:tsc": "tsc",
+    "build": "sh ./scripts/build.sh",
+    "build:swagger": "sh ./scripts/build.sh swagger",
+    "serve": "yarn run build && node dist/server.js",
+    "serve:swagger": "yarn run build:swagger && node dist/server.js",
+    "server:quick": "node dist/server.js"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.8",
+    "@types/express": "^4.17.9",
+    "@types/swagger-ui-express": "^4.1.2",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "module-alias": "^2.2.2",
+    "mysql2": "^2.2.5",
+    "reflect-metadata": "^0.1.13",
+    "swagger-ui-express": "^4.1.5",
+    "tsoa": "^3.4.0",
+    "typeorm": "^0.2.29"
+  },
+  "_moduleAliases": {
+    "@": "dist"
+  }
+}

@@ -1,0 +1,21 @@
+version: "3.6"
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: '1234'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - "0.0.0.0:3306:3306"
+  phpmyadmin:
+    depends_on:
+       - mysql
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "0.0.0.0:3001:80"
+    environment:
+        PMA_HOST: mysql
+
