@@ -1,11 +1,17 @@
 {
-  "name": "YunNet_Backend_v3",
+  "name": "yunnet_backend",
   "version": "3.0.0",
   "main": "index.js",
-  "author": "YoMin Su",
+  "contributors": [
+    "Clooooode <jackey8616@gmail.com> (https://www.clo5de.info)",
+    "YoMin Su"
+  ],
   "license": "MIT",
   "scripts": {
     "tsc": "tsc",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+    "typeorm:migration:run": "typeorm migration:run",
+    "typeorm:migration:revert": "typeorm migration:revert",
     "clean": "sh ./scripts/clean.sh",
     "test": "yarn clean && yarn build && ts-mocha --paths 'test/**/*.ts'",
     "test:watch": "yarn test -- --watchAll",
@@ -14,7 +20,7 @@
     "build:swagger": "sh ./scripts/build.sh swagger",
     "serve": "yarn run build && node dist/server.js",
     "serve:swagger": "yarn run build:swagger && node dist/server.js",
-    "server:quick": "node dist/server.js"
+    "serve:quick": "node dist/server.js"
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",
@@ -25,6 +31,7 @@
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
     "ts-mocha": "^8.0.0",
+    "ts-node": "^9.0.0",
     "typescript": "^4.1.2"
   },
   "dependencies": {

@@ -5,12 +5,12 @@ import { Entity, PrimaryColumn } from 'typeorm';
 export class GroupUser {
     @PrimaryColumn('int', {
         width: 10,
-        unsigned: false,
+        unsigned: true,
     })
     uid: string;
     @PrimaryColumn('int', {
         width: 10,
-        unsigned: false,
+        unsigned: true,
     })
     gid: string;
 
