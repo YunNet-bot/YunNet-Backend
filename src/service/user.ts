@@ -37,10 +37,9 @@ export class UserService {
 
     public async getInfo(username: string): Promise<UserInfoDTO> {
         const user: User = await this.getByUsername(username);
-        const groups: Array<Group> = await this.groupRepo
+        const groupDescriptions: Array<{ [g_description: string]: string }> = await this.groupRepo
             .createQueryBuilder('g')
-            // Should replace with proper DTO.
-            .select('g.gid, g.name, g.description')
+            .select('g.description')
             .innerJoin(GroupUser, 'gu', 'g.gid = gu.gid')
             .innerJoin(User, 'u', 'u.uid = gu.uid')
             .where('u.username = :username', { username })
@@ -49,7 +48,8 @@ export class UserService {
             username: user.username,
             department: user.department,
             name: user.nick,
-            group: groups.map((g: Group) => g.description),
+            group: groupDescriptions
+                .map((g: { [g_description: string]: string }) => g.g_description),
         }
     }
 }
