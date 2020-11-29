@@ -27,7 +27,7 @@ export class Init1606331057077 implements MigrationInterface {
         await queryRunner.createTable(new Table({
             name: 'backup_mac',
             columns: [
-                { name: 'ip', type: 'varchar', length: '32', collation: 'utf8_unicode_ci' },
+                { isPrimary: true, name: 'ip', type: 'varchar', length: '32', collation: 'utf8_unicode_ci' },
                 { name: 'mac', type: 'varchar', length: '18', collation: 'utf8_unicode_ci', isNullable: true,  default: 'NULL' },
             ],
         }), true),
@@ -108,7 +108,7 @@ export class Init1606331057077 implements MigrationInterface {
         await queryRunner.createTable(new Table({
             name: 'iptable_test',
             columns: [
-                { name: 'ip', type: 'varchar', length: '32', collation: 'utf8_unicode_ci' },
+                { isPrimary: true, name: 'ip', type: 'varchar', length: '32', collation: 'utf8_unicode_ci' },
                 { name: 'ip_type_id', type: 'int', width: 11, unsigned: true, isNullable: true, default: 'NULL' },
                 { name: 'is_unlimited', type: 'tinyint', width: 1, default: 0 },
                 { name: 'switch_id', type: 'int', width: 11, isNullable: true, default: 'NULL' },

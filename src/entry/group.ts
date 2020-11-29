@@ -1,16 +1,26 @@
 // src/entry/group.ts
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Group {
-    @PrimaryColumn('int', {
-        width: 10,
+    @PrimaryGeneratedColumn('increment', {
+        type: 'int',
         unsigned: true,
     })
     gid: number;
-    @Column('text')
+    @Column({
+        type: 'text',
+        collation: 'utf8_unicode_ci',
+        nullable: true,
+        default: 'NULL',
+    })
     name: string;
-    @Column('text')
+    @Column({
+        type: 'text',
+        collation: 'utf8_unicode_ci',
+        nullable: true,
+        default: 'NULL',
+    })
     description: string;
 
     constructor(gid: number, name: string, desciption: string) {

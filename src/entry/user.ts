@@ -1,25 +1,54 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+// src/entry/user.ts
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
-    @PrimaryColumn('int', {
+    @PrimaryGeneratedColumn('increment', {
+        type: 'int',
         unsigned: true,
-        width: 10,
     })
     uid: number;
-    @Column('varchar', { length: 20 })
+    @Column({
+        type: 'varchar',
+        length: 20,
+        collation: 'utf8mb4_unicode_ci',
+    })
     username: string;
-    @Column('mediumtext', { name: 'password_hash' })
+    @Column({
+        type: 'mediumtext',
+        nullable: true,
+        default: 'NULL',
+        collation: 'utf8mb4_unicode_ci',
+    })
     passwordHash: string;
-    @Column('mediumtext')
+    @Column({
+        type: 'mediumtext',
+        nullable: true,
+        default: 'NULL',
+        collation: 'utf8mb4_unicode_ci',
+    })
     nick: string;
-    @Column('mediumtext')
+    @Column({
+        type: 'mediumtext',
+        nullable: true,
+        default: 'NULL',
+        collation: 'utf8mb4_unicode_ci',
+    })
     department: string;
-    @Column('mediumtext', {
-        name: 'back_mail',
+    @Column({
+        type: 'varchar',
+        length: 255,
+        nullable: true,
+        default: 'NULL',
+        collation: 'utf8mb4_unicode_ci',
     })
     backMail: string;
-    @Column('mediumtext')
+    @Column({
+        type: 'mediumtext',
+        nullable: true,
+        default: 'NULL',
+        collation: 'utf8mb4_unicode_ci',
+    })
     note: string;
 
     constructor(uid: number, username:string, passwordHash: string, nick: string, department: string, backMail: string, note: string) {
