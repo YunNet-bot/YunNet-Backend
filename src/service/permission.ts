@@ -1,0 +1,44 @@
+// src/service/permission.ts
+
+import { Permission } from "@/entry";
+import { DeleteResult, getRepository, Repository } from "typeorm";
+
+export class PermissionService {
+    private static INSTANCE: PermissionService;
+    private permissionRepo: Repository<Permission>;
+
+    public static init(): PermissionService {
+        if (this.INSTANCE === undefined) {
+            this.INSTANCE = new PermissionService();
+        }
+        return this.INSTANCE;
+    }
+
+    public static getInstance(): PermissionService {
+        return this.INSTANCE;
+    }
+
+    constructor() {
+        this.permissionRepo = getRepository(Permission);
+    }
+
+    public async getByPid(pid: number): Promise<Permission> {
+        const permission: Permission | undefined = await this.permissionRepo.findOne({
+            pid: pid,
+        });
+
+        if(permission === undefined) {
+            throw new Error(`No such Permission with Pid: ${pid}.`);
+        }
+
+        return permission;
+    }
+
+    public async deleteByPid(pid: number): Promise<boolean> {
+        const result: DeleteResult = await this.permissionRepo.delete({
+            pid: pid,
+        });
+
+        return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+}

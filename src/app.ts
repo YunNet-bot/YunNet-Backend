@@ -7,7 +7,15 @@ import swaggerUi from 'swagger-ui-express';
 import { RegisterRoutes } from '@/routes';
 
 // Services
-import { UserService } from '@/service';
+import {
+    UserService, AnnouncementService, BackupMacService,
+    BedService, GroupInheritService, GroupManagedByService,
+    GroupPermissionService, GroupUserService, GroupService,
+    IpTypeService, IpTableService, IpTableTestService,
+    LockTypeService, LockService, NetflowService,
+    PermissionService, SwitchService, TokenService,
+    UserPermissionService, VariableService,
+} from '@/service';
 
 const app = express();
 
@@ -27,6 +35,25 @@ export default function appInit(): Promise<Express> {
         
         await createConnection();
         UserService.init();
+        AnnouncementService.init();
+        BackupMacService.init();
+        BedService.init();
+        GroupInheritService.init();
+        GroupManagedByService.init();
+        GroupPermissionService.init();
+        GroupUserService.init();
+        GroupService.init();
+        IpTypeService.init();
+        IpTableTestService.init();
+        IpTableService.init();
+        LockTypeService.init();
+        LockService.init();
+        NetflowService.init();
+        PermissionService.init();
+        SwitchService.init();
+        TokenService.init();
+        UserPermissionService.init();
+        VariableService.init();
 
         RegisterRoutes(app);
 

@@ -7,7 +7,7 @@ export class Announcement {
         type: 'int',
         unsigned: true,
     })
-    announcemnet_id: number;
+    announcement_id: number;
     @Column({
         type: 'text',
         collation: 'utf8_unicode_ci',
@@ -29,7 +29,7 @@ export class Announcement {
     uid: number;
 
     constructor(announcement_id: number, title: string, content: string, uid: number) {
-        this.announcemnet_id = announcement_id;
+        this.announcement_id = announcement_id;
         this.title = title;
         this.content = content;
         this.uid = uid;

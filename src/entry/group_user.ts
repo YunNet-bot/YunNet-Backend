@@ -7,14 +7,14 @@ export class GroupUser {
         width: 10,
         unsigned: true,
     })
-    uid: string;
+    uid: number;
     @PrimaryColumn('int', {
         width: 10,
         unsigned: true,
     })
-    gid: string;
+    gid: number;
 
-    constructor(uid: string, gid: string) {
+    constructor(uid: number, gid: number) {
         this.uid = uid;
         this.gid = gid;
     }
