@@ -19,9 +19,15 @@ export class UserPermission {
         nullable: true,
         default: 'NULL',
     })
-    is_excluded: number;
+    is_excluded: number | null;
 
-    constructor(uid: number, pid: number, is_excluded: number) {
+    constructor(param: UserPermission = {} as UserPermission) {
+        let {
+            uid,
+            pid,
+            is_excluded = null,
+        } = param;
+
         this.uid = uid;
         this.pid = pid;
         this.is_excluded = is_excluded;

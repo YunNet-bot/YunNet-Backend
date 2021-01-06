@@ -14,7 +14,9 @@ export class GroupPermission {
     })
     pid: number;
 
-    constructor(gid: number, pid: number) {
+    constructor(param: GroupPermission = {} as GroupPermission) {
+        let { gid, pid } = param;
+
         this.gid = gid;
         this.pid = pid;
     }

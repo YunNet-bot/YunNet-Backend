@@ -2,7 +2,7 @@
 
 export interface UserInfoDTO {
     username: string;
-    department: string;
-    name: string;
+    department: string | null;
+    name: string | null;
     group: Array<string>
 }

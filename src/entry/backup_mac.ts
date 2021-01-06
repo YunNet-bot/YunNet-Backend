@@ -17,9 +17,14 @@ export class BackupMac {
         nullable: true,
         default: 'NULL',
     })
-    mac: string;
+    mac: string | null;
 
-    constructor(ip: string, mac: string) {
+    constructor(param: BackupMac = {} as BackupMac) {
+        let {
+            ip,
+            mac = null,
+        } = param;
+
         this.ip = ip;
         this.mac = mac;
     }

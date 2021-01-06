@@ -14,7 +14,9 @@ export class GroupUser {
     })
     gid: number;
 
-    constructor(uid: number, gid: number) {
+    constructor(param: GroupUser = {} as GroupUser) {
+        let { uid, gid } = param;
+
         this.uid = uid;
         this.gid = gid;
     }

@@ -14,9 +14,14 @@ export class IpType {
         nullable: true,
         default: 'NULL',
     })
-    type: string;
+    type: string | null;
 
-    constructor(ip_type_id: number, type: string) {
+    constructor(param: IpType = {} as IpType) {
+        let {
+            ip_type_id,
+            type = null,
+        } = param;
+
         this.ip_type_id = ip_type_id;
         this.type = type;
     }

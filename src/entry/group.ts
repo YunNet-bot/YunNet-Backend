@@ -14,18 +14,24 @@ export class Group {
         nullable: true,
         default: 'NULL',
     })
-    name: string;
+    name: string | null;
     @Column({
         type: 'text',
         collation: 'utf8_unicode_ci',
         nullable: true,
         default: 'NULL',
     })
-    description: string;
+    description: string | null;
 
-    constructor(gid: number, name: string, desciption: string) {
+    constructor(param: Group = {} as Group) {
+        let {
+            gid,
+            name = null,
+            description = null,
+        } = param;
+
         this.gid = gid;
         this.name = name;
-        this.description = desciption;
+        this.description = description;
     }
 }

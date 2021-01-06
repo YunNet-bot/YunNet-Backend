@@ -18,7 +18,7 @@ export class Bed {
         nullable: true,
         default: 'NULL',
     })
-    portal: string;
+    portal: string | null;
     @Column({
         type: 'varchar',
         length: 32,
@@ -26,7 +26,14 @@ export class Bed {
     })
     ip: string;
 
-    constructor(bed: string, type: number, portal: string, ip: string) {
+    constructor(param: Bed = {} as Bed) {
+        let {
+            bed,
+            type,
+            portal = null,
+            ip,
+        } = param;
+
         this.bed = bed;
         this.type = type;
         this.portal = portal;

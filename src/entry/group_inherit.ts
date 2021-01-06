@@ -14,7 +14,9 @@ export class GroupInherit {
     })
     parent_gid: number;
     
-    constructor(gid: number, parent_gid: number) {
+    constructor(param: GroupInherit = {} as GroupInherit) {
+        let { gid, parent_gid } = param;
+
         this.gid = gid;
         this.parent_gid = parent_gid;
     }

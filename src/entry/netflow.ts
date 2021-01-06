@@ -14,7 +14,9 @@ export class Netflow {
     @Column('int', { width: 11 })
     lan_download: number;
 
-    constructor(ip: number, wan_upload: number, wan_download: number, lan_upload: number, lan_download: number) {
+    constructor(param: Netflow = {} as Netflow) {
+        let { ip, wan_upload, wan_download, lan_upload, lan_download } = param;
+
         this.ip = ip;
         this.wan_upload = wan_upload;
         this.wan_download = wan_download;

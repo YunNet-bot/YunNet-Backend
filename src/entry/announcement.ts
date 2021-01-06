@@ -14,21 +14,28 @@ export class Announcement {
         nullable: true,
         default: 'NULL',
     })
-    title: string;
+    title: string | null;
     @Column({
         type: 'longtext',
         collation: 'utf8_unicode_ci',
         nullable: true,
         default: 'NULL',
     })
-    content: string;
+    content: string | null;
     @Column('int', {
         width: 10,
         unsigned: true,
     })
     uid: number;
 
-    constructor(announcement_id: number, title: string, content: string, uid: number) {
+    constructor(param: Announcement = {} as Announcement) {
+        let {
+            announcement_id,
+            title = null,
+            content = null,
+            uid,
+        } = param;
+
         this.announcement_id = announcement_id;
         this.title = title;
         this.content = content;

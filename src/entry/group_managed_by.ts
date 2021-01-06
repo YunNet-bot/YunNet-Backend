@@ -14,7 +14,9 @@ export class GroupManagedBy {
     })
     parent_gid: number;
 
-    constructor(gid: number, parent_gid: number) {
+    constructor(param: GroupManagedBy = {} as GroupManagedBy) {
+        let { gid, parent_gid } = param;
+
         this.gid = gid;
         this.parent_gid = parent_gid;
     }

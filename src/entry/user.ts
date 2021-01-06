@@ -20,21 +20,21 @@ export class User {
         default: 'NULL',
         collation: 'utf8mb4_unicode_ci',
     })
-    passwordHash: string;
+    passwordHash: string | null;
     @Column({
         type: 'mediumtext',
         nullable: true,
         default: 'NULL',
         collation: 'utf8mb4_unicode_ci',
     })
-    nick: string;
+    nick: string | null;
     @Column({
         type: 'mediumtext',
         nullable: true,
         default: 'NULL',
         collation: 'utf8mb4_unicode_ci',
     })
-    department: string;
+    department: string | null;
     @Column({
         type: 'varchar',
         length: 255,
@@ -42,16 +42,26 @@ export class User {
         default: 'NULL',
         collation: 'utf8mb4_unicode_ci',
     })
-    backMail: string;
+    backMail: string | null;
     @Column({
         type: 'mediumtext',
         nullable: true,
         default: 'NULL',
         collation: 'utf8mb4_unicode_ci',
     })
-    note: string;
+    note: string | null;
 
-    constructor(uid: number, username:string, passwordHash: string, nick: string, department: string, backMail: string, note: string) {
+    constructor(param: User = {} as User) {
+        let {
+            uid,
+            username,
+            passwordHash = null,
+            nick = null,
+            department = null,
+            backMail = null,
+            note = null,
+        } = param;
+
         this.uid = uid;
         this.username = username;
         this.passwordHash = passwordHash;

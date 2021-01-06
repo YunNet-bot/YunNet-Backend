@@ -14,14 +14,20 @@ export class Token {
         nullable: true,
         default: 'NULL',
     })
-    token: string;
+    token: string | null;
     @Column({
         type: 'datetime',
         default: 'CURRENT_TIMESTAMP',
     })
     timestamp: Date;
 
-    constructor(uid: number, token: string, timestamp: Date) {
+    constructor(param: Token = {} as Token) {
+        let {
+            uid,
+            token = null,
+            timestamp,
+        } = param;
+
         this.uid = uid;
         this.token = token;
         this.timestamp = timestamp;

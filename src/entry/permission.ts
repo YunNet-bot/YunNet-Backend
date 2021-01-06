@@ -15,7 +15,9 @@ export class Permission {
     })
     str: string;
 
-    constructor(pid: number, str: string) {
+    constructor(param: Permission = {} as Permission) {
+        let { pid, str } = param;
+
         this.pid = pid;
         this.str = str;
     }

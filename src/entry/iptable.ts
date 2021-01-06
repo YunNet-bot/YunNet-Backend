@@ -16,7 +16,7 @@ export class IpTable {
         nullable: true,
         default: 'NULL',
     })
-    ip_type_id: number;
+    ip_type_id: number | null;
     @Column({
         type: 'tinyint',
         width: 1,
@@ -29,7 +29,7 @@ export class IpTable {
         nullable: true,
         default: 'NULL',
     })
-    switch_id: number;
+    switch_id: number | null;
     @Column('int', { width: 11 })
     port: number;
     @Column('int', { width: 11 })
@@ -41,7 +41,7 @@ export class IpTable {
         nullable: true,
         default: 'NULL',
     })
-    mac: string;
+    mac: string | null;
     @Column({
         type: 'tinyint',
         width: 1,
@@ -70,9 +70,24 @@ export class IpTable {
         nullable: true,
         default: 'NULL',
     })
-    lock_id: number;
+    lock_id: number | null;
 
-    constructor(ip: string, ip_type_id: number, is_unlimited: number, switch_id: number, port: number, port_type: number, mac: string, is_updated: number, uid: number, gid: number, description: string, lock_id: number) {
+    constructor(param: IpTable = {} as IpTable) {
+        let {
+            ip,
+            ip_type_id = null,
+            is_unlimited,
+            switch_id = null,
+            port,
+            port_type,
+            mac = null,
+            is_updated,
+            uid,
+            gid,
+            description,
+            lock_id = null,
+        } = param;
+
         this.ip = ip;
         this.ip_type_id = ip_type_id;
         this.is_unlimited = is_unlimited;

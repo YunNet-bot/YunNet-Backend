@@ -11,14 +11,14 @@ export class Switch {
         nullable: true,
         default: 'NULL',
     })
-    upper_switch: number;
+    upper_switch: number | null;
     @Column({
         type: 'int',
         width: 11,
         nullable: true,
         default: 'NULL',
     })
-    upper_port: number;
+    upper_port: number | null;
     @Column('int', { width: 11 })
     upper_port_type: number;
     @Column({
@@ -28,7 +28,7 @@ export class Switch {
         default: 'NULL',
         collation: 'utf8_unicode_ci',
     })
-    location: string;
+    location: string | null;
     @Column({
         type: 'varchar',
         length: 30,
@@ -54,7 +54,7 @@ export class Switch {
         default: 'NULL',
         collation: 'utf8_unicode_ci',
     })
-    port_description: string;
+    port_description: string | null;
     @Column({
         type: 'longtext',
         collation: 'utf8mb4_bin',
@@ -67,7 +67,22 @@ export class Switch {
     })
     ip: string;
 
-    constructor(id: number, upper_switch: number, upper_port: number, upper_port_type: number, location: string, account: string, password: string, vlan: string, machine_type: number, port_description: string, port_type: string, ip: string) {
+    constructor(param: Switch = {} as Switch) {
+        let {
+            id,
+            upper_switch = null,
+            upper_port = null,
+            upper_port_type,
+            location = null,
+            account,
+            password,
+            vlan,
+            machine_type,
+            port_description = null,
+            port_type,
+            ip,
+        } = param;
+
         this.id = id;
         this.upper_switch = upper_switch;
         this.upper_port = upper_port;

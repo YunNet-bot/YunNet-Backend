@@ -22,7 +22,7 @@ export class Lock {
         nullable: true,
         default: 'NULL',
     })
-    ip: string;
+    ip: string | null;
     @Column({
         type: 'int',
         width: 10,
@@ -30,7 +30,7 @@ export class Lock {
         nullable: true,
         default: 'NULL',
     })
-    uid: number;
+    uid: number | null;
     @Column({
         type: 'int',
         width: 10,
@@ -38,19 +38,19 @@ export class Lock {
         nullable: true,
         default: 'NULL',
     })
-    gid: number;
+    gid: number | null;
     @Column({
         type: 'datetime',
         nullable: true,
         default: 'NULL',
     })
-    lock_date: Date;
+    lock_date: Date | null;
     @Column({
         type: 'datetime',
         nullable: true,
         default: 'NULL',
     })
-    unlock_date: Date;
+    unlock_date: Date | null;
     @Column({
         type: 'text',
         collation: 'utf8_unicode_ci',
@@ -62,16 +62,29 @@ export class Lock {
         default: 'NULL',
         collation: 'utf8_unicode_ci',
     })
-    description: string;
+    description: string | null;
     @Column({
         type: 'int',
         unsigned: true,
         nullable: true,
         default: 'NULL',
     })
-    lock_by_user_id: number;
+    lock_by_user_id: number | null;
 
-    constructor(lock_id: number, lock_type_id: number, ip: string, uid: number, gid: number, lock_date: Date, unlock_date: Date, title: string, description: string, lock_by_user_id: number) {
+    constructor(param: Lock = {} as Lock) {
+        let {
+            lock_id,
+            lock_type_id,
+            ip = null,
+            uid = null,
+            gid = null,
+            lock_date = null,
+            unlock_date = null,
+            title,
+            description = null,
+            lock_by_user_id = null,
+        } = param;
+
         this.lock_id = lock_id;
         this.lock_type_id = lock_type_id;
         this.ip = ip;

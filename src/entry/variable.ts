@@ -21,9 +21,15 @@ export class Variable {
         default: 'NULL',
         collation: 'utf8_unicode_ci',
     })
-    value: string;
+    value: string | null;
 
-    constructor(name: string, type: string, value: string) {
+    constructor(param: Variable = {} as Variable) {
+        let {
+            name,
+            type,
+            value = null,
+        } = param;
+
         this.name = name;
         this.type = type;
         this.value = value;
