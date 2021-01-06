@@ -14,7 +14,7 @@ if [ "${1}" = "swagger" ]; then
 fi
 
 echo "Building..."
-tsc
+tsc -p $PWD/build.tsconfig.json
 #npm run build:tsc
 
 echo "Build completed."
