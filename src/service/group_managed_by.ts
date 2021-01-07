@@ -1,65 +1,67 @@
 // src/service/group_managed_by.ts
-import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from 'typeorm';
+import {
+  DeleteResult, getRepository, InsertResult, Repository, UpdateResult,
+} from 'typeorm';
 
 import { GroupManagedBy } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 
 export class GroupManagedByService {
-    private static INSTANCE: GroupManagedByService;
-    private groupmanagedbyRepo: Repository<GroupManagedBy>;
+  private static INSTANCE: GroupManagedByService;
+  private groupmanagedbyRepo: Repository<GroupManagedBy>;
 
-    public static init(): GroupManagedByService {
-        if (this.INSTANCE === undefined) {
-            this.INSTANCE = new GroupManagedByService();
-        }
-        return this.INSTANCE;
+  public static init(): GroupManagedByService {
+    if (this.INSTANCE === undefined) {
+      this.INSTANCE = new GroupManagedByService();
     }
+    return this.INSTANCE;
+  }
 
-    public static getInstance(): GroupManagedByService {
-        return this.INSTANCE;
+  public static getInstance(): GroupManagedByService {
+    return this.INSTANCE;
+  }
+
+  constructor() {
+    this.groupmanagedbyRepo = getRepository(GroupManagedBy);
+  }
+
+  public async getByGid(gid: number): Promise<GroupManagedBy> {
+    const groupmanagedby: GroupManagedBy | undefined = await this.groupmanagedbyRepo.findOne({
+      gid,
+    });
+
+    if (groupmanagedby === undefined) {
+      throw new Error(`No such GroupManageBy with Gid: ${gid}.`);
     }
+    return groupmanagedby;
+  }
 
-    constructor() {
-        this.groupmanagedbyRepo = getRepository(GroupManagedBy);
-    }
+  public async deleteByGid(gid: number): Promise<boolean> {
+    const result: DeleteResult = await this.groupmanagedbyRepo.delete({
+      gid,
+    });
 
-    public async getByGid(gid: number): Promise<GroupManagedBy> {
-        const groupmanagedby: GroupManagedBy | undefined = await this.groupmanagedbyRepo.findOne({
-            gid,
-        });
+    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+  }
 
-        if (groupmanagedby === undefined) {
-            throw new Error(`No such GroupManageBy with Gid: ${gid}.`);
-        }
-        return groupmanagedby;
-    }
+  public async add(gid: number, parent_gid: number): Promise<any> {
+    const result: InsertResult = await this.groupmanagedbyRepo.insert({
+      gid, parent_gid,
+    });
 
-    public async deleteByGid(gid: number): Promise<boolean> {
-        const result: DeleteResult = await this.groupmanagedbyRepo.delete({
-            gid,
-        });
+    return result.raw;
+  }
 
-        return result.affected !== undefined && result.affected !== null && result.affected > 0
-    }
+  public async updateByGid(gid: number, parent_gid: number): Promise<any> {
+    const result: UpdateResult = await this.groupmanagedbyRepo
+      .createQueryBuilder()
+      .update(GroupManagedBy)
+      .set(filterObjectUndefined({
+        parent_gid,
+      }))
+      .where('gid = :gid', { gid })
+      .execute();
 
-    public async add(gid: number, parent_gid: number): Promise<any> {
-        const result: InsertResult = await this.groupmanagedbyRepo.insert({
-            gid, parent_gid,
-        });
-
-        return result.raw;
-    }
-
-    public async updateByGid(gid: number, parent_gid: number): Promise<any> {
-        const result: UpdateResult = await this.groupmanagedbyRepo
-            .createQueryBuilder()
-            .update(GroupManagedBy)
-            .set(filterObjectUndefined({
-                parent_gid,
-            }))
-            .where("gid = :gid", { gid })
-            .execute();
-        
-        return result.raw;
-    }
+    return result.raw;
+  }
 }

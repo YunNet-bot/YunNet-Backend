@@ -1,5 +1,5 @@
 // src/service/index.ts
-export *  from './user';
+export * from './user';
 export * from './announcement';
 export * from './backup_mac';
 export * from './bed';

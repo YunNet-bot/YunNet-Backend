@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Lint..."
+yarn lint
+
 echo "Build Mode: $1"
 sh $PWD/scripts/clean.sh
 

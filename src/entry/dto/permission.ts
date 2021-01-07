@@ -1,9 +1,9 @@
 // src/entry/dto/permission.ts
 
 export interface PermissionDTO {
-    str: string;
+  str: string;
 }
 
 export interface UpdatePermissionDTO {
-    str: string;
+  str: string;
 }
