@@ -1,7 +1,8 @@
 // src/service/group_permission.ts
-import { DeleteResult, getRepository, Repository } from "typeorm";
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from "typeorm";
 
 import { GroupPermission } from "@/entry";
+import { filterObjectUndefined } from "@/utils";
 
 export class GroupPermissionService {
     private static INSTANCE: GroupPermissionService;
@@ -24,7 +25,7 @@ export class GroupPermissionService {
 
     public async getByGid(gid: number): Promise<GroupPermission> {
         const grouppermission: GroupPermission | undefined = await this.grouppermissionRepo.findOne({
-            gid: gid,
+            gid,
         });
 
         if(grouppermission === undefined) {
@@ -35,7 +36,7 @@ export class GroupPermissionService {
 
     public async getByPid(pid: number): Promise<GroupPermission> {
         const grouppermission: GroupPermission | undefined = await this.grouppermissionRepo.findOne({
-            pid: pid,
+            pid,
         });
 
         if(grouppermission === undefined) {
@@ -46,7 +47,7 @@ export class GroupPermissionService {
 
     public async deleteByGid(gid: number): Promise<boolean> {
         const result: DeleteResult = await this.grouppermissionRepo.delete({
-            gid: gid,
+            gid,
         });
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
@@ -54,9 +55,43 @@ export class GroupPermissionService {
 
     public async deleteByPid(pid: number): Promise<boolean> {
         const result: DeleteResult = await this.grouppermissionRepo.delete({
-            pid: pid,
+            pid,
         });
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(gid: number, pid: number): Promise<any> {
+        const result: InsertResult = await this.grouppermissionRepo.insert({
+            gid, pid,
+        });
+
+        return result.raw;
+    }
+
+    public async updateByGid(gid: number, pid: number): Promise<any> {
+        const result: UpdateResult = await this.grouppermissionRepo
+            .createQueryBuilder()
+            .update(GroupPermission)
+            .set(filterObjectUndefined({
+                pid,
+            }))
+            .where("gid = :gid", { gid })
+            .execute()
+        
+        return result.raw;
+    }
+
+    public async updateByPid(gid: number, pid: number): Promise<any> {
+        const result: UpdateResult = await this.grouppermissionRepo
+            .createQueryBuilder()
+            .update(GroupPermission)
+            .set(filterObjectUndefined({
+                gid,
+            }))
+            .where("pid = :pid", { pid })
+            .execute()
+        
+        return result.raw;
     }
 }

@@ -1,10 +1,11 @@
 // src/controller/ip_type.ts
 
 import { IpType } from "@/entry";
+import { UpdateIpTypeDTO } from "@/entry/dto";
 import { IpTypeService } from "@/service";
-import { Controller, Delete, Get, Path, Route, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Patch, Path, Post, Route, Tags } from "tsoa";
 
-@Tags('Ip_Type')
+@Tags('Ip Type')
 @Route('ip_type')
 export class IpTypeController extends Controller {
     @Get('{ip_type_id}')
@@ -19,5 +20,22 @@ export class IpTypeController extends Controller {
         @Path('ip_type_id') iptypeId: number,
     ): Promise<void> {
         IpTypeService.getInstance().deleteById(iptypeId);
+    }
+
+    @Post()
+    public async add(
+        @Body() form: IpType,
+    ): Promise<any> {
+        const { ip_type_id, type } = form;
+        return IpTypeService.getInstance().add(ip_type_id, type);
+    }
+
+    @Patch('{ip_type_id}')
+    public async updateById(
+        @Path('ip_type_id') ip_type_id: number,
+        @Body() form: UpdateIpTypeDTO,
+    ): Promise<any> {
+        const { type } = form;
+        return IpTypeService.getInstance().updateById(ip_type_id, type);
     }
 }

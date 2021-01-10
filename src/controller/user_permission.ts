@@ -1,8 +1,9 @@
 // src/controller/user_permission.ts
 
 import { UserPermission } from "@/entry";
+import { UpdateUserPermissionPidDTO, UpdateUserPermissionUidDTO } from "@/entry/dto";
 import { UserPermissionService } from "@/service";
-import { Controller, Delete, Get, Path, Route, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Patch, Path, Post, Route, Tags } from "tsoa";
 
 @Tags('UserPermission')
 @Route('user_permission')
@@ -33,5 +34,31 @@ export class UserPermissionController extends Controller {
         @Path('pid') pid: number,
     ): Promise<void> {
         UserPermissionService.getInstance().deleteByPid(pid);
+    }
+
+    @Post()
+    public async add(
+        @Body() form: UserPermission,
+    ): Promise<any> {
+        const { uid, pid, is_excluded } = form;
+        return UserPermissionService.getInstance().add(uid, pid, is_excluded);
+    }
+
+    @Patch('{uid}')
+    public async updateByUid(
+        @Path('uid') uid: number,
+        @Body() form: UpdateUserPermissionUidDTO,
+    ): Promise<any> {
+        const { pid, is_excluded } = form;
+        return UserPermissionService.getInstance().updateByUid(uid, pid, is_excluded);
+    }
+
+    @Patch('{pid}')
+    public async updateByPid(
+        @Path('pid') pid: number,
+        @Body() form: UpdateUserPermissionPidDTO,
+    ): Promise<any> {
+        const { uid, is_excluded } = form;
+        return UserPermissionService.getInstance().updateByPid(pid, uid, is_excluded);
     }
 }

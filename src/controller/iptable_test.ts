@@ -1,10 +1,11 @@
 // src/controller/iptable_test.ts
 
 import { IpTableTest } from "@/entry";
+import { UpdateIptableTestDTO } from "@/entry/dto";
 import { IpTableTestService } from "@/service";
-import { Controller, Delete, Get, Path, Route, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Patch, Path, Post, Route, Tags } from "tsoa";
 
-@Tags('Iptable_Test')
+@Tags('Iptable Test')
 @Route('iptable_test')
 export class IptableTestController extends Controller {
     @Get('{ip}')
@@ -19,5 +20,22 @@ export class IptableTestController extends Controller {
         @Path('ip') ip: string,
     ): Promise<void> {
         IpTableTestService.getInstance().deleteByIp(ip);
+    }
+
+    @Post()
+    public async add(
+        @Body() form: IpTableTest,
+    ): Promise<any> {
+        const { description, gid, ip, ip_type_id, is_unlimited, is_updated, lock_id, mac, port, port_type, switch_id, uid } = form;
+        return IpTableTestService.getInstance().add(ip, ip_type_id, is_unlimited, switch_id, port, port_type, mac, is_updated, uid, gid, description, lock_id);
+    }
+
+    @Patch('{ip}')
+    public async updateByIp(
+        @Path('ip') ip: string,
+        @Body() form: UpdateIptableTestDTO,
+    ): Promise<any> {
+        const { description, gid, ip_type_id, is_unlimited, is_updated, lock_id, mac, port, port_type, switch_id, uid } = form;
+        return IpTableTestService.getInstance().updateByIp(ip, ip_type_id, is_unlimited, switch_id, port, port_type, mac, is_updated, uid, gid, description, lock_id);
     }
 }

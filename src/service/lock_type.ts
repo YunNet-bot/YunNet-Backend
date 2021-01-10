@@ -1,7 +1,8 @@
 // src/service/lock_type.ts
 
 import { LockType } from "@/entry";
-import { DeleteResult, getRepository, Repository } from "typeorm";
+import { filterObjectUndefined } from "@/utils";
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from "typeorm";
 
 export class LockTypeService {
     private static INSTANCE: LockTypeService;
@@ -22,23 +23,44 @@ export class LockTypeService {
         this.locktypeRepo = getRepository(LockType);
     }
 
-    public async getById(lockid: number): Promise<LockType> {
+    public async getById(lockId: number): Promise<LockType> {
         const locktype: LockType | undefined = await this.locktypeRepo.findOne({
-            lock_type_id: lockid,
+            lock_type_id: lockId,
         });
 
         if(locktype === undefined) {
-            throw new Error(`No such LockType with lockid: ${lockid}.`);
+            throw new Error(`No such LockType with lockid: ${lockId}.`);
         }
 
         return locktype;
     }
 
-    public async deleteById(lockid: number): Promise<boolean> {
+    public async deleteById(lockId: number): Promise<boolean> {
         const result: DeleteResult = await this.locktypeRepo.delete({
-            lock_type_id: lockid,
+            lock_type_id: lockId,
         });
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(lock_type_id: number, str: string): Promise<any> {
+        const result: InsertResult = await this.locktypeRepo.insert({
+            lock_type_id, str,
+        });
+
+        return result.raw;
+    }
+
+    public async updateById(lock_type_id: number, str?: string): Promise<any> {
+        const result: UpdateResult = await this.locktypeRepo
+            .createQueryBuilder()
+            .update(LockType)
+            .set(filterObjectUndefined({
+                str,
+            }))
+            .where("lock_type_id = :lock_type_id", { lock_type_id })
+            .execute();
+
+        return result.raw;
     }
 }

@@ -1,7 +1,8 @@
 // src/service/ip_type.ts
 
 import { IpType } from "@/entry";
-import { DeleteResult, getRepository, Repository } from "typeorm";
+import { filterObjectUndefined } from "@/utils";
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from "typeorm";
 
 export class IpTypeService {
     private static INSTANCE: IpTypeService;
@@ -40,5 +41,26 @@ export class IpTypeService {
         });
         
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(ip_type_id: number, type: string): Promise<any> {
+        const result: InsertResult = await this.iptypeRepo.insert({
+            ip_type_id, type,
+        });
+
+        return result.raw;
+    }
+
+    public async updateById(ip_type_id: number, type?: string): Promise<any> {
+        const result: UpdateResult = await this.iptypeRepo
+            .createQueryBuilder()
+            .update(IpType)
+            .set(filterObjectUndefined({
+                type,
+            }))
+            .where("ip_type_id = :ip_type_id", { ip_type_id })
+            .execute();
+
+        return result.raw;
     }
 }

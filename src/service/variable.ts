@@ -1,7 +1,8 @@
 // src/service/variable.ts
 
 import { Variable } from "@/entry";
-import { DeleteResult, getRepository, Repository } from "typeorm";
+import { filterObjectUndefined } from "@/utils";
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from "typeorm";
 
 export class VariableService {
     private static INSTANCE: VariableService;
@@ -40,5 +41,26 @@ export class VariableService {
         });
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(name: string, type: string, value: string): Promise<any> {
+        const result: InsertResult = await this.variableRepo.insert({
+            name, type, value,
+        });
+
+        return result.raw;
+    }
+
+    public async updateByName(name: string, type?: string, value?: string): Promise<any> {
+        const result: UpdateResult = await this.variableRepo
+            .createQueryBuilder()
+            .update(Variable)
+            .set(filterObjectUndefined({
+                type, value,
+            }))
+            .where("name = :name", { name })
+            .execute();
+
+        return result.raw;
     }
 }

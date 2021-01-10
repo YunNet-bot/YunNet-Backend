@@ -1,8 +1,9 @@
 // src/controller/group.ts
 
 import { Group } from '@/entry';
+import { GroupDTO, UpdateGroupDTO } from '@/entry/dto';
 import { GroupService } from '@/service';
-import { Controller, Delete, Get, Path, Route, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Patch, Path, Post, Route, Tags } from "tsoa";
 
 @Tags('Group')
 @Route('group')
@@ -19,5 +20,22 @@ export class GroupController extends Controller {
         @Path('gid') gid: number,
     ): Promise<void> {
         GroupService.getInstance().deleteByGid(gid);
+    }
+
+    @Post()
+    public async add(
+        @Body() form: GroupDTO,
+    ): Promise<any> {
+        const { name, description } = form;
+        return GroupService.getInstance().add(name, description);
+    }
+
+    @Patch('{gid}')
+    public async updateByGid(
+        @Path('gid') gid: number,
+        @Body() form: UpdateGroupDTO,
+    ): Promise<any> {
+        const { name, description } = form;
+        return GroupService.getInstance().updateByGid(gid, name, description);
     }
 }

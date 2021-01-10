@@ -1,7 +1,8 @@
 // src/service/group.ts
 
 import { Group } from "@/entry";
-import { DeleteResult, getRepository, Repository } from "typeorm";
+import { filterObjectUndefined } from "@/utils";
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from "typeorm";
 
 export class GroupService {
     private static INSTANCE: GroupService;
@@ -24,7 +25,7 @@ export class GroupService {
 
     public async getByGid(gid: number): Promise<Group> {
         const group: Group | undefined = await this.groupRepo.findOne({
-            gid: gid,
+            gid,
         });
 
         if(group === undefined) {
@@ -36,9 +37,30 @@ export class GroupService {
 
     public async deleteByGid(gid: number): Promise<boolean> {
         const result: DeleteResult = await this.groupRepo.delete({
-            gid: gid,
+            gid,
         });
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(name: string, description: string): Promise<any> {
+        const result: InsertResult = await this.groupRepo.insert({
+           name, description,
+        });
+
+        return result.raw;
+    }
+
+    public async updateByGid(gid: number, name?: string, description?: string): Promise<any> {
+        const result: UpdateResult = await this.groupRepo
+            .createQueryBuilder()
+            .update(Group)
+            .set(filterObjectUndefined({
+                gid, name, description,
+            }))
+            .where("gid = :gid", { gid })
+            .execute();
+
+        return result.raw;
     }
 }

@@ -1,7 +1,8 @@
 // src/service/token.ts
 
 import { Token } from "@/entry";
-import { DeleteResult, getRepository, Repository } from "typeorm";
+import { filterObjectUndefined } from "@/utils";
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from "typeorm";
 
 export class TokenService {
     private static INSTANCE: TokenService;
@@ -24,7 +25,7 @@ export class TokenService {
 
     public async getByUid(uid: number): Promise<Token> {
         const token: Token | undefined = await this.tokenRepo.findOne({
-            uid: uid,
+            uid,
         });
 
         if(token === undefined) {
@@ -36,9 +37,30 @@ export class TokenService {
 
     public async deleteByUid(uid: number): Promise<boolean> {
         const result: DeleteResult = await this.tokenRepo.delete({
-            uid: uid,
+            uid,
         });
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(uid: number, token: string, timestamp: Date): Promise<any> {
+        const result: InsertResult = await this.tokenRepo.insert({
+            uid, token, timestamp,
+        });
+
+        return result.raw;
+    }
+
+    public async updateByUid(uid: number, token?: string, timestamp?: Date): Promise<any> {
+        const result: UpdateResult = await this.tokenRepo
+            .createQueryBuilder()
+            .update(Token)
+            .set(filterObjectUndefined({
+                token, timestamp,
+            }))
+            .where("uid = :uid", { uid })
+            .execute();
+
+        return result.raw;
     }
 }

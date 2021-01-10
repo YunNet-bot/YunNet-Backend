@@ -1,7 +1,8 @@
 // src/service/permission.ts
 
 import { Permission } from "@/entry";
-import { DeleteResult, getRepository, Repository } from "typeorm";
+import { filterObjectUndefined } from "@/utils";
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from "typeorm";
 
 export class PermissionService {
     private static INSTANCE: PermissionService;
@@ -40,5 +41,26 @@ export class PermissionService {
         });
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(str: string): Promise<any> {
+        const result: InsertResult = await this.permissionRepo.insert({
+            str,
+        });
+
+        return result.raw;
+    }
+
+    public async updateByPid(pid: number, str: string): Promise<any> {
+        const result: UpdateResult = await this.permissionRepo
+            .createQueryBuilder()
+            .update(Permission)
+            .set(filterObjectUndefined({
+                str,
+            }))
+            .where("pid = :pid", { pid })
+            .execute();
+
+        return result.raw;
     }
 }

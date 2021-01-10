@@ -1,7 +1,8 @@
 // src/service/announcement.ts
-import { DeleteResult, getRepository, Repository } from 'typeorm';
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from 'typeorm';
 
 import { BackupMac } from '@/entry';
+import { filterObjectUndefined } from '@/utils';
 
 export class BackupMacService {
     private static INSTANCE: BackupMacService;
@@ -39,5 +40,26 @@ export class BackupMacService {
         })
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(ip: string, mac: string): Promise<any> {
+        const result: InsertResult = await this.backupmacRepo.insert({
+            ip, mac,
+        });
+
+        return result.raw;
+    }
+
+    public async updateByIp(ip: string, mac?: string): Promise<any> {
+        const result: UpdateResult = await this.backupmacRepo
+            .createQueryBuilder()
+            .update(BackupMac)
+            .set(filterObjectUndefined({
+                mac,
+            }))
+            .where("ip = :ip", { ip })
+            .execute();
+
+            return result.raw;
     }
 }

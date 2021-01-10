@@ -1,7 +1,8 @@
 // src/service/bed.ts
-import { DeleteResult, getRepository, Repository } from "typeorm";
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from "typeorm";
 
 import { Bed } from '@/entry';
+import { filterObjectUndefined } from "@/utils";
 
 export class BedService {
     private static INSTANCE: BedService;
@@ -24,7 +25,7 @@ export class BedService {
 
     public async getByBed(bed: string): Promise<Bed> {
         const b: Bed | undefined = await this.bedRepo.findOne({
-            bed: bed,
+            bed,
         });
 
         if(b === undefined) {
@@ -35,9 +36,30 @@ export class BedService {
 
     public async deleteByBed(bed: string): Promise<boolean> {
         const result: DeleteResult = await this.bedRepo.delete({
-            bed: bed,
+            bed,
         })
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(bed: string, type: number, portal: string, ip: string): Promise<any> {
+        const result: InsertResult = await this.bedRepo.insert({
+            bed, type, portal, ip,
+        });
+
+        return result.raw;
+    }
+
+    public async updateByBed(bed: string, type?: number, portal?: string, ip?: string): Promise<any> {
+        const result: UpdateResult = await this.bedRepo
+            .createQueryBuilder()
+            .update(Bed)
+            .set(filterObjectUndefined({
+                type, portal, ip,
+            }))
+            .where("bed = :bed", { bed })
+            .execute();
+
+        return result.raw;
     }
 }

@@ -1,8 +1,9 @@
 // src/controller/announcement.ts
-import { Controller, Delete, Get, Path, Route, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Patch, Path, Post, Route, Tags } from "tsoa";
 
 import { Announcement } from '@/entry';
 import { AnnouncementService } from "@/service";
+import { AnnouncementDTO, UpdateAnnouncementDTO } from "@/entry/dto";
 
 @Tags('Announcement')
 @Route('announcements')
@@ -19,5 +20,22 @@ export class AnnouncementController extends Controller {
         @Path('announcement_id') announcementId: number,
     ): Promise<void> {
         AnnouncementService.getInstance().deleteById(announcementId);
+    }
+
+    @Post()
+    public async add(
+        @Body() form: AnnouncementDTO,
+    ): Promise<any> {
+        const { title, content, uid } = form;
+        return AnnouncementService.getInstance().add(title, content, uid);
+    }
+
+    @Patch('{announcement_id}')
+    public async updateById(
+        @Path('announcement_id') aid: number,
+        @Body() form: UpdateAnnouncementDTO,
+    ): Promise<any> {
+        const { title, content, uid } = form;
+        return AnnouncementService.getInstance().updateById(aid, title, content, uid);
     }
 }

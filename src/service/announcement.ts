@@ -1,7 +1,9 @@
 // src/service/announcement.ts
-import { DeleteResult, getRepository, Repository } from "typeorm";
+import { DeleteResult, getRepository, InsertResult, Repository, UpdateResult } from "typeorm";
 
 import { Announcement } from "@/entry";
+import { AnnouncementDTO } from "@/entry/dto";
+import { filterObjectUndefined } from "@/utils";
 
 export class AnnouncementService {
     private static INSTANCE: AnnouncementService;
@@ -39,5 +41,26 @@ export class AnnouncementService {
         });
 
         return result.affected !== undefined && result.affected !== null && result.affected > 0
+    }
+
+    public async add(title: string, content: string, uid: number): Promise<any> {
+        const result: InsertResult = await this.announcementRepo.insert({
+            title, content, uid,
+        });
+
+        return result.raw;
+    }
+
+    public async updateById(aid: number, title?: string, content?: string, uid?: number): Promise<any> {
+        const result: UpdateResult = await this.announcementRepo
+            .createQueryBuilder()
+            .update(Announcement)
+            .set(filterObjectUndefined({
+                title, content, uid,
+            }))
+            .where("announcement_id = :aid", { aid })
+            .execute();
+        
+        return result.raw
     }
 }

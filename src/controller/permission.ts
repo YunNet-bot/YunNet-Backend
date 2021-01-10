@@ -1,8 +1,9 @@
 // src/controller/permission.ts
 
 import { Permission } from "@/entry";
+import { PermissionDTO, UpdatePermissionDTO } from "@/entry/dto";
 import { PermissionService } from "@/service";
-import { Controller, Delete, Get, Path, Route, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Patch, Path, Post, Route, Tags } from "tsoa";
 
 @Tags('Permission')
 @Route('permission')
@@ -19,5 +20,22 @@ export class PermissionController extends Controller {
         @Path('pid') pid: number,
     ): Promise<void> {
         PermissionService.getInstance().deleteByPid(pid);
+    }
+
+    @Post()
+    public async add(
+        @Body() form: PermissionDTO,
+    ): Promise<any> {
+        const { str } = form;
+        return PermissionService.getInstance().add(str);
+    }
+
+    @Patch('{pid}')
+    public async updateByPid(
+        @Path('pid') pid: number,
+        @Body() form: UpdatePermissionDTO,
+    ): Promise<any> {
+        const { str } = form;
+        return PermissionService.getInstance().updateByPid(pid, str);
     }
 }

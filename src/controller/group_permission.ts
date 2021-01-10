@@ -1,10 +1,11 @@
 // src/controller/group_permission.ts
 import { GroupPermission } from "@/entry";
+import { UpdateGroupPermissionGidDTO, UpdateGroupPermissionPidDTO } from "@/entry/dto";
 import { GroupPermissionService } from "@/service";
-import { Controller, Delete, Get, Path, Route, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Patch, Path, Post, Route, Tags } from "tsoa";
 
 
-@Tags('Group_Permission')
+@Tags('Group Permission')
 @Route('group_permission')
 export class GroupPermissionController extends Controller {
     @Get('{gid}')
@@ -33,5 +34,31 @@ export class GroupPermissionController extends Controller {
         @Path('pid') pid: number,
     ): Promise<void> {
         GroupPermissionService.getInstance().deleteByPid(pid);
+    }
+
+    @Post()
+    public async add(
+        @Body() form: GroupPermission,
+    ): Promise<any> {
+        const { gid, pid } = form;
+        return GroupPermissionService.getInstance().add(gid, pid);
+    }
+
+    @Patch('{gid}')
+    public async updateByGid(
+        @Path('gid') gid: number,
+        @Body() form: UpdateGroupPermissionGidDTO,
+    ): Promise<any> {
+        const { pid } = form;
+        return GroupPermissionService.getInstance().updateByGid(gid, pid);
+    }
+    
+    @Patch('{pid}')
+    public async updateByPid(
+        @Path('pid') pid: number,
+        @Body() form: UpdateGroupPermissionPidDTO,
+    ): Promise<any> {
+        const { gid } = form;
+        return GroupPermissionService.getInstance().updateByPid(gid, pid);
     }
 }
