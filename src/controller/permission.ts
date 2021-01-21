@@ -27,7 +27,7 @@ export class PermissionController extends Controller {
   @Post()
   public async add(
     @Body() form: PermissionDTO,
-  ): Promise<any> {
+  ): Promise<number> {
     const { str } = form;
     return PermissionService.getInstance().add(str);
   }

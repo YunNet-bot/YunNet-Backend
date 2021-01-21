@@ -44,12 +44,12 @@ export class AnnouncementService {
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
-  public async add(title: string, content: string, uid: number): Promise<any> {
+  public async add(title: string, content: string, uid: number): Promise<number> {
     const result: InsertResult = await this.announcementRepo.insert({
       title, content, uid,
     });
 
-    return result.raw;
+    return result.raw["insertId"];
   }
 
   public async updateById(

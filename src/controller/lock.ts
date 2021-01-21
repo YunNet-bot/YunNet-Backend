@@ -27,7 +27,7 @@ export class LockController extends Controller {
   @Post()
   public async add(
     @Body() form: LockDTO,
-  ): Promise<any> {
+  ): Promise<number> {
     const {
       description, gid, ip, lock_by_user_id, lock_date, lock_type_id, title, uid, unlock_date,
     } = form;

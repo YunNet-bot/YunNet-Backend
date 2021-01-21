@@ -45,12 +45,12 @@ export class PermissionService {
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
-  public async add(str: string): Promise<any> {
+  public async add(str: string): Promise<number> {
     const result: InsertResult = await this.permissionRepo.insert({
       str,
     });
 
-    return result.raw;
+    return result.raw["insertId"];
   }
 
   public async updateByPid(pid: number, str: string): Promise<any> {

@@ -35,8 +35,8 @@ export class AnnouncementController extends Controller {
   @Patch('{announcement_id}')
   public async updateById(
     @Path('announcement_id') aid: number,
-      @Body() form: UpdateAnnouncementDTO,
-  ): Promise<any> {
+    @Body() form: UpdateAnnouncementDTO,
+  ): Promise<number> {
     const { title, content, uid } = form;
     return AnnouncementService.getInstance().updateById(aid, title, content, uid);
   }

@@ -44,12 +44,12 @@ export class GroupService {
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
-  public async add(name: string, description: string): Promise<any> {
+  public async add(name: string, description: string): Promise<number> {
     const result: InsertResult = await this.groupRepo.insert({
       name, description,
     });
 
-    return result.raw;
+    return result.raw["insertId"];
   }
 
   public async updateByGid(gid: number, name?: string, description?: string): Promise<any> {

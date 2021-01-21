@@ -47,12 +47,12 @@ export class LockService {
   public async add(
     lock_type_id: number, ip: string, uid: number, gid: number, lock_date: Date,
     unlock_date: Date, title: string, description: string, lock_by_user_id: number,
-  ): Promise<any> {
+  ): Promise<number> {
     const result: InsertResult = await this.lockRepo.insert({
       lock_type_id, ip, uid, gid, lock_date, unlock_date, title, description, lock_by_user_id,
     });
 
-    return result.raw;
+    return result.raw["insertId"];
   }
 
   public async updateById(

@@ -27,7 +27,7 @@ export class GroupController extends Controller {
   @Post()
   public async add(
     @Body() form: GroupDTO,
-  ): Promise<any> {
+  ): Promise<number> {
     const { name, description } = form;
     return GroupService.getInstance().add(name, description);
   }
