@@ -49,7 +49,7 @@ export class AnnouncementService {
       title, content, uid,
     });
 
-    return result.raw["insertId"];
+    return result.raw.insertId;
   }
 
   public async updateById(

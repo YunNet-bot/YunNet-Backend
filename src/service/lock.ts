@@ -52,7 +52,7 @@ export class LockService {
       lock_type_id, ip, uid, gid, lock_date, unlock_date, title, description, lock_by_user_id,
     });
 
-    return result.raw["insertId"];
+    return result.raw.insertId;
   }
 
   public async updateById(

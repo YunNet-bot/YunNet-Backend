@@ -50,7 +50,7 @@ export class PermissionService {
       str,
     });
 
-    return result.raw["insertId"];
+    return result.raw.insertId;
   }
 
   public async updateByPid(pid: number, str: string): Promise<any> {

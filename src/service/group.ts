@@ -49,7 +49,7 @@ export class GroupService {
       name, description,
     });
 
-    return result.raw["insertId"];
+    return result.raw.insertId;
   }
 
   public async updateByGid(gid: number, name?: string, description?: string): Promise<any> {
