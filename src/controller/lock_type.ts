@@ -28,16 +28,16 @@ export class LockTypeController extends Controller {
   public async add(
     @Body() form: LockType,
   ): Promise<any> {
-    const { lock_type_id, str } = form;
-    return LockTypeService.getInstance().add(lock_type_id, str);
+    const { lockTypeId, str } = form;
+    return LockTypeService.getInstance().add(lockTypeId, str);
   }
 
   @Patch('{id}')
   public async updateById(
-    @Path('id') lock_type_id: number,
+    @Path('id') lockTypeId: number,
       @Body() form: UpdateLockTypeDTO,
   ): Promise<any> {
     const { str } = form;
-    return LockTypeService.getInstance().updateById(lock_type_id, str);
+    return LockTypeService.getInstance().updateById(lockTypeId, str);
   }
 }

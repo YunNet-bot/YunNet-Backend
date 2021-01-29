@@ -9,18 +9,19 @@ export class GroupManagedBy {
   })
   gid: number;
   @Column('int', {
+    name: 'parent_gid',
     width: 10,
     unsigned: true,
   })
-  parent_gid: number;
+  parentGid: number;
 
   constructor(param: GroupManagedBy = {} as GroupManagedBy) {
     const {
       gid,
-      parent_gid,
+      parentGid,
     } = param;
 
     this.gid = gid;
-    this.parent_gid = parent_gid;
+    this.parentGid = parentGid;
   }
 }

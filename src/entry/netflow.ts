@@ -5,28 +5,28 @@ import { Entity, PrimaryColumn, Column } from 'typeorm';
 export class Netflow {
   @PrimaryColumn('int', { width: 11 })
   ip: number;
-  @Column('int', { width: 11 })
-  wan_upload: number;
-  @Column('int', { width: 11 })
-  wan_download: number;
-  @Column('int', { width: 11 })
-  lan_upload: number;
-  @Column('int', { width: 11 })
-  lan_download: number;
+  @Column('int', { name: 'wan_upload', width: 11 })
+  wanUpload: number;
+  @Column('int', { name: 'wan_download', width: 11 })
+  wanDownload: number;
+  @Column('int', { name: 'lan_upload', width: 11 })
+  lanUpload: number;
+  @Column('int', { name: 'lan_download', width: 11 })
+  lanDownload: number;
 
   constructor(param: Netflow = {} as Netflow) {
     const {
       ip,
-      wan_upload,
-      wan_download,
-      lan_upload,
-      lan_download,
+      wanUpload,
+      wanDownload,
+      lanUpload,
+      lanDownload,
     } = param;
 
     this.ip = ip;
-    this.wan_upload = wan_upload;
-    this.wan_download = wan_download;
-    this.lan_upload = lan_upload;
-    this.lan_download = lan_download;
+    this.wanUpload = wanUpload;
+    this.wanDownload = wanDownload;
+    this.lanUpload = lanUpload;
+    this.lanDownload = lanDownload;
   }
 }

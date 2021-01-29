@@ -64,20 +64,20 @@ export class UserPermissionService {
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
-  public async add(uid: number, pid: number, is_excluded: number | null): Promise<any> {
+  public async add(uid: number, pid: number, isExcluded: number | null): Promise<any> {
     const result: InsertResult = await this.userpermissionRepo.insert({
-      uid, pid, is_excluded,
+      uid, pid, isExcluded,
     });
 
     return result.raw;
   }
 
-  public async updateByUid(uid: number, pid?: number, is_excluded?: number): Promise<any> {
+  public async updateByUid(uid: number, pid?: number, isExcluded?: number): Promise<any> {
     const result: UpdateResult = await this.userpermissionRepo
       .createQueryBuilder()
       .update(UserPermission)
       .set(filterObjectUndefined({
-        pid, is_excluded,
+        pid, isExcluded,
       }))
       .where('uid = :uid', { uid })
       .execute();
@@ -85,12 +85,12 @@ export class UserPermissionService {
     return result.raw;
   }
 
-  public async updateByPid(pid: number, uid?: number, is_excluded?: number): Promise<any> {
+  public async updateByPid(pid: number, uid?: number, isExcluded?: number): Promise<any> {
     const result: UpdateResult = await this.userpermissionRepo
       .createQueryBuilder()
       .update(UserPermission)
       .set(filterObjectUndefined({
-        uid, is_excluded,
+        uid, isExcluded,
       }))
       .where('pid = :pid', { pid })
       .execute();

@@ -1,7 +1,7 @@
 // src/entry/dto/group_inherit.ts
 
 export interface UpdateGroupInheritGidDTO {
-  parent_gid: number;
+  parentGid: number;
 }
 
 export interface UpdateGroupInheritParentGidDTO {

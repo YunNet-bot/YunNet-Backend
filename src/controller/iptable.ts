@@ -29,12 +29,12 @@ export class IpTableController extends Controller {
     @Body() form: IpTable,
   ): Promise<any> {
     const {
-      description, gid, ip, ip_type_id, is_unlimited,
-      is_updated, lock_id, mac, port, port_type, switch_id, uid,
+      description, gid, ip, ipTypeId, isUnlimited,
+      isUpdated, lockId, mac, port, portType, switchId, uid,
     } = form;
     return IpTableService.getInstance().add(
-      ip, ip_type_id, is_unlimited, switch_id, port,
-      port_type, mac, is_updated, uid, gid, description, lock_id,
+      ip, ipTypeId, isUnlimited, switchId, port,
+      portType, mac, isUpdated, uid, gid, description, lockId,
     );
   }
 
@@ -44,12 +44,12 @@ export class IpTableController extends Controller {
       @Body() form: UpdateIptableDTO,
   ): Promise<any> {
     const {
-      description, gid, ip_type_id, is_unlimited,
-      is_updated, lock_id, mac, port, port_type, switch_id, uid,
+      description, gid, ipTypeId, isUnlimited,
+      isUpdated, lockId, mac, port, portType, switchId, uid,
     } = form;
     return IpTableService.getInstance().updateByIp(
-      ip, ip_type_id, is_unlimited, switch_id, port,
-      port_type, mac, is_updated, uid, gid, description, lock_id,
+      ip, ipTypeId, isUnlimited, switchId, port,
+      portType, mac, isUpdated, uid, gid, description, lockId,
     );
   }
 }

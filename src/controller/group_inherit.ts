@@ -19,9 +19,9 @@ export class GroupInheritController extends Controller {
 
   @Get('{parent_gid}')
   public async getByParentGid(
-    @Path('parent_gid') parent_gid: number,
+    @Path('parent_gid') parentGid: number,
   ): Promise<GroupInherit> {
-    return GroupInheritService.getInstance().getByParentGid(parent_gid);
+    return GroupInheritService.getInstance().getByParentGid(parentGid);
   }
 
   @Delete('{gid}')
@@ -33,17 +33,17 @@ export class GroupInheritController extends Controller {
 
   @Delete('{parent_gid}')
   public async deleteByParentGid(
-    @Path('parent_gid') parent_gid: number,
+    @Path('parent_gid') parentGid: number,
   ): Promise<void> {
-    GroupInheritService.getInstance().deleteByParentGid(parent_gid);
+    GroupInheritService.getInstance().deleteByParentGid(parentGid);
   }
 
   @Post()
   public async add(
     @Body() form: GroupInherit,
   ): Promise<any> {
-    const { gid, parent_gid } = form;
-    return GroupInheritService.getInstance().add(gid, parent_gid);
+    const { gid, parentGid } = form;
+    return GroupInheritService.getInstance().add(gid, parentGid);
   }
 
   @Patch('{gid}')
@@ -51,16 +51,16 @@ export class GroupInheritController extends Controller {
     @Path('gid') gid: number,
       @Body() form: UpdateGroupInheritGidDTO,
   ): Promise<any> {
-    const { parent_gid } = form;
-    return GroupInheritService.getInstance().updateByGid(gid, parent_gid);
+    const { parentGid } = form;
+    return GroupInheritService.getInstance().updateByGid(gid, parentGid);
   }
 
   @Patch('{parent_gid}')
   public async updateByParentGid(
-    @Path('parent_gid') parent_gid: number,
+    @Path('parent_gid') parentGid: number,
       @Body() form: UpdateGroupInheritParentGidDTO,
   ): Promise<any> {
     const { gid } = form;
-    return GroupInheritService.getInstance().updateByParentGid(gid, parent_gid);
+    return GroupInheritService.getInstance().updateByParentGid(gid, parentGid);
   }
 }

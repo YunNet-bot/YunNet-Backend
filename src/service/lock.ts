@@ -25,48 +25,48 @@ export class LockService {
     this.lockRepo = getRepository(Lock);
   }
 
-  public async getById(lockid: number): Promise<Lock> {
+  public async getById(lockId: number): Promise<Lock> {
     const lock: Lock | undefined = await this.lockRepo.findOne({
-      lock_id: lockid,
+      lockId,
     });
 
     if (lock === undefined) {
-      throw new Error(`No such Lock with id: ${lockid}.`);
+      throw new Error(`No such Lock with id: ${lockId}.`);
     }
     return lock;
   }
 
   public async deleteById(lockId: number): Promise<boolean> {
     const result: DeleteResult = await this.lockRepo.delete({
-      lock_id: lockId,
+      lockId,
     });
 
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
   public async add(
-    lock_type_id: number, ip: string, uid: number, gid: number, lock_date: Date,
-    unlock_date: Date, title: string, description: string, lock_by_user_id: number,
+    lockTypeId: number, ip: string, uid: number, gid: number, lockDate: Date,
+    unlockDate: Date, title: string, description: string, lockByUserId: number,
   ): Promise<number> {
     const result: InsertResult = await this.lockRepo.insert({
-      lock_type_id, ip, uid, gid, lock_date, unlock_date, title, description, lock_by_user_id,
+      lockTypeId, ip, uid, gid, lockDate, unlockDate, title, description, lockByUserId,
     });
 
     return result.raw.insertId;
   }
 
   public async updateById(
-    lock_id: number, lock_type_id?: number, ip?: string, uid?: number, gid?: number,
-    lock_date?: Date, unlock_date?: Date, title?: string, description?: string,
-    lock_by_user_id?: number,
+    lockId: number, lockTypeId?: number, ip?: string, uid?: number, gid?: number,
+    lockDate?: Date, unlockDate?: Date, title?: string, description?: string,
+    lockByUserId?: number,
   ): Promise<any> {
     const result: UpdateResult = await this.lockRepo
       .createQueryBuilder()
       .update(Lock)
       .set(filterObjectUndefined({
-        lock_type_id, ip, uid, gid, lock_date, unlock_date, title, description, lock_by_user_id,
+        lockTypeId, ip, uid, gid, lockDate, unlockDate, title, description, lockByUserId,
       }))
-      .where('lock_id = :lock_id', { lock_id })
+      .where('lock_id = :lockId', { lockId })
       .execute();
 
     return result.raw;

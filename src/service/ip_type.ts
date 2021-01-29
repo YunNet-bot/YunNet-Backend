@@ -25,41 +25,41 @@ export class IpTypeService {
     this.iptypeRepo = getRepository(IpType);
   }
 
-  public async getById(iptypeId: number): Promise<IpType> {
+  public async getById(ipTypeId: number): Promise<IpType> {
     const iptype: IpType | undefined = await this.iptypeRepo.findOne({
-      ip_type_id: iptypeId,
+      ipTypeId,
     });
 
     if (iptype === undefined) {
-      throw new Error(`No such IpType with iptypeId: ${iptypeId}.`);
+      throw new Error(`No such IpType with ipTypeId: ${ipTypeId}.`);
     }
     return iptype;
   }
 
-  public async deleteById(iptypeId: number): Promise<boolean> {
+  public async deleteById(ipTypeId: number): Promise<boolean> {
     const result: DeleteResult = await this.iptypeRepo.delete({
-      ip_type_id: iptypeId,
+      ipTypeId,
     });
 
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
-  public async add(ip_type_id: number, type: string | null): Promise<any> {
+  public async add(ipTypeId: number, type: string | null): Promise<any> {
     const result: InsertResult = await this.iptypeRepo.insert({
-      ip_type_id, type,
+      ipTypeId, type,
     });
 
     return result.raw;
   }
 
-  public async updateById(ip_type_id: number, type?: string): Promise<any> {
+  public async updateById(ipTypeId: number, type?: string): Promise<any> {
     const result: UpdateResult = await this.iptypeRepo
       .createQueryBuilder()
       .update(IpType)
       .set(filterObjectUndefined({
         type,
       }))
-      .where('ip_type_id = :ip_type_id', { ip_type_id })
+      .where('ip_type_id = :ipTypeId', { ipTypeId })
       .execute();
 
     return result.raw;

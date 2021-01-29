@@ -3,11 +3,13 @@ import { Entity, PrimaryColumn, Column } from 'typeorm';
 
 @Entity({ name: 'lock_type' })
 export class LockType {
-  @PrimaryColumn('int', {
+  @PrimaryColumn({
+    name: 'lock_type_id',
+    type: 'int',
     width: 10,
     unsigned: true,
   })
-  lock_type_id: number;
+  lockTypeId: number;
   @Column({
     type: 'text',
     collation: 'utf8_unicode_ci',
@@ -18,10 +20,10 @@ export class LockType {
 
   constructor(param: LockType = {} as LockType) {
     const {
-      lock_type_id,
+      lockTypeId,
       str = null,
     } = param;
-    this.lock_type_id = lock_type_id;
+    this.lockTypeId = lockTypeId;
     this.str = str;
   }
 }

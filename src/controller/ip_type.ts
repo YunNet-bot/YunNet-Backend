@@ -28,16 +28,16 @@ export class IpTypeController extends Controller {
   public async add(
     @Body() form: IpType,
   ): Promise<any> {
-    const { ip_type_id, type } = form;
-    return IpTypeService.getInstance().add(ip_type_id, type);
+    const { ipTypeId, type } = form;
+    return IpTypeService.getInstance().add(ipTypeId, type);
   }
 
   @Patch('{ip_type_id}')
   public async updateById(
-    @Path('ip_type_id') ip_type_id: number,
+    @Path('ip_type_id') ipTypeId: number,
       @Body() form: UpdateIpTypeDTO,
   ): Promise<any> {
     const { type } = form;
-    return IpTypeService.getInstance().updateById(ip_type_id, type);
+    return IpTypeService.getInstance().updateById(ipTypeId, type);
   }
 }

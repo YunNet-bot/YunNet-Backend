@@ -28,8 +28,8 @@ export class GroupManagedByController extends Controller {
   public async add(
     @Body() form: GroupManagedBy,
   ): Promise<any> {
-    const { gid, parent_gid } = form;
-    return GroupManagedByService.getInstance().add(gid, parent_gid);
+    const { gid, parentGid } = form;
+    return GroupManagedByService.getInstance().add(gid, parentGid);
   }
 
   @Patch('{gid}')
@@ -37,7 +37,7 @@ export class GroupManagedByController extends Controller {
     @Path('gid') gid: number,
       @Body() form: UpdateGroupManagedByDTO,
   ): Promise<any> {
-    const { parent_gid } = form;
-    return GroupManagedByService.getInstance().updateByGid(gid, parent_gid);
+    const { parentGid } = form;
+    return GroupManagedByService.getInstance().updateByGid(gid, parentGid);
   }
 }

@@ -14,22 +14,23 @@ export class UserPermission {
   })
   pid: number;
   @Column({
+    name: 'is_exluded',
     type: 'tinyint',
     width: 1,
     nullable: true,
     default: 'NULL',
   })
-  is_excluded: number | null;
+  isExcluded: number | null;
 
   constructor(param: UserPermission = {} as UserPermission) {
     const {
       uid,
       pid,
-      is_excluded = null,
+      isExcluded = null,
     } = param;
 
     this.uid = uid;
     this.pid = pid;
-    this.is_excluded = is_excluded;
+    this.isExcluded = isExcluded;
   }
 }

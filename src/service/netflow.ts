@@ -45,25 +45,25 @@ export class NetflowService {
   }
 
   public async add(
-    ip: number, wan_upload: number, wan_download: number,
-    lan_upload: number, lan_download: number,
+    ip: number, wanUpload: number, wanDownload: number,
+    lanUpload: number, lanDownload: number,
   ): Promise<any> {
     const result: InsertResult = await this.netflowRepo.insert({
-      ip, wan_upload, wan_download, lan_upload, lan_download,
+      ip, wanUpload, wanDownload, lanUpload, lanDownload,
     });
 
     return result.raw;
   }
 
   public async updateByIp(
-    ip: number, wan_upload?: number, wan_download?: number,
-    lan_upload?: number, lan_download?: number,
+    ip: number, wanUpload?: number, wanDownload?: number,
+    lanUpload?: number, lanDownload?: number,
   ): Promise<any> {
     const result: UpdateResult = await this.netflowRepo
       .createQueryBuilder()
       .update(Netflow)
       .set(filterObjectUndefined({
-        wan_upload, wan_download, lan_upload, lan_download,
+        wanUpload, wanDownload, lanUpload, lanDownload,
       }))
       .where('ip = :ip', { ip })
       .execute();

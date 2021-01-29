@@ -1,15 +1,15 @@
 // src/entry/dto/switch.ts
 
 export interface UpdateSwitchDTO {
-  upper_switch?: number;
-  upper_port?: number;
-  upper_port_type?: number;
+  upperSwitch?: number;
+  upperPort?: number;
+  upperPortType?: number;
   location?: string;
   account?: string;
   password?: string;
   vlan?: string;
-  machine_type?: number;
-  port_description?: string;
-  port_type?: string;
+  machineType?: number;
+  portDescription?: string;
+  portType?: string;
   ip?: string;
 }

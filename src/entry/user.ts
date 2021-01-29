@@ -15,6 +15,7 @@ export class User {
   })
   username: string;
   @Column({
+    name: 'password_hash',
     type: 'mediumtext',
     nullable: true,
     default: 'NULL',
@@ -36,6 +37,7 @@ export class User {
   })
   department: string | null;
   @Column({
+    name: 'back_mail',
     type: 'varchar',
     length: 255,
     nullable: true,

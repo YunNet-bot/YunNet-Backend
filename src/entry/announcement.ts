@@ -4,10 +4,11 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity()
 export class Announcement {
   @PrimaryGeneratedColumn('increment', {
+    name: 'announcement_id',
     type: 'int',
     unsigned: true,
   })
-  announcement_id: number;
+  announcementId: number;
   @Column({
     type: 'text',
     collation: 'utf8_unicode_ci',
@@ -30,13 +31,13 @@ export class Announcement {
 
   constructor(param: Announcement = {} as Announcement) {
     const {
-      announcement_id,
+      announcementId,
       title = null,
       content = null,
       uid,
     } = param;
 
-    this.announcement_id = announcement_id;
+    this.announcementId = announcementId;
     this.title = title;
     this.content = content;
     this.uid = uid;

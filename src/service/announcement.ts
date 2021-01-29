@@ -27,7 +27,7 @@ export class AnnouncementService {
 
   public async getById(announcementId: number): Promise<Announcement> {
     const announcement: Announcement | undefined = await this.announcementRepo.findOne({
-      announcement_id: announcementId,
+      announcementId,
     });
 
     if (announcement === undefined) {
@@ -38,7 +38,7 @@ export class AnnouncementService {
 
   public async deleteById(announcementId: number): Promise<boolean> {
     const result: DeleteResult = await this.announcementRepo.delete({
-      announcement_id: announcementId,
+      announcementId,
     });
 
     return result.affected !== undefined && result.affected !== null && result.affected > 0;

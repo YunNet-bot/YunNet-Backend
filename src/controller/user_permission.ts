@@ -42,8 +42,8 @@ export class UserPermissionController extends Controller {
   public async add(
     @Body() form: UserPermission,
   ): Promise<any> {
-    const { uid, pid, is_excluded } = form;
-    return UserPermissionService.getInstance().add(uid, pid, is_excluded);
+    const { uid, pid, isExcluded } = form;
+    return UserPermissionService.getInstance().add(uid, pid, isExcluded);
   }
 
   @Patch('{uid}')
@@ -51,8 +51,8 @@ export class UserPermissionController extends Controller {
     @Path('uid') uid: number,
       @Body() form: UpdateUserPermissionUidDTO,
   ): Promise<any> {
-    const { pid, is_excluded } = form;
-    return UserPermissionService.getInstance().updateByUid(uid, pid, is_excluded);
+    const { pid, isExcluded } = form;
+    return UserPermissionService.getInstance().updateByUid(uid, pid, isExcluded);
   }
 
   @Patch('{pid}')
@@ -60,7 +60,7 @@ export class UserPermissionController extends Controller {
     @Path('pid') pid: number,
       @Body() form: UpdateUserPermissionPidDTO,
   ): Promise<any> {
-    const { uid, is_excluded } = form;
-    return UserPermissionService.getInstance().updateByPid(pid, uid, is_excluded);
+    const { uid, isExcluded } = form;
+    return UserPermissionService.getInstance().updateByPid(pid, uid, isExcluded);
   }
 }

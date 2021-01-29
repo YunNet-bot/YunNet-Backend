@@ -4,17 +4,19 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity()
 export class Lock {
   @PrimaryGeneratedColumn('increment', {
+    name: 'lock_id',
     type: 'int',
     unsigned: true,
   })
-  lock_id: number;
+  lockId: number;
   @Column({
+    name: 'lock_type_id',
     type: 'int',
     width: 10,
     unsigned: true,
     default: 0,
   })
-  lock_type_id: number;
+  lockTypeId: number;
   @Column({
     type: 'varchar',
     length: 32,
@@ -40,17 +42,19 @@ export class Lock {
   })
   gid: number | null;
   @Column({
+    name: 'lock_date',
     type: 'datetime',
     nullable: true,
     default: 'NULL',
   })
-  lock_date: Date | null;
+  lockDate: Date | null;
   @Column({
+    name: 'unlock_date',
     type: 'datetime',
     nullable: true,
     default: 'NULL',
   })
-  unlock_date: Date | null;
+  unlockDate: Date | null;
   @Column({
     type: 'text',
     collation: 'utf8_unicode_ci',
@@ -64,36 +68,37 @@ export class Lock {
   })
   description: string | null;
   @Column({
+    name: 'lock_by_user_id',
     type: 'int',
     unsigned: true,
     nullable: true,
     default: 'NULL',
   })
-  lock_by_user_id: number | null;
+  lockByUserId: number | null;
 
   constructor(param: Lock = {} as Lock) {
     const {
-      lock_id,
-      lock_type_id,
+      lockId,
+      lockTypeId,
       ip = null,
       uid = null,
       gid = null,
-      lock_date = null,
-      unlock_date = null,
+      lockDate = null,
+      unlockDate = null,
       title,
       description = null,
-      lock_by_user_id = null,
+      lockByUserId = null,
     } = param;
 
-    this.lock_id = lock_id;
-    this.lock_type_id = lock_type_id;
+    this.lockId = lockId;
+    this.lockTypeId = lockTypeId;
     this.ip = ip;
     this.uid = uid;
     this.gid = gid;
-    this.lock_date = lock_date;
-    this.unlock_date = unlock_date;
+    this.lockDate = lockDate;
+    this.unlockDate = unlockDate;
     this.title = title;
     this.description = description;
-    this.lock_by_user_id = lock_by_user_id;
+    this.lockByUserId = lockByUserId;
   }
 }

@@ -44,20 +44,20 @@ export class GroupManagedByService {
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
-  public async add(gid: number, parent_gid: number): Promise<any> {
+  public async add(gid: number, parentGid: number): Promise<any> {
     const result: InsertResult = await this.groupmanagedbyRepo.insert({
-      gid, parent_gid,
+      gid, parentGid,
     });
 
     return result.raw;
   }
 
-  public async updateByGid(gid: number, parent_gid: number): Promise<any> {
+  public async updateByGid(gid: number, parentGid: number): Promise<any> {
     const result: UpdateResult = await this.groupmanagedbyRepo
       .createQueryBuilder()
       .update(GroupManagedBy)
       .set(filterObjectUndefined({
-        parent_gid,
+        parentGid,
       }))
       .where('gid = :gid', { gid })
       .execute();

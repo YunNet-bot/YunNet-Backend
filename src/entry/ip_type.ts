@@ -4,10 +4,11 @@ import { Entity, PrimaryColumn, Column } from 'typeorm';
 @Entity({ name: 'ip_type' })
 export class IpType {
   @PrimaryColumn('int', {
+    name: 'ip_type_id',
     width: 11,
     unsigned: true,
   })
-  ip_type_id: number;
+  ipTypeId: number;
   @Column({
     type: 'text',
     collation: 'utf8_unicode_ci',
@@ -18,11 +19,11 @@ export class IpType {
 
   constructor(param: IpType = {} as IpType) {
     const {
-      ip_type_id,
+      ipTypeId,
       type = null,
     } = param;
 
-    this.ip_type_id = ip_type_id;
+    this.ipTypeId = ipTypeId;
     this.type = type;
   }
 }

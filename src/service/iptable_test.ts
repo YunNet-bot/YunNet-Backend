@@ -45,48 +45,48 @@ export class IpTableTestService {
   }
 
   public async add(
-    ip: string, ip_type_id: number | null, is_unlimited: number, switch_id: number | null,
-    port: number, port_type: number, mac: string | null, is_updated: number, uid: number,
-    gid: number, description: string, lock_id: number | null,
+    ip: string, ipTypeId: number | null, isUnlimited: number, switchId: number | null,
+    port: number, portType: number, mac: string | null, isUpdated: number, uid: number,
+    gid: number, description: string, lockId: number | null,
   ): Promise<any> {
     const result: InsertResult = await this.iptabletestRepo.insert({
       ip,
-      ip_type_id,
-      is_unlimited,
-      switch_id,
+      ipTypeId,
+      isUnlimited,
+      switchId,
       port,
-      port_type,
+      portType,
       mac,
-      is_updated,
+      isUpdated,
       uid,
       gid,
       description,
-      lock_id,
+      lockId,
     });
 
     return result.raw;
   }
 
   public async updateByIp(
-    ip: string, ip_type_id?: number, is_unlimited?: number, switch_id?: number,
-    port?: number, port_type?: number, mac?: string, is_updated?: number, uid?: number,
-    gid?: number, description?: string, lock_id?: number,
+    ip: string, ipTypeId?: number, isUnlimited?: number, switchId?: number,
+    port?: number, portType?: number, mac?: string, isUpdated?: number, uid?: number,
+    gid?: number, description?: string, lockId?: number,
   ): Promise<any> {
     const result: UpdateResult = await this.iptabletestRepo
       .createQueryBuilder()
       .update(IpTableTest)
       .set(filterObjectUndefined({
-        ip_type_id,
-        is_unlimited,
-        switch_id,
+        ipTypeId,
+        isUnlimited,
+        switchId,
         port,
-        port_type,
+        portType,
         mac,
-        is_updated,
+        isUpdated,
         uid,
         gid,
         description,
-        lock_id,
+        lockId,
       }))
       .where('ip = :ip', { ip })
       .execute();

@@ -45,23 +45,23 @@ export class SwitchService {
   }
 
   public async add(
-    id: number, upper_switch: number | null, upper_port: number | null,
-    upper_port_type: number, location: string | null, account: string,
-    password: string, vlan: string, machine_type: number,
-    port_description: string | null, port_type: string, ip: string,
+    id: number, upperSwitch: number | null, upperPort: number | null,
+    upperPortType: number, location: string | null, account: string,
+    password: string, vlan: string, machineType: number,
+    portDescription: string | null, portType: string, ip: string,
   ): Promise<any> {
     const result: InsertResult = await this.switchRepo.insert({
       id,
-      upper_switch,
-      upper_port,
-      upper_port_type,
+      upperSwitch,
+      upperPort,
+      upperPortType,
       location,
       account,
       password,
       vlan,
-      machine_type,
-      port_description,
-      port_type,
+      machineType,
+      portDescription,
+      portType,
       ip,
     });
 
@@ -69,25 +69,25 @@ export class SwitchService {
   }
 
   public async updateById(
-    id: number, upper_switch?: number, upper_port?: number,
-    upper_port_type?: number, location?: string, account?: string,
-    password?: string, vlan?: string, machine_type?: number,
-    port_description?: string, port_type?: string, ip?: string,
+    id: number, upperSwitch?: number, upperPort?: number,
+    upperPortType?: number, location?: string, account?: string,
+    password?: string, vlan?: string, machineType?: number,
+    portDescription?: string, portType?: string, ip?: string,
   ): Promise<any> {
     const result: UpdateResult = await this.switchRepo
       .createQueryBuilder()
       .update(Switch)
       .set(filterObjectUndefined({
-        upper_switch,
-        upper_port,
-        upper_port_type,
+        upperSwitch,
+        upperPort,
+        upperPortType,
         location,
         account,
         password,
         vlan,
-        machine_type,
-        port_description,
-        port_type,
+        machineType,
+        portDescription,
+        portType,
         ip,
       }))
       .where('id = :id', { id })

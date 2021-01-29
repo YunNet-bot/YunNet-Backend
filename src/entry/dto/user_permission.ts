@@ -2,10 +2,10 @@
 
 export interface UpdateUserPermissionUidDTO {
   pid: number;
-  is_excluded?: number;
+  isExcluded?: number;
 }
 
 export interface UpdateUserPermissionPidDTO {
   uid: number;
-  is_excluded?: number;
+  isExcluded?: number;
 }

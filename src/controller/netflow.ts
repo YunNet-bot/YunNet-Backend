@@ -29,9 +29,9 @@ export class NetflowController extends Controller {
     @Body() form: Netflow,
   ): Promise<any> {
     const {
-      ip, lan_download, lan_upload, wan_download, wan_upload,
+      ip, lanDownload, lanUpload, wanDownload, wanUpload,
     } = form;
-    return NetflowService.getInstance().add(ip, wan_upload, wan_download, lan_upload, lan_download);
+    return NetflowService.getInstance().add(ip, wanUpload, wanDownload, lanUpload, lanDownload);
   }
 
   @Patch('{ip}')
@@ -40,10 +40,10 @@ export class NetflowController extends Controller {
       @Body() form: UpdateNetflowDTO,
   ): Promise<any> {
     const {
-      lan_download, lan_upload, wan_download, wan_upload,
+      lanDownload, lanUpload, wanDownload, wanUpload,
     } = form;
     return NetflowService.getInstance().updateByIp(
-      ip, wan_upload, wan_download, lan_upload, lan_download,
+      ip, wanUpload, wanDownload, lanUpload, lanDownload,
     );
   }
 }

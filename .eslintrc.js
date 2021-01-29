@@ -22,15 +22,6 @@ module.exports = {
   },
   overrides: [
     {
-      files: [
-        'src/entry/**/*.ts',
-        'src/controller/**/*.ts',
-      ],
-      rules: {
-        '@typescript-eslint/naming-convention': 'off',
-      },
-    },
-    {
       files: ['src/migration/**/*.ts'],
       rules: {
         'max-len': 'off',

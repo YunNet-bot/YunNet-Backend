@@ -36,13 +36,13 @@ export class GroupInheritService {
     return groupinherit;
   }
 
-  public async getByParentGid(parent_gid: number): Promise<GroupInherit> {
+  public async getByParentGid(parentGid: number): Promise<GroupInherit> {
     const groupinherit: GroupInherit | undefined = await this.groupinheritRepo.findOne({
-      parent_gid,
+      parentGid,
     });
 
     if (groupinherit === undefined) {
-      throw new Error(`No such GroupInherit with Gid: ${parent_gid}.`);
+      throw new Error(`No such GroupInherit with Gid: ${parentGid}.`);
     }
     return groupinherit;
   }
@@ -55,28 +55,28 @@ export class GroupInheritService {
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
-  public async deleteByParentGid(parent_gid: number): Promise<boolean> {
+  public async deleteByParentGid(parentGid: number): Promise<boolean> {
     const result: DeleteResult = await this.groupinheritRepo.delete({
-      parent_gid,
+      parentGid,
     });
 
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
-  public async add(gid: number, parent_gid: number): Promise<any> {
+  public async add(gid: number, parentGid: number): Promise<any> {
     const result: InsertResult = await this.groupinheritRepo.insert({
-      gid, parent_gid,
+      gid, parentGid,
     });
 
     return result.raw;
   }
 
-  public async updateByGid(gid: number, parent_gid: number): Promise<any> {
+  public async updateByGid(gid: number, parentGid: number): Promise<any> {
     const result: UpdateResult = await this.groupinheritRepo
       .createQueryBuilder()
       .update(GroupInherit)
       .set(filterObjectUndefined({
-        parent_gid,
+        parentGid,
       }))
       .where('gid = :gid', { gid })
       .execute();
@@ -84,14 +84,14 @@ export class GroupInheritService {
     return result.raw;
   }
 
-  public async updateByParentGid(gid: number, parent_gid: number): Promise<any> {
+  public async updateByParentGid(gid: number, parentGid: number): Promise<any> {
     const result: UpdateResult = await this.groupinheritRepo
       .createQueryBuilder()
       .update(GroupInherit)
       .set(filterObjectUndefined({
         gid,
       }))
-      .where('parent_gid = :parent_gid', { parent_gid })
+      .where('parent_gid = :parentGid', { parentGid })
       .execute();
 
     return result.raw;

@@ -1,15 +1,15 @@
 // src/entry/dto/iptable_test.ts
 
 export interface UpdateIptableTestDTO {
-  ip_type_id?: number;
-  is_unlimited?: number;
-  switch_id?: number;
+  ipTypeId?: number;
+  isUnlimited?: number;
+  switchId?: number;
   port?: number;
-  port_type?: number;
+  portType?: number;
   mac?: string;
-  is_updated?: number;
+  isUpdated?: number;
   uid?: number;
   gid?: number;
   description?: string;
-  lock_id?: number;
+  lockId?: number;
 }

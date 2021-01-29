@@ -29,25 +29,25 @@ export class LockController extends Controller {
     @Body() form: LockDTO,
   ): Promise<number> {
     const {
-      description, gid, ip, lock_by_user_id, lock_date, lock_type_id, title, uid, unlock_date,
+      description, gid, ip, lockByUserId, lockDate, lockTypeId, title, uid, unlockDate,
     } = form;
     return LockService.getInstance().add(
-      lock_type_id, ip, uid, gid, lock_date,
-      unlock_date, title, description, lock_by_user_id,
+      lockTypeId, ip, uid, gid, lockDate,
+      unlockDate, title, description, lockByUserId,
     );
   }
 
   @Patch('{id}')
   public async updateById(
-    @Path('id') lock_id: number,
+    @Path('id') lockId: number,
       @Body() form: UpdateLockDTO,
   ): Promise<any> {
     const {
-      description, gid, ip, lock_by_user_id, lock_date, lock_type_id, title, uid, unlock_date,
+      description, gid, ip, lockByUserId, lockDate, lockTypeId, title, uid, unlockDate,
     } = form;
     return LockService.getInstance().updateById(
-      lock_id, lock_type_id, ip, uid, gid, lock_date,
-      unlock_date, title, description, lock_by_user_id,
+      lockId, lockTypeId, ip, uid, gid, lockDate,
+      unlockDate, title, description, lockByUserId,
     );
   }
 }

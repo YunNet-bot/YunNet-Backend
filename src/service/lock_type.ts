@@ -25,41 +25,41 @@ export class LockTypeService {
     this.locktypeRepo = getRepository(LockType);
   }
 
-  public async getById(lockid: number): Promise<LockType> {
+  public async getById(lockTypeId: number): Promise<LockType> {
     const locktype: LockType | undefined = await this.locktypeRepo.findOne({
-      lock_type_id: lockid,
+      lockTypeId,
     });
 
     if (locktype === undefined) {
-      throw new Error(`No such LockType with lockid: ${lockid}.`);
+      throw new Error(`No such LockType with lockTypeId: ${lockTypeId}.`);
     }
     return locktype;
   }
 
-  public async deleteById(lockId: number): Promise<boolean> {
+  public async deleteById(lockTypeId: number): Promise<boolean> {
     const result: DeleteResult = await this.locktypeRepo.delete({
-      lock_type_id: lockId,
+      lockTypeId,
     });
 
     return result.affected !== undefined && result.affected !== null && result.affected > 0;
   }
 
-  public async add(lock_type_id: number, str: string | null): Promise<any> {
+  public async add(lockTypeId: number, str: string | null): Promise<any> {
     const result: InsertResult = await this.locktypeRepo.insert({
-      lock_type_id, str,
+      lockTypeId, str,
     });
 
     return result.raw;
   }
 
-  public async updateById(lock_type_id: number, str?: string): Promise<any> {
+  public async updateById(lockTypeId: number, str?: string): Promise<any> {
     const result: UpdateResult = await this.locktypeRepo
       .createQueryBuilder()
       .update(LockType)
       .set(filterObjectUndefined({
         str,
       }))
-      .where('lock_type_id = :lock_type_id', { lock_type_id })
+      .where('lock_type_id = :lockTypeId', { lockTypeId })
       .execute();
 
     return result.raw;

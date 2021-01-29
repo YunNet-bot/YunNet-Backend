@@ -29,12 +29,12 @@ export class SwitchController extends Controller {
     @Body() form: Switch,
   ): Promise<any> {
     const {
-      account, ip, id, location, machine_type, password, port_description,
-      port_type, upper_port, upper_port_type, upper_switch, vlan,
+      account, ip, id, location, machineType, password, portDescription,
+      portType, upperPort, upperPortType, upperSwitch, vlan,
     } = form;
     return SwitchService.getInstance().add(
-      id, upper_switch, upper_port, upper_port_type, location,
-      account, password, vlan, machine_type, port_description, port_type, ip,
+      id, upperSwitch, upperPort, upperPortType, location,
+      account, password, vlan, machineType, portDescription, portType, ip,
     );
   }
 
@@ -44,12 +44,12 @@ export class SwitchController extends Controller {
       @Body() form: UpdateSwitchDTO,
   ): Promise<any> {
     const {
-      account, ip, location, machine_type, password, port_description,
-      port_type, upper_port, upper_port_type, upper_switch, vlan,
+      account, ip, location, machineType, password, portDescription,
+      portType, upperPort, upperPortType, upperSwitch, vlan,
     } = form;
     return SwitchService.getInstance().updateById(
-      id, upper_switch, upper_port, upper_port_type, location,
-      account, password, vlan, machine_type, port_description, port_type, ip,
+      id, upperSwitch, upperPort, upperPortType, location,
+      account, password, vlan, machineType, portDescription, portType, ip,
     );
   }
 }
