@@ -14,13 +14,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
        node-version: ${{ matrix.node-version }}
-    - name: Install dependencies
-      run: yarn
-    - name: Build
-      run: yarn build
     - name: Init docker with docker-compose
       run: docker-compose -f docker-compose.yml up -d
     - name: Docker status
       run: docker ps -a
+    - name: Install dependencies
+      run: yarn
+    - name: Build
+      run: yarn build:swagger
     - name: Test
-      run: yarn test
+      run: yarn test:coverage
