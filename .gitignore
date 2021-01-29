@@ -1,7 +1,8 @@
 node_modules/
 dist/
+.nyc_output/
+coverage/
 
-yarn.lock
 *.log
 *.sql
 routes.ts
