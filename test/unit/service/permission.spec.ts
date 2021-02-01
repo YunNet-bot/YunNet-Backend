@@ -1,4 +1,4 @@
-// test/integration/service/permission.spec.ts
+// test/unit/service/permission.spec.ts
 import { expect, use as chaiUse } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 

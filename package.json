@@ -22,9 +22,9 @@
     "test": "yarn test:unit && yarn test:integration",
     "build": "sh ./scripts/build.sh",
     "build:swagger": "sh ./scripts/build.sh swagger",
-    "serve": "yarn run build && node dist/server.js",
-    "serve:swagger": "yarn run build:swagger && node dist/server.js",
-    "serve:quick": "node dist/server.js"
+    "serve": "yarn run build && node dist/app.js",
+    "serve:swagger": "yarn run build:swagger && node dist/app.js",
+    "serve:quick": "node dist/app.js"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -38,6 +38,7 @@
     "@typescript-eslint/parser": "^4.12.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.3.0",
     "eslint": "^7.17.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-plugin-import": "^2.22.1",
