@@ -10,28 +10,28 @@ import { GroupUserService } from '@/service';
 @Tags('Group User')
 @Route('group_user')
 export class GroupUserController extends Controller {
-  @Get('{uid}')
+  @Get('uid/{uid}')
   public async getByUid(
     @Path('uid') uid: number,
   ): Promise<GroupUser> {
     return GroupUserService.getInstance().getByUid(uid);
   }
 
-  @Get('{gid}')
+  @Get('gid/{gid}')
   public async getByGid(
     @Path('gid') gid: number,
   ): Promise<GroupUser> {
     return GroupUserService.getInstance().getByGid(gid);
   }
 
-  @Delete('{uid}')
+  @Delete('uid/{uid}')
   public async deleteByUid(
     @Path('uid') uid: number,
   ): Promise<void> {
     GroupUserService.getInstance().deleteByUid(uid);
   }
 
-  @Delete('{gid}')
+  @Delete('gid/{gid}')
   public async deleteByGid(
     @Path('gid') gid: number,
   ): Promise<void> {
@@ -46,7 +46,7 @@ export class GroupUserController extends Controller {
     return GroupUserService.getInstance().add(uid, gid);
   }
 
-  @Patch('{uid}')
+  @Patch('uid/{uid}')
   public async updateByUid(
     @Path('uid') uid: number,
       @Body() form: UpdateGroupUserUidDTO,
@@ -55,7 +55,7 @@ export class GroupUserController extends Controller {
     return GroupUserService.getInstance().updateByUid(uid, gid);
   }
 
-  @Patch('{gid}')
+  @Patch('gid/{gid}')
   public async updateByGid(
     @Path('gid') gid: number,
       @Body() form: UpdateGroupUserGidDTO,

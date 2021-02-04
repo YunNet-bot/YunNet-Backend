@@ -10,28 +10,28 @@ import { GroupPermissionService } from '@/service';
 @Tags('Group Permission')
 @Route('group_permission')
 export class GroupPermissionController extends Controller {
-  @Get('{gid}')
+  @Get('gid/{gid}')
   public async getByGid(
     @Path('gid') gid: number,
   ): Promise<GroupPermission> {
     return GroupPermissionService.getInstance().getByGid(gid);
   }
 
-  @Get('{pid}')
+  @Get('pid/{pid}')
   public async getByPid(
     @Path('pid') pid: number,
   ): Promise<GroupPermission> {
     return GroupPermissionService.getInstance().getByPid(pid);
   }
 
-  @Delete('{gid}')
+  @Delete('gid/{gid}')
   public async deleteByGid(
     @Path('gid') gid: number,
   ): Promise<void> {
     GroupPermissionService.getInstance().deleteByGid(gid);
   }
 
-  @Delete('{pid}')
+  @Delete('pid/{pid}')
   public async deleteByPid(
     @Path('pid') pid: number,
   ): Promise<void> {
@@ -46,7 +46,7 @@ export class GroupPermissionController extends Controller {
     return GroupPermissionService.getInstance().add(gid, pid);
   }
 
-  @Patch('{gid}')
+  @Patch('gid/{gid}')
   public async updateByGid(
     @Path('gid') gid: number,
       @Body() form: UpdateGroupPermissionGidDTO,
@@ -55,7 +55,7 @@ export class GroupPermissionController extends Controller {
     return GroupPermissionService.getInstance().updateByGid(gid, pid);
   }
 
-  @Patch('{pid}')
+  @Patch('pid/{pid}')
   public async updateByPid(
     @Path('pid') pid: number,
       @Body() form: UpdateGroupPermissionPidDTO,
