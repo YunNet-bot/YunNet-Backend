@@ -1,6 +1,6 @@
 // scripts/typeorm.ts
 import 'module-alias/register';
-import { runMigrations } from '@/config';
+import { runMigrations, revertMigrations } from '@/config';
 
 const argv = require('minimist')(process.argv.slice(2));
 const verbose: string | undefined = argv.verbose || 2;
@@ -17,7 +17,7 @@ if (migrations !== undefined) {
     runMigrations(verbose);
   } else if (lowerCase === 'revert') {
     console.log(`Run migrations with: revert mode.`);
-    // revertMigrations(verbose);
+    revertMigrations(verbose);
   } else {
     console.error(`Unknown migration mode, should be 'run' or 'revert'.`);
     process.exit(0);
