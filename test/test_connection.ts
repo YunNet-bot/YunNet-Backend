@@ -1,40 +1,14 @@
 // test/connect.ts
-import { createConnection, Connection } from 'typeorm';
+import { createConnection, Connection, ConnectionOptions } from 'typeorm';
 
-// Entries
-import {
-  Announcement, BackupMac, Bed, GroupInherit, Group,
-  GroupManagedBy, GroupPermission, GroupUser, IpType,
-  IpTableTest, IpTable, LockType, Lock, Netflow, Permission,
-  Switch, Token, UserPermission, User, Variable,
-} from '@/entry';
-// Migrations
-import { Init1606331057077 } from '@/migration';
+import * as devConfig from '@/config/dev';
 
 export default class TestConnection {
   private conn!: Connection;
 
   async create(): Promise<void> {
-    this.conn = await createConnection({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'user',
-      password: '1234',
-      database: 'YunNet',
-      dropSchema: true,
-      entities: [
-        Announcement, BackupMac, Bed, GroupInherit, Group,
-        GroupManagedBy, GroupPermission, GroupUser, IpType,
-        IpTableTest, IpTable, LockType, Lock, Netflow, Permission,
-        Switch, Token, UserPermission, User, Variable,
-      ],
-      migrationsRun: true,
-      migrations: [Init1606331057077],
-      extra: {
-        charset: 'utf8_unicode_ci',
-      },
-    });
+    const cfg = Object.assign(devConfig.default, { logging: false });
+    this.conn = await createConnection(cfg as ConnectionOptions);
   }
 
   getConn(): Connection {
