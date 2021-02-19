@@ -1,19 +1,10 @@
 // src/app.ts
-import { createConnection } from 'typeorm';
+import { ConnectionOptions, createConnection } from 'typeorm';
 import express, { Express, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 
-// Entries
-import {
-  Announcement, BackupMac, Bed, GroupInherit, Group,
-  GroupManagedBy, GroupPermission, GroupUser, IpType,
-  IpTableTest, IpTable, LockType, Lock, Netflow, Permission,
-  Switch, Token, UserPermission, User, Variable,
-} from '@/entry';
-// Migrations
-import { Init1606331057077 } from '@/migration';
 // Services
 import {
   UserService, AnnouncementService, BackupMacService,
@@ -29,7 +20,7 @@ import { RegisterRoutes } from '@/routes';
 
 const app = express();
 
-export default function appInit(): Promise<Express> {
+export default function appInit(typeormConifg: ConnectionOptions): Promise<Express> {
   return new Promise(async (resolve) => {
     app.use(cors({
       origin: '*',
@@ -43,26 +34,7 @@ export default function appInit(): Promise<Express> {
     const swaggerHtml = swaggerUi.generateHTML(await import('./swagger.json'));
     app.use('/docs', swaggerUi.serve, (_: Request, res: Response) => res.send(swaggerHtml));
 
-    await createConnection({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'user',
-      password: '1234',
-      database: 'YunNet',
-      dropSchema: true,
-      entities: [
-        Announcement, BackupMac, Bed, GroupInherit, Group,
-        GroupManagedBy, GroupPermission, GroupUser, IpType,
-        IpTableTest, IpTable, LockType, Lock, Netflow, Permission,
-        Switch, Token, UserPermission, User, Variable,
-      ],
-      migrationsRun: true,
-      migrations: [Init1606331057077],
-      extra: {
-        charset: 'utf8_unicode_ci',
-      },
-    });
+    await createConnection(typeormConifg);
 
     UserService.init();
     AnnouncementService.init();

@@ -560,13 +560,26 @@ export class Init1606331057077 implements MigrationInterface {
   }
 
   private async dropTables(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('variable', true);
-    await queryRunner.dropTable('user', true);
-    await queryRunner.dropTable('switch', true);
-    await queryRunner.dropTable('lock', true);
-    await queryRunner.dropTable('iptable', true);
-    await queryRunner.dropTable('group_user', true);
-    await queryRunner.dropTable('group', true);
-    await queryRunner.dropTable('bed', true);
+    await queryRunner.dropTable('announcement', true, true, true);
+    await queryRunner.dropTable('backup_mac', true, true, true);
+    await queryRunner.dropTable('bed', true, true, true);
+    await queryRunner.dropTable('group_inherit', true, true, true);
+    await queryRunner.dropTable('group_managed_by', true, true, true);
+    await queryRunner.dropTable('group_permission', true, true, true);
+    await queryRunner.dropTable('group_user', true, true, true);
+    await queryRunner.dropTable('iptable', true, true, true);
+    await queryRunner.dropTable('iptable_test', true, true, true);
+    await queryRunner.dropTable('ip_type', true, true, true);
+    await queryRunner.dropTable('group', true, true, true);
+    await queryRunner.dropTable('lock', true, true, true);
+    await queryRunner.dropTable('lock_type', true, true, true);
+    await queryRunner.dropTable('netflow', true, true, true);
+    await queryRunner.dropTable('switch', true, true, true);
+    await queryRunner.dropTable('temptable', true, true, true);
+    await queryRunner.dropTable('token', true, true, true);
+    await queryRunner.dropTable('user_permission', true, true, true);
+    await queryRunner.dropTable('user', true, true, true);
+    await queryRunner.dropTable('permission', true, true, true);
+    await queryRunner.dropTable('variable', true, true, true);
   }
 }
