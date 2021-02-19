@@ -6,6 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [14.x, 15.x]
     steps:
@@ -22,5 +23,30 @@ jobs:
       run: yarn
     - name: Build
       run: yarn build:swagger
-    - name: Test
-      run: yarn test:coverage
+    - name: Unit Test
+      run: yarn test:unit:coverage
+    - name: Unit Test Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./coverage/unit/lcov.info
+        flag-name: Unit(Node-${{ matrix.node-version }})
+        parallel: true
+    - name: Integration Test
+      run: yarn test:integration:coverage
+    - name: Integration Test Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./coverage/integration/lcov.info
+        flag-name: Integration(Node-${{ matrix.node-version }})
+        parallel: true
+  finish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true
