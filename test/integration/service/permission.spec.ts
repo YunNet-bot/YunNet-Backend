@@ -6,6 +6,7 @@ import { Permission } from '@/entry';
 import { PermissionService } from '@/service';
 
 import TestConnection from '../../test_connection';
+import { AddResultDTO } from '@/entry/dto';
 
 chaiUse(chaiAsPromised);
 const conn = new TestConnection();
@@ -19,7 +20,8 @@ describe('Permission Service', async () => {
   const firstPermission = new Permission({ pid: 1, str: 'test permission str' });
   describe('method add', () => {
     it('should add a new first permission.', async () => {
-      const pid: number = await PermissionService.getInstance().add(firstPermission.str);
+      const addResult: AddResultDTO = await PermissionService.getInstance().add(firstPermission.str);
+      const pid: number = addResult['id'][0];
 
       const result = conn.getConn()
         .getRepository(Permission)
@@ -50,7 +52,8 @@ describe('Permission Service', async () => {
 
   describe('method deleteByPid', () => {
     it('should delete a permission by pid', async () => {
-      const pidForDelete = await PermissionService.getInstance().add('permission to be delete');
+      const addResult = await PermissionService.getInstance().add('permission to be delete');
+      const pidForDelete = addResult['id'][0];
       const result = conn.getConn()
         .getRepository(Permission)
         .createQueryBuilder('p')
