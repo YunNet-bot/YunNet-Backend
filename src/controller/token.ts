@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { Token } from '@/entry';
-import { UpdateTokenDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateResultDTO,
+  UpdateTokenDTO,
+} from '@/entry/dto';
 import { TokenService } from '@/service';
 
 @Tags('Token')
@@ -20,14 +23,14 @@ export class TokenController extends Controller {
   @Delete('{uid}')
   public async deleteByUid(
     @Path('uid') uid: number,
-  ): Promise<void> {
-    TokenService.getInstance().deleteByUid(uid);
+  ): Promise<DeleteResultDTO> {
+    return TokenService.getInstance().deleteByUid(uid);
   }
 
   @Post()
   public async add(
     @Body() form: Token,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const { uid, token, timestamp } = form;
     return TokenService.getInstance().add(uid, token, timestamp);
   }
@@ -36,7 +39,7 @@ export class TokenController extends Controller {
   public async updateByUid(
     @Path('uid') uid: number,
       @Body() form: UpdateTokenDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { token, timestamp } = form;
     return TokenService.getInstance().updateByUid(uid, token, timestamp);
   }

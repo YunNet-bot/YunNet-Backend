@@ -5,7 +5,10 @@ import {
 
 import { Bed } from '@/entry';
 import { BedService } from '@/service';
-import { UpdateBedDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateBedDTO,
+  UpdateResultDTO,
+} from '@/entry/dto';
 
 @Tags('Bed')
 @Route('bed')
@@ -20,14 +23,14 @@ export class BedController extends Controller {
   @Delete('{bed}')
   public async deleteByBed(
     @Path('bed') bed: string,
-  ): Promise<void> {
-    BedService.getInstance().deleteByBed(bed);
+  ): Promise<DeleteResultDTO> {
+    return BedService.getInstance().deleteByBed(bed);
   }
 
   @Post()
   public async add(
     @Body() form: Bed,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const {
       bed, ip, portal, type,
     } = form;
@@ -38,7 +41,7 @@ export class BedController extends Controller {
   public async updateByBed(
     @Path('bed') bed: string,
       @Body() form: UpdateBedDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { ip, portal, type } = form;
     return BedService.getInstance().updateByBed(bed, type, portal, ip);
   }

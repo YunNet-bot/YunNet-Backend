@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { GroupUser } from '@/entry';
-import { UpdateGroupUserGidDTO, UpdateGroupUserUidDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateGroupUserGidDTO,
+  UpdateGroupUserUidDTO, UpdateResultDTO,
+} from '@/entry/dto';
 import { GroupUserService } from '@/service';
 
 @Tags('Group User')
@@ -27,21 +30,21 @@ export class GroupUserController extends Controller {
   @Delete('uid/{uid}')
   public async deleteByUid(
     @Path('uid') uid: number,
-  ): Promise<void> {
-    GroupUserService.getInstance().deleteByUid(uid);
+  ): Promise<DeleteResultDTO> {
+    return GroupUserService.getInstance().deleteByUid(uid);
   }
 
   @Delete('gid/{gid}')
   public async deleteByGid(
     @Path('gid') gid: number,
-  ): Promise<void> {
-    GroupUserService.getInstance().deleteByGid(gid);
+  ): Promise<DeleteResultDTO> {
+    return GroupUserService.getInstance().deleteByGid(gid);
   }
 
   @Post()
   public async add(
     @Body() form: GroupUser,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const { gid, uid } = form;
     return GroupUserService.getInstance().add(uid, gid);
   }
@@ -50,7 +53,7 @@ export class GroupUserController extends Controller {
   public async updateByUid(
     @Path('uid') uid: number,
       @Body() form: UpdateGroupUserUidDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { gid } = form;
     return GroupUserService.getInstance().updateByUid(uid, gid);
   }
@@ -59,7 +62,7 @@ export class GroupUserController extends Controller {
   public async updateByGid(
     @Path('gid') gid: number,
       @Body() form: UpdateGroupUserGidDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { uid } = form;
     return GroupUserService.getInstance().updateByGid(uid, gid);
   }

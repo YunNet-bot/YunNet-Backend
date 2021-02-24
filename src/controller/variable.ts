@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { Variable } from '@/entry';
-import { UpdateVariableDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateResultDTO,
+  UpdateVariableDTO,
+} from '@/entry/dto';
 import { VariableService } from '@/service/variable';
 
 @Tags('Variable')
@@ -20,14 +23,14 @@ export class VariableController extends Controller {
   @Delete('{name}')
   public async deleteByName(
     @Path('name') name: string,
-  ): Promise<void> {
-    VariableService.getInstace().deleteByName(name);
+  ): Promise<DeleteResultDTO> {
+    return VariableService.getInstace().deleteByName(name);
   }
 
   @Post()
   public async add(
     @Body() form: Variable,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const { name, type, value } = form;
     return VariableService.getInstace().add(name, type, value);
   }
@@ -36,7 +39,7 @@ export class VariableController extends Controller {
   public async updateByName(
     @Path('name') name: string,
       @Body() form: UpdateVariableDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { type, value } = form;
     return VariableService.getInstace().updateByName(name, type, value);
   }

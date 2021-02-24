@@ -5,6 +5,10 @@ import {
 
 import { Announcement } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateResultDTO,
+  filterAddResult, filterDeleteResult, filterUpdateResult,
+} from '@/entry/dto';
 
 export class AnnouncementService {
   private static INSTANCE: AnnouncementService;
@@ -36,25 +40,25 @@ export class AnnouncementService {
     return announcement;
   }
 
-  public async deleteById(announcementId: number): Promise<boolean> {
+  public async deleteById(announcementId: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.announcementRepo.delete({
       announcement_id: announcementId,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(title: string, content: string, uid: number): Promise<number> {
+  public async add(title: string, content: string, uid: number): Promise<AddResultDTO> {
     const result: InsertResult = await this.announcementRepo.insert({
       title, content, uid,
     });
 
-    return result.raw.insertId;
+    return filterAddResult(result);
   }
 
   public async updateById(
     aid: number, title?: string, content?: string, uid?: number,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.announcementRepo
       .createQueryBuilder()
       .update(Announcement)
@@ -64,6 +68,6 @@ export class AnnouncementService {
       .where('announcement_id = :aid', { aid })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

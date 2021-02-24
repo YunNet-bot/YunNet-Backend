@@ -5,6 +5,10 @@ import {
 
 import { GroupPermission } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class GroupPermissionService {
   private static INSTANCE: GroupPermissionService;
@@ -47,31 +51,31 @@ export class GroupPermissionService {
     return grouppermission;
   }
 
-  public async deleteByGid(gid: number): Promise<boolean> {
+  public async deleteByGid(gid: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.grouppermissionRepo.delete({
       gid,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async deleteByPid(pid: number): Promise<boolean> {
+  public async deleteByPid(pid: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.grouppermissionRepo.delete({
       pid,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(gid: number, pid: number): Promise<any> {
+  public async add(gid: number, pid: number): Promise<AddResultDTO> {
     const result: InsertResult = await this.grouppermissionRepo.insert({
       gid, pid,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
-  public async updateByGid(gid: number, pid: number): Promise<any> {
+  public async updateByGid(gid: number, pid: number): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.grouppermissionRepo
       .createQueryBuilder()
       .update(GroupPermission)
@@ -81,10 +85,10 @@ export class GroupPermissionService {
       .where('gid = :gid', { gid })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 
-  public async updateByPid(gid: number, pid: number): Promise<any> {
+  public async updateByPid(gid: number, pid: number): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.grouppermissionRepo
       .createQueryBuilder()
       .update(GroupPermission)
@@ -94,6 +98,6 @@ export class GroupPermissionService {
       .where('pid = :pid', { pid })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

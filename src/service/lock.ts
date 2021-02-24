@@ -5,6 +5,10 @@ import {
 
 import { Lock } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class LockService {
   private static INSTANCE: LockService;
@@ -36,30 +40,30 @@ export class LockService {
     return lock;
   }
 
-  public async deleteById(lockId: number): Promise<boolean> {
+  public async deleteById(lockId: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.lockRepo.delete({
       lock_id: lockId,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
   public async add(
     lock_type_id: number, ip: string, uid: number, gid: number, lock_date: Date,
     unlock_date: Date, title: string, description: string, lock_by_user_id: number,
-  ): Promise<number> {
+  ): Promise<AddResultDTO> {
     const result: InsertResult = await this.lockRepo.insert({
       lock_type_id, ip, uid, gid, lock_date, unlock_date, title, description, lock_by_user_id,
     });
 
-    return result.raw.insertId;
+    return filterAddResult(result);
   }
 
   public async updateById(
     lock_id: number, lock_type_id?: number, ip?: string, uid?: number, gid?: number,
     lock_date?: Date, unlock_date?: Date, title?: string, description?: string,
     lock_by_user_id?: number,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.lockRepo
       .createQueryBuilder()
       .update(Lock)
@@ -69,6 +73,6 @@ export class LockService {
       .where('lock_id = :lock_id', { lock_id })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

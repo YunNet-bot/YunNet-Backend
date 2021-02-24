@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { Switch } from '@/entry';
-import { UpdateSwitchDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateResultDTO,
+  UpdateSwitchDTO,
+} from '@/entry/dto';
 import { SwitchService } from '@/service';
 
 @Tags('Switch')
@@ -20,14 +23,14 @@ export class SwitchController extends Controller {
   @Delete('{id}')
   public async deleteById(
     @Path('id') id: number,
-  ): Promise<void> {
-    SwitchService.getInstance().deleteById(id);
+  ): Promise<DeleteResultDTO> {
+    return SwitchService.getInstance().deleteById(id);
   }
 
   @Post()
   public async add(
     @Body() form: Switch,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const {
       account, ip, id, location, machine_type, password, port_description,
       port_type, upper_port, upper_port_type, upper_switch, vlan,
@@ -42,7 +45,7 @@ export class SwitchController extends Controller {
   public async updateById(
     @Path('id') id: number,
       @Body() form: UpdateSwitchDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const {
       account, ip, location, machine_type, password, port_description,
       port_type, upper_port, upper_port_type, upper_switch, vlan,

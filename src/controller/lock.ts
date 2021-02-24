@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { Lock } from '@/entry';
-import { LockDTO, UpdateLockDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, LockDTO,
+  UpdateLockDTO, UpdateResultDTO,
+} from '@/entry/dto';
 import { LockService } from '@/service';
 
 @Tags('Lock')
@@ -20,14 +23,14 @@ export class LockController extends Controller {
   @Delete('{id}')
   public async deleteById(
     @Path('id') id: number,
-  ): Promise<void> {
-    LockService.getInstance().deleteById(id);
+  ): Promise<DeleteResultDTO> {
+    return LockService.getInstance().deleteById(id);
   }
 
   @Post()
   public async add(
     @Body() form: LockDTO,
-  ): Promise<number> {
+  ): Promise<AddResultDTO> {
     const {
       description, gid, ip, lock_by_user_id, lock_date, lock_type_id, title, uid, unlock_date,
     } = form;
@@ -41,7 +44,7 @@ export class LockController extends Controller {
   public async updateById(
     @Path('id') lock_id: number,
       @Body() form: UpdateLockDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const {
       description, gid, ip, lock_by_user_id, lock_date, lock_type_id, title, uid, unlock_date,
     } = form;

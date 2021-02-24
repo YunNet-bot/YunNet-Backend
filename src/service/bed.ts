@@ -5,6 +5,10 @@ import {
 
 import { Bed } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class BedService {
   private static INSTANCE: BedService;
@@ -36,23 +40,27 @@ export class BedService {
     return b;
   }
 
-  public async deleteByBed(bed: string): Promise<boolean> {
+  public async deleteByBed(bed: string): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.bedRepo.delete({
       bed,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(bed: string, type: number, portal: string | null, ip: string): Promise<any> {
+  public async add(
+    bed: string, type: number, portal: string | null, ip: string,
+  ): Promise<AddResultDTO> {
     const result: InsertResult = await this.bedRepo.insert({
       bed, type, portal, ip,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
-  public async updateByBed(bed: string, type?: number, portal?: string, ip?: string): Promise<any> {
+  public async updateByBed(
+    bed: string, type?: number, portal?: string, ip?: string,
+  ): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.bedRepo
       .createQueryBuilder()
       .update(Bed)
@@ -62,6 +70,6 @@ export class BedService {
       .where('bed = :bed', { bed })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

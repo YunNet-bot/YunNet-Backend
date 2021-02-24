@@ -5,6 +5,10 @@ import {
 
 import { LockType } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class LockTypeService {
   private static INSTANCE: LockTypeService;
@@ -36,23 +40,23 @@ export class LockTypeService {
     return locktype;
   }
 
-  public async deleteById(lockId: number): Promise<boolean> {
+  public async deleteById(lockId: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.locktypeRepo.delete({
       lock_type_id: lockId,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(lock_type_id: number, str: string | null): Promise<any> {
+  public async add(lock_type_id: number, str: string | null): Promise<AddResultDTO> {
     const result: InsertResult = await this.locktypeRepo.insert({
       lock_type_id, str,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
-  public async updateById(lock_type_id: number, str?: string): Promise<any> {
+  public async updateById(lock_type_id: number, str?: string): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.locktypeRepo
       .createQueryBuilder()
       .update(LockType)
@@ -62,6 +66,6 @@ export class LockTypeService {
       .where('lock_type_id = :lock_type_id', { lock_type_id })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

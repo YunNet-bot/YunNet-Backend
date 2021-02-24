@@ -5,7 +5,10 @@ import {
 
 import { BackupMac } from '@/entry';
 import { BackupMacService } from '@/service';
-import { UpdateBackupMacDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateBackupMacDTO,
+  UpdateResultDTO,
+} from '@/entry/dto';
 
 @Tags('Backup Mac')
 @Route('backup_mac')
@@ -20,14 +23,14 @@ export class BackupMacController extends Controller {
   @Delete('{backupmac_ip}')
   public async deleteByIp(
     @Path('backupmac_ip') backupmacIp: string,
-  ): Promise<void> {
-    BackupMacService.getInstance().deleteByIp(backupmacIp);
+  ): Promise<DeleteResultDTO> {
+    return BackupMacService.getInstance().deleteByIp(backupmacIp);
   }
 
   @Post()
   public async add(
     @Body() form: BackupMac,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const { ip, mac } = form;
     return BackupMacService.getInstance().add(ip, mac);
   }
@@ -36,7 +39,7 @@ export class BackupMacController extends Controller {
   public async updateByIp(
     @Path('backupmac_ip') ip: string,
       @Body() form: UpdateBackupMacDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { mac } = form;
     return BackupMacService.getInstance().updateByIp(ip, mac);
   }

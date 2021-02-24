@@ -5,6 +5,10 @@ import {
 
 import { GroupUser } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class GroupUserService {
   private static INSTANCE: GroupUserService;
@@ -49,30 +53,30 @@ export class GroupUserService {
     return groupuser;
   }
 
-  public async deleteByUid(uid: number): Promise<boolean> {
+  public async deleteByUid(uid: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.groupuserRepo.delete({
       uid,
     });
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async deleteByGid(gid: number): Promise<boolean> {
+  public async deleteByGid(gid: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.groupuserRepo.delete({
       gid,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(uid: number, gid: number): Promise<any> {
+  public async add(uid: number, gid: number): Promise<AddResultDTO> {
     const result: InsertResult = await this.groupuserRepo.insert({
       uid, gid,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
-  public async updateByUid(uid: number, gid: number): Promise<any> {
+  public async updateByUid(uid: number, gid: number): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.groupuserRepo
       .createQueryBuilder()
       .update(GroupUser)
@@ -82,10 +86,10 @@ export class GroupUserService {
       .where('uid = :uid', { uid })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 
-  public async updateByGid(uid: number, gid: number): Promise<any> {
+  public async updateByGid(uid: number, gid: number): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.groupuserRepo
       .createQueryBuilder()
       .update(GroupUser)
@@ -95,6 +99,6 @@ export class GroupUserService {
       .where('gid = :gid', { gid })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

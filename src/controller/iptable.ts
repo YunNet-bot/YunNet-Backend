@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { IpTable } from '@/entry';
-import { UpdateIptableDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateIptableDTO,
+  UpdateResultDTO,
+} from '@/entry/dto';
 import { IpTableService } from '@/service';
 
 @Tags('IpTable')
@@ -20,14 +23,14 @@ export class IpTableController extends Controller {
   @Delete('{ip}')
   public async deleteByIp(
     @Path('ip') ip: string,
-  ): Promise<void> {
-    IpTableService.getInstance().deleteByIp(ip);
+  ): Promise<DeleteResultDTO> {
+    return IpTableService.getInstance().deleteByIp(ip);
   }
 
   @Post()
   public async add(
     @Body() form: IpTable,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const {
       description, gid, ip, ip_type_id, is_unlimited,
       is_updated, lock_id, mac, port, port_type, switch_id, uid,
@@ -42,7 +45,7 @@ export class IpTableController extends Controller {
   public async updateByIp(
     @Path('ip') ip: string,
       @Body() form: UpdateIptableDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const {
       description, gid, ip_type_id, is_unlimited,
       is_updated, lock_id, mac, port, port_type, switch_id, uid,

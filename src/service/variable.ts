@@ -5,6 +5,10 @@ import {
 
 import { Variable } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class VariableService {
   private static INSTANCE: VariableService;
@@ -37,23 +41,23 @@ export class VariableService {
     return variable;
   }
 
-  public async deleteByName(name: string): Promise<boolean> {
+  public async deleteByName(name: string): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.variableRepo.delete({
       name,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(name: string, type: string, value: string | null): Promise<any> {
+  public async add(name: string, type: string, value: string | null): Promise<AddResultDTO> {
     const result: InsertResult = await this.variableRepo.insert({
       name, type, value,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
-  public async updateByName(name: string, type?: string, value?: string): Promise<any> {
+  public async updateByName(name: string, type?: string, value?: string): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.variableRepo
       .createQueryBuilder()
       .update(Variable)
@@ -63,6 +67,6 @@ export class VariableService {
       .where('name = :name', { name })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { IpType } from '@/entry';
-import { UpdateIpTypeDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateIpTypeDTO,
+  UpdateResultDTO,
+} from '@/entry/dto';
 import { IpTypeService } from '@/service';
 
 @Tags('Ip Type')
@@ -20,14 +23,14 @@ export class IpTypeController extends Controller {
   @Delete('{ip_type_id}')
   public async deleteById(
     @Path('ip_type_id') iptypeId: number,
-  ): Promise<void> {
-    IpTypeService.getInstance().deleteById(iptypeId);
+  ): Promise<DeleteResultDTO> {
+    return IpTypeService.getInstance().deleteById(iptypeId);
   }
 
   @Post()
   public async add(
     @Body() form: IpType,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const { ip_type_id, type } = form;
     return IpTypeService.getInstance().add(ip_type_id, type);
   }
@@ -36,7 +39,7 @@ export class IpTypeController extends Controller {
   public async updateById(
     @Path('ip_type_id') ip_type_id: number,
       @Body() form: UpdateIpTypeDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { type } = form;
     return IpTypeService.getInstance().updateById(ip_type_id, type);
   }

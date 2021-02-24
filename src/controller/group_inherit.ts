@@ -5,7 +5,10 @@ import {
 
 import { GroupInherit } from '@/entry';
 import { GroupInheritService } from '@/service';
-import { UpdateGroupInheritGidDTO, UpdateGroupInheritParentGidDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateGroupInheritGidDTO,
+  UpdateGroupInheritParentGidDTO, UpdateResultDTO,
+} from '@/entry/dto';
 
 @Tags('Group Inherit')
 @Route('group_inherit')
@@ -27,21 +30,21 @@ export class GroupInheritController extends Controller {
   @Delete('gid/{gid}')
   public async deleteByGid(
     @Path('gid') gid: number,
-  ): Promise<void> {
-    GroupInheritService.getInstance().deleteByGid(gid);
+  ): Promise<DeleteResultDTO> {
+    return GroupInheritService.getInstance().deleteByGid(gid);
   }
 
   @Delete('parent_gid/{parent_gid}')
   public async deleteByParentGid(
     @Path('parent_gid') parent_gid: number,
-  ): Promise<void> {
-    GroupInheritService.getInstance().deleteByParentGid(parent_gid);
+  ): Promise<DeleteResultDTO> {
+    return GroupInheritService.getInstance().deleteByParentGid(parent_gid);
   }
 
   @Post()
   public async add(
     @Body() form: GroupInherit,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const { gid, parent_gid } = form;
     return GroupInheritService.getInstance().add(gid, parent_gid);
   }
@@ -50,7 +53,7 @@ export class GroupInheritController extends Controller {
   public async updateByGid(
     @Path('gid') gid: number,
       @Body() form: UpdateGroupInheritGidDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { parent_gid } = form;
     return GroupInheritService.getInstance().updateByGid(gid, parent_gid);
   }
@@ -59,7 +62,7 @@ export class GroupInheritController extends Controller {
   public async updateByParentGid(
     @Path('parent_gid') parent_gid: number,
       @Body() form: UpdateGroupInheritParentGidDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { gid } = form;
     return GroupInheritService.getInstance().updateByParentGid(gid, parent_gid);
   }
