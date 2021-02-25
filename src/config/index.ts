@@ -16,9 +16,11 @@ function verboseParse(verbose: number): boolean | ['schema'] | 'all' {
 }
 
 export async function runMigrations(verbose: number): Promise<void> {
-  const config: any = process.env.MODE === 'production' ? prodConfig : devConfig;
-  config.default.logging = verboseParse(verbose);
-  const conn: Connection = await createConnection(config.default as ConnectionOptions);
+  const config: ConnectionOptions = Object.assign(
+    process.env.MODE === 'production' ? prodConfig.default : devConfig.default,
+    { logging: verboseParse(verbose) },
+  );
+  const conn: Connection = await createConnection(config);
 
   await conn.runMigrations();
 
@@ -26,9 +28,11 @@ export async function runMigrations(verbose: number): Promise<void> {
 }
 
 export async function revertMigrations(verbose: number): Promise<void> {
-  const config: any = process.env.MODE === 'production' ? prodConfig : devConfig;
-  config.default.logging = verboseParse(verbose);
-  const conn: Connection = await createConnection(config.default as ConnectionOptions);
+  const config: ConnectionOptions = Object.assign(
+    process.env.MODE === 'production' ? prodConfig.default : devConfig.default,
+    { logging: verboseParse(verbose) },
+  );
+  const conn: Connection = await createConnection(config);
 
   conn.migrations.forEach(async () => {
     await conn.undoLastMigration();
