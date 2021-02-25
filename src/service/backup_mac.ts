@@ -5,6 +5,10 @@ import {
 
 import { BackupMac } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class BackupMacService {
   private static INSTANCE: BackupMacService;
@@ -36,23 +40,23 @@ export class BackupMacService {
     return backupmac;
   }
 
-  public async deleteByIp(backupmacIp: string): Promise<boolean> {
+  public async deleteByIp(backupmacIp: string): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.backupmacRepo.delete({
       ip: backupmacIp,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(ip: string, mac: string | null): Promise<any> {
+  public async add(ip: string, mac: string | null): Promise<AddResultDTO> {
     const result: InsertResult = await this.backupmacRepo.insert({
       ip, mac,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
-  public async updateByIp(ip: string, mac?: string): Promise<any> {
+  public async updateByIp(ip: string, mac?: string): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.backupmacRepo
       .createQueryBuilder()
       .update(BackupMac)
@@ -62,6 +66,6 @@ export class BackupMacService {
       .where('ip = :ip', { ip })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

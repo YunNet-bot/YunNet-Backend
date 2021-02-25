@@ -5,7 +5,10 @@ import {
 
 import { Announcement } from '@/entry';
 import { AnnouncementService } from '@/service';
-import { AnnouncementDTO, UpdateAnnouncementDTO } from '@/entry/dto';
+import {
+  AddResultDTO, AnnouncementDTO, DeleteResultDTO,
+  UpdateAnnouncementDTO, UpdateResultDTO,
+} from '@/entry/dto';
 
 @Tags('Announcement')
 @Route('announcements')
@@ -20,14 +23,14 @@ export class AnnouncementController extends Controller {
   @Delete('{announcement_id}')
   public async deleteById(
     @Path('announcement_id') announcementId: number,
-  ): Promise<void> {
-    AnnouncementService.getInstance().deleteById(announcementId);
+  ): Promise<DeleteResultDTO> {
+    return AnnouncementService.getInstance().deleteById(announcementId);
   }
 
   @Post()
   public async add(
     @Body() form: AnnouncementDTO,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const { title, content, uid } = form;
     return AnnouncementService.getInstance().add(title, content, uid);
   }
@@ -35,8 +38,8 @@ export class AnnouncementController extends Controller {
   @Patch('{announcement_id}')
   public async updateById(
     @Path('announcement_id') aid: number,
-    @Body() form: UpdateAnnouncementDTO,
-  ): Promise<number> {
+      @Body() form: UpdateAnnouncementDTO,
+  ): Promise<UpdateResultDTO> {
     const { title, content, uid } = form;
     return AnnouncementService.getInstance().updateById(aid, title, content, uid);
   }

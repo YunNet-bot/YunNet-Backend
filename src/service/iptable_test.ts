@@ -5,6 +5,10 @@ import {
 
 import { IpTableTest } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class IpTableTestService {
   private static INSTANCE: IpTableTestService;
@@ -36,19 +40,19 @@ export class IpTableTestService {
     return iptabletest;
   }
 
-  public async deleteByIp(ip: string): Promise<boolean> {
+  public async deleteByIp(ip: string): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.iptabletestRepo.delete({
       ip,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
   public async add(
     ip: string, ip_type_id: number | null, is_unlimited: number, switch_id: number | null,
     port: number, port_type: number, mac: string | null, is_updated: number, uid: number,
     gid: number, description: string, lock_id: number | null,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const result: InsertResult = await this.iptabletestRepo.insert({
       ip,
       ip_type_id,
@@ -64,14 +68,14 @@ export class IpTableTestService {
       lock_id,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
   public async updateByIp(
     ip: string, ip_type_id?: number, is_unlimited?: number, switch_id?: number,
     port?: number, port_type?: number, mac?: string, is_updated?: number, uid?: number,
     gid?: number, description?: string, lock_id?: number,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.iptabletestRepo
       .createQueryBuilder()
       .update(IpTableTest)
@@ -91,6 +95,6 @@ export class IpTableTestService {
       .where('ip = :ip', { ip })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

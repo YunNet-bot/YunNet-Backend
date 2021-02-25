@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { Group } from '@/entry';
-import { GroupDTO, UpdateGroupDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, GroupDTO,
+  UpdateGroupDTO, UpdateResultDTO,
+} from '@/entry/dto';
 import { GroupService } from '@/service';
 
 @Tags('Group')
@@ -20,14 +23,14 @@ export class GroupController extends Controller {
   @Delete('{gid}')
   public async deleteByGid(
     @Path('gid') gid: number,
-  ): Promise<void> {
-    GroupService.getInstance().deleteByGid(gid);
+  ): Promise<DeleteResultDTO> {
+    return GroupService.getInstance().deleteByGid(gid);
   }
 
   @Post()
   public async add(
     @Body() form: GroupDTO,
-  ): Promise<number> {
+  ): Promise<AddResultDTO> {
     const { name, description } = form;
     return GroupService.getInstance().add(name, description);
   }
@@ -36,7 +39,7 @@ export class GroupController extends Controller {
   public async updateByGid(
     @Path('gid') gid: number,
       @Body() form: UpdateGroupDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { name, description } = form;
     return GroupService.getInstance().updateByGid(gid, name, description);
   }

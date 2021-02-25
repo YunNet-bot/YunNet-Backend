@@ -5,6 +5,10 @@ import {
 
 import { GroupManagedBy } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class GroupManagedByService {
   private static INSTANCE: GroupManagedByService;
@@ -36,23 +40,23 @@ export class GroupManagedByService {
     return groupmanagedby;
   }
 
-  public async deleteByGid(gid: number): Promise<boolean> {
+  public async deleteByGid(gid: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.groupmanagedbyRepo.delete({
       gid,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(gid: number, parent_gid: number): Promise<any> {
+  public async add(gid: number, parent_gid: number): Promise<AddResultDTO> {
     const result: InsertResult = await this.groupmanagedbyRepo.insert({
       gid, parent_gid,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
-  public async updateByGid(gid: number, parent_gid: number): Promise<any> {
+  public async updateByGid(gid: number, parent_gid: number): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.groupmanagedbyRepo
       .createQueryBuilder()
       .update(GroupManagedBy)
@@ -62,6 +66,6 @@ export class GroupManagedByService {
       .where('gid = :gid', { gid })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

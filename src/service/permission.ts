@@ -5,6 +5,10 @@ import {
 
 import { Permission } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class PermissionService {
   private static INSTANCE: PermissionService;
@@ -37,23 +41,23 @@ export class PermissionService {
     return permission;
   }
 
-  public async deleteByPid(pid: number): Promise<boolean> {
+  public async deleteByPid(pid: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.permissionRepo.delete({
       pid,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(str: string): Promise<number> {
+  public async add(str: string): Promise<AddResultDTO> {
     const result: InsertResult = await this.permissionRepo.insert({
       str,
     });
 
-    return result.raw.insertId;
+    return filterAddResult(result);
   }
 
-  public async updateByPid(pid: number, str: string): Promise<any> {
+  public async updateByPid(pid: number, str: string): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.permissionRepo
       .createQueryBuilder()
       .update(Permission)
@@ -63,6 +67,6 @@ export class PermissionService {
       .where('pid = :pid', { pid })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

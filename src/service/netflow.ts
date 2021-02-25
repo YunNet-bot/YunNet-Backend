@@ -5,6 +5,10 @@ import {
 
 import { Netflow } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class NetflowService {
   private static INSTANCE: NetflowService;
@@ -36,29 +40,29 @@ export class NetflowService {
     return netflow;
   }
 
-  public async deleteByIp(ip: number): Promise<boolean> {
+  public async deleteByIp(ip: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.netflowRepo.delete({
       ip,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
   public async add(
     ip: number, wan_upload: number, wan_download: number,
     lan_upload: number, lan_download: number,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const result: InsertResult = await this.netflowRepo.insert({
       ip, wan_upload, wan_download, lan_upload, lan_download,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
   public async updateByIp(
     ip: number, wan_upload?: number, wan_download?: number,
     lan_upload?: number, lan_download?: number,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.netflowRepo
       .createQueryBuilder()
       .update(Netflow)
@@ -68,6 +72,6 @@ export class NetflowService {
       .where('ip = :ip', { ip })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

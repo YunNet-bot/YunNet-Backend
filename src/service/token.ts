@@ -5,6 +5,10 @@ import {
 
 import { Token } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class TokenService {
   private static INSTANCE: TokenService;
@@ -36,23 +40,25 @@ export class TokenService {
     return token;
   }
 
-  public async deleteByUid(uid: number): Promise<boolean> {
+  public async deleteByUid(uid: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.tokenRepo.delete({
       uid,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(uid: number, token: string | null, timestamp: Date): Promise<any> {
+  public async add(uid: number, token: string | null, timestamp: Date): Promise<AddResultDTO> {
     const result: InsertResult = await this.tokenRepo.insert({
       uid, token, timestamp,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
-  public async updateByUid(uid: number, token?: string, timestamp?: Date): Promise<any> {
+  public async updateByUid(
+    uid: number, token?: string, timestamp?: Date,
+  ): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.tokenRepo
       .createQueryBuilder()
       .update(Token)
@@ -62,6 +68,6 @@ export class TokenService {
       .where('uid = :uid', { uid })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { Netflow } from '@/entry';
-import { UpdateNetflowDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateNetflowDTO,
+  UpdateResultDTO,
+} from '@/entry/dto';
 import { NetflowService } from '@/service';
 
 @Tags('Netflow')
@@ -20,14 +23,14 @@ export class NetflowController extends Controller {
   @Delete('{ip}')
   public async deleteByIp(
     @Path('ip') ip: number,
-  ): Promise<void> {
-    NetflowService.getInstance().deleteByIp(ip);
+  ): Promise<DeleteResultDTO> {
+    return NetflowService.getInstance().deleteByIp(ip);
   }
 
   @Post()
   public async add(
     @Body() form: Netflow,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const {
       ip, lan_download, lan_upload, wan_download, wan_upload,
     } = form;
@@ -38,7 +41,7 @@ export class NetflowController extends Controller {
   public async updateByIp(
     @Path('ip') ip: number,
       @Body() form: UpdateNetflowDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const {
       lan_download, lan_upload, wan_download, wan_upload,
     } = form;

@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { GroupPermission } from '@/entry';
-import { UpdateGroupPermissionGidDTO, UpdateGroupPermissionPidDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, UpdateGroupPermissionGidDTO,
+  UpdateGroupPermissionPidDTO, UpdateResultDTO,
+} from '@/entry/dto';
 import { GroupPermissionService } from '@/service';
 
 @Tags('Group Permission')
@@ -27,21 +30,21 @@ export class GroupPermissionController extends Controller {
   @Delete('gid/{gid}')
   public async deleteByGid(
     @Path('gid') gid: number,
-  ): Promise<void> {
-    GroupPermissionService.getInstance().deleteByGid(gid);
+  ): Promise<DeleteResultDTO> {
+    return GroupPermissionService.getInstance().deleteByGid(gid);
   }
 
   @Delete('pid/{pid}')
   public async deleteByPid(
     @Path('pid') pid: number,
-  ): Promise<void> {
-    GroupPermissionService.getInstance().deleteByPid(pid);
+  ): Promise<DeleteResultDTO> {
+    return GroupPermissionService.getInstance().deleteByPid(pid);
   }
 
   @Post()
   public async add(
     @Body() form: GroupPermission,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const { gid, pid } = form;
     return GroupPermissionService.getInstance().add(gid, pid);
   }
@@ -50,7 +53,7 @@ export class GroupPermissionController extends Controller {
   public async updateByGid(
     @Path('gid') gid: number,
       @Body() form: UpdateGroupPermissionGidDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { pid } = form;
     return GroupPermissionService.getInstance().updateByGid(gid, pid);
   }
@@ -59,7 +62,7 @@ export class GroupPermissionController extends Controller {
   public async updateByPid(
     @Path('pid') pid: number,
       @Body() form: UpdateGroupPermissionPidDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { gid } = form;
     return GroupPermissionService.getInstance().updateByPid(gid, pid);
   }

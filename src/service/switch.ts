@@ -5,6 +5,10 @@ import {
 
 import { Switch } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class SwitchService {
   private static INSTANCE: SwitchService;
@@ -36,12 +40,12 @@ export class SwitchService {
     return switchid;
   }
 
-  public async deleteById(id: number): Promise<boolean> {
+  public async deleteById(id: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.switchRepo.delete({
       id,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
   public async add(
@@ -49,7 +53,7 @@ export class SwitchService {
     upper_port_type: number, location: string | null, account: string,
     password: string, vlan: string, machine_type: number,
     port_description: string | null, port_type: string, ip: string,
-  ): Promise<any> {
+  ): Promise<AddResultDTO> {
     const result: InsertResult = await this.switchRepo.insert({
       id,
       upper_switch,
@@ -65,7 +69,7 @@ export class SwitchService {
       ip,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
   public async updateById(
@@ -73,7 +77,7 @@ export class SwitchService {
     upper_port_type?: number, location?: string, account?: string,
     password?: string, vlan?: string, machine_type?: number,
     port_description?: string, port_type?: string, ip?: string,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.switchRepo
       .createQueryBuilder()
       .update(Switch)
@@ -93,6 +97,6 @@ export class SwitchService {
       .where('id = :id', { id })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

@@ -4,7 +4,10 @@ import {
 } from 'tsoa';
 
 import { Permission } from '@/entry';
-import { PermissionDTO, UpdatePermissionDTO } from '@/entry/dto';
+import {
+  AddResultDTO, DeleteResultDTO, PermissionDTO,
+  UpdatePermissionDTO, UpdateResultDTO,
+} from '@/entry/dto';
 import { PermissionService } from '@/service';
 
 @Tags('Permission')
@@ -20,14 +23,14 @@ export class PermissionController extends Controller {
   @Delete('{pid}')
   public async deleteByPid(
     @Path('pid') pid: number,
-  ): Promise<void> {
-    PermissionService.getInstance().deleteByPid(pid);
+  ): Promise<DeleteResultDTO> {
+    return PermissionService.getInstance().deleteByPid(pid);
   }
 
   @Post()
   public async add(
     @Body() form: PermissionDTO,
-  ): Promise<number> {
+  ): Promise<AddResultDTO> {
     const { str } = form;
     return PermissionService.getInstance().add(str);
   }
@@ -36,7 +39,7 @@ export class PermissionController extends Controller {
   public async updateByPid(
     @Path('pid') pid: number,
       @Body() form: UpdatePermissionDTO,
-  ): Promise<any> {
+  ): Promise<UpdateResultDTO> {
     const { str } = form;
     return PermissionService.getInstance().updateByPid(pid, str);
   }

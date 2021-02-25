@@ -5,6 +5,10 @@ import {
 
 import { IpType } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
+import {
+  AddResultDTO, DeleteResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+} from '@/entry/dto';
 
 export class IpTypeService {
   private static INSTANCE: IpTypeService;
@@ -36,23 +40,23 @@ export class IpTypeService {
     return iptype;
   }
 
-  public async deleteById(iptypeId: number): Promise<boolean> {
+  public async deleteById(iptypeId: number): Promise<DeleteResultDTO> {
     const result: DeleteResult = await this.iptypeRepo.delete({
       ip_type_id: iptypeId,
     });
 
-    return result.affected !== undefined && result.affected !== null && result.affected > 0;
+    return filterDeleteResult(result);
   }
 
-  public async add(ip_type_id: number, type: string | null): Promise<any> {
+  public async add(ip_type_id: number, type: string | null): Promise<AddResultDTO> {
     const result: InsertResult = await this.iptypeRepo.insert({
       ip_type_id, type,
     });
 
-    return result.raw;
+    return filterAddResult(result);
   }
 
-  public async updateById(ip_type_id: number, type?: string): Promise<any> {
+  public async updateById(ip_type_id: number, type?: string): Promise<UpdateResultDTO> {
     const result: UpdateResult = await this.iptypeRepo
       .createQueryBuilder()
       .update(IpType)
@@ -62,6 +66,6 @@ export class IpTypeService {
       .where('ip_type_id = :ip_type_id', { ip_type_id })
       .execute();
 
-    return result.raw;
+    return filterUpdateResult(result);
   }
 }

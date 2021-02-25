@@ -1,5 +1,6 @@
 // src/entry/dto/index.ts
 export * from './announcement';
+export * from './api';
 export * from './backup_mac';
 export * from './bed';
 export * from './group_inherit';
@@ -13,6 +14,7 @@ export * from './iptable';
 export * from './lock_type';
 export * from './lock';
 export * from './netflow';
+export * from './ormresult';
 export * from './permission';
 export * from './switch';
 export * from './token';
