@@ -1,21 +1,23 @@
 // scripts/typeorm.ts
 import 'module-alias/register';
 import { runMigrations, revertMigrations } from '@/config';
+import { parseIntDefault } from '@/utils';
 
 const argv = require('minimist')(process.argv.slice(2));
-const verbose: string | undefined = argv.verbose || 2;
+const verbose: number = parseIntDefault({
+  value: argv.verbose,
+  default: 2,
+});
 const migrations: string | undefined = argv.migrations;
 
-if (verbose !== undefined) {
-  console.log(`verbose mode: ${verbose}.`);
-}
+let lowerCaseMigrations: string;
 
 if (migrations !== undefined) {
-  const lowerCase = migrations.toLowerCase();
-  if (lowerCase === 'run') {
+  lowerCaseMigrations = migrations.toLowerCase();
+  if (lowerCaseMigrations === 'run') {
     console.log(`Run migrations with: run mode.`);
     runMigrations(verbose);
-  } else if (lowerCase === 'revert') {
+  } else if (lowerCaseMigrations === 'revert') {
     console.log(`Run migrations with: revert mode.`);
     revertMigrations(verbose);
   } else {
