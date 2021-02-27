@@ -11,17 +11,17 @@
 import { use as chaiUse } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 
-import { PermissionService } from "@/service";
-
-import TestConnection from "../test_connection";
+import { PermissionService } from '@/service';
 import { Permission } from '@/entry';
+
+import TestConnection from '../test_connection';
 import { permission } from '../test_data';
 
 chaiUse(chaiAsPromised);
 
 export const conn = new TestConnection();
 export const mochaHooks = {
-  async beforeAll() {
+  async beforeAll(): Promise<void> {
     await conn.create();
 
     PermissionService.init();
@@ -31,7 +31,7 @@ export const mochaHooks = {
     await conn.getConn().getRepository(Permission).insert(permission);
     // await conn.getConn().getRepository(SomeType).insert(someVariableFromTestData);
   },
-  afterAll() {
+  afterAll(): void {
     conn.close();
   },
 };
