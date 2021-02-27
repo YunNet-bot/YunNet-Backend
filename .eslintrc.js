@@ -20,6 +20,11 @@ module.exports = {
     'class-methods-use-this': 'off',
     '@typescript-eslint/lines-between-class-members': 'off',
   },
+  settings: {
+    react: {
+      version: '999.999.999',
+    },
+  },
   overrides: [
     {
       files: [
