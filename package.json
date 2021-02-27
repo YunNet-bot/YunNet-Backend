@@ -18,7 +18,7 @@
     "clean": "sh ./scripts/clean.sh",
     "test:unit": "ts-mocha --paths 'test/unit/**/*.ts' --timeout 10000",
     "test:unit:coverage": "nyc --report-dir coverage/unit yarn test:unit",
-    "test:integration": "ts-mocha --paths 'test/integration/**/*.ts' --timeout 10000",
+    "test:integration": "ts-mocha --require 'test/integration/hook.spec.ts' --paths 'test/integration/**/*.ts' --timeout 10000",
     "test:integration:coverage": "nyc --report-dir coverage/integration yarn test:integration",
     "test:coverage": "yarn test:unit:coverage && yarn test:integration:coverage",
     "test": "yarn test:unit && yarn test:integration",

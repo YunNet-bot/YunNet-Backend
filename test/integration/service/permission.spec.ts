@@ -1,6 +1,5 @@
 // test/integration/service/permission.spec.ts
-import { expect, use as chaiUse } from 'chai';
-import chaiAsPromised from 'chai-as-promised';
+import { expect } from 'chai';
 
 import { Permission } from '@/entry';
 import { PermissionService } from '@/service';
@@ -8,7 +7,6 @@ import { PermissionService } from '@/service';
 import TestConnection from '../../test_connection';
 import { AddResultDTO } from '@/entry/dto';
 
-chaiUse(chaiAsPromised);
 const conn = new TestConnection();
 
 describe('Permission Service', async () => {
