@@ -3,8 +3,12 @@
  * This file is global hook for integration tests.
  * It resiponsible for running setup & teardown function at mocha.
  *
- * You can pre-insert any value defined at test_data, like below comment.
+ * You can pre-insert any value defined at {@link test_data}, like below comment.
  *   await conn.getConn().getRepository(SomeType).insert(someVariableFromTestData);
+ *
+ * Typically, you shall only need to pre-insert data whom use as fk(ForeignKey) and init services.
+ * For instance, {@link Announcement} entry has an fk for field uid, then you shall pre-insert a
+ * {@link User} entry.
  *
  * @author Clooooode
  */
