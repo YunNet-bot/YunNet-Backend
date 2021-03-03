@@ -1,9 +1,8 @@
 // test/integration/service/iptable.spec.ts
 import { expect } from 'chai';
-import { InsertResult } from 'typeorm';
 
 import { IpTable } from '@/entry';
-import { filterAddResult, AddResultDTO } from '@/entry/dto';
+import { AddResultDTO } from '@/entry/dto';
 import { IpTableService } from '@/service';
 
 import { conn } from '../hook.spec';
@@ -13,18 +12,17 @@ const addedIPList: Array<string> = [];
 describe('Iptable Service', async () => {
   describe('method add', () => {
     it('should add a new record in iptable.', async () => {
-      //const newPermissionStr = 'new permission str';
-      const ip = "111.112.113.114";
+      const ip = '111.112.113.114';
       const ip_type_id = 1;
       const is_unlimited = 1;
       const switch_id = 1;
       const port = 123;
       const port_type = 1;
-      const mac = "a";
+      const mac = 'a';
       const is_updated = 1;
       const uid = 1;
       const gid = 1;
-      const description = "hi";
+      const description = 'hi';
       const lock_id = 1;
 
       const addResult: AddResultDTO = await IpTableService.getInstance().add(
