@@ -3,6 +3,7 @@ dist/
 .nyc_output/
 coverage/
 
+.DS_Store
 *.log
 *.sql
 routes.ts
