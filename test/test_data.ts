@@ -9,7 +9,7 @@
  *
  * @author Clooooode
  */
-import { Permission, IpTable } from '@/entry';
+import { Permission, IpTable, Group } from '@/entry';
 
 export const permission: Permission = new Permission({ pid: 1, str: 'first permission' });
 export const iptableData: IpTable = new IpTable({
@@ -25,5 +25,10 @@ export const iptableData: IpTable = new IpTable({
   gid: 1,
   description: 'hi',
   lock_id: 1,
+});
+export const group: Group = new Group({
+  gid: 123,
+  name: 'admin',
+  description: 'this is a test admin.',
 });
 // export const somethingmore: SomeType = new SomeType({ ... });
