@@ -1,0 +1,259 @@
+[33mcommit 7d22bab36b72d6dcd40c50f3d7ed5c53dd9bb730[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Author: Clooooode <jackey8616@gmail.com>
+Date:   Fri Feb 19 22:40:28 2021 +0800
+
+    chore: Add coveralls serving config
+
+[33mcommit ca5ae50194bd56b27d80803cdd2847160c5965cc[m
+Merge: 3f32cf9 733228c
+Author: Clooooode <jackey8616@gmail.com>
+Date:   Fri Feb 19 21:10:26 2021 +0800
+
+    Merge branch 'fix_2' into dev
+    
+    Fixes #2.
+
+[33mcommit 733228c8502a5321832d6ab7d07626b14f0ba620[m
+Author: Clooooode <jackey8616@gmail.com>
+Date:   Mon Feb 15 00:37:36 2021 +0800
+
+    chore: Apply split config to app, server & test
+
+[33mcommit 17703c1ac6b9bcc4d6e74fde2fa5da9112d55c63[m
+Author: Clooooode <jackey8616@gmail.com>
+Date:   Mon Feb 15 00:28:24 2021 +0800
+
+    feat: Add revert migrations scripts
+    
+    Add revert method since drop order is fixed.
+    Add ForeignKey & Indices delete when dropping tables.
+    Fix 1606331057077-Init#dropTables with proper drop order.
+
+[33mcommit f2d26bdf4f38c6082c88943bb50211f6ceaf06be[m
+Author: Clooooode <jackey8616@gmail.com>
+Date:   Mon Feb 15 00:19:13 2021 +0800
+
+    feat: Add run migrations script
+    
+    Add typeorm script for runMigrations.
+    Add minimist package to resolve arguments.
+    Exclude scripts folder since typeorm script is written in typescript.
+
+[33mcommit 0b7d3e6622b40fdd19dd94222628c6a6a881d54d[m
+Author: Clooooode <jackey8616@gmail.com>
+Date:   Mon Feb 15 00:10:03 2021 +0800
+
+    chore: Add dev & production config
+
+[33mcommit 3f32cf9d6ef945e51d3587d804f1b6757b86b833[m
+Author: YoMin <aaaa1234567891016@gmail.com>
+Date:   Thu Feb 4 22:29:50 2021 +0800
+
+    fix: tsoa duplicate path parameter
+    
+    Add pk as part of API route, let each controller with 2 pk working
+    properly.
+    Update yarn.lock with latest package information.
+    Fix #1
+
+[33mcommit 1c0c8b793f8fd4d080f7ace62448b29aba0fc4dc[m
+Merge: 31ac4cf 1951a62
+Author: clooooode <jackey8616@gmail.com>
+Date:   Sat Jan 30 01:41:50 2021 +0800
+
+    Merge branch 'feat_testing' into dev
+
+[33mcommit 31ac4cf50de7504f5a3893fc25f1e5489c2c766f[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Fri Jan 29 12:51:28 2021 +0800
+
+    chore: Upgrade tsoa to 3.5.1
+
+[33mcommit 1951a62aeb4c1d128b34a16a1a5fcb4d99edd300[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Fri Jan 29 12:54:33 2021 +0800
+
+    chore: Change action order
+    
+    Adjust action's testing command.
+
+[33mcommit d2cb9ea33bc609295c6fc04258384358c668f943[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Fri Jan 29 11:52:10 2021 +0800
+
+    feat: Add nyc for codecov
+    
+    Add nyc package to generate code coverage.
+    Add missing yarn.lock file into version control.
+    Add utiles unit tests.
+
+[33mcommit 67f1608444a25ed805a4de5212d079191fea41ce[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Fri Jan 29 00:39:59 2021 +0800
+
+    Feat: Add Github Action for testing
+
+[33mcommit 64eba04ff9b7e7f9af375e1c8dc634e2ea1d4e82[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Fri Jan 29 00:20:29 2021 +0800
+
+    feat: integrate test mould
+    
+    Remove tyoeorm config.
+    Temporary remove UserService 's integrate tests.
+    
+    Add tests to lint source.
+    Add timeout for test scripts.
+    Add chai-as-promised package to handle async error.
+    Add typeorm database utils for testing.
+    Add integrate test for PermissionService.
+    Add migrations & entires invoke @ typeorm connection create statement.
+    
+    Fix some lint typo.
+
+[33mcommit 90c29852a807413e248383419af56887e18bd96d[m
+Author: YoMin <aaaa1234567891016@gmail.com>
+Date:   Thu Jan 21 09:47:17 2021 +0800
+
+    fix: Missing pk id when adding entry.
+    
+    What add method use now is return number, will change to json object in
+    the future.
+
+[33mcommit 850cce7dedd7d71f3c2960e7492a772e4adc73e9[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Mon Jan 11 20:38:18 2021 +0800
+
+    fix: build tsconfig for build folder
+    
+    Add override compileOptions.rootDir to let build dist folder will not
+    output with another src child folder.
+
+[33mcommit 74ea4a447419f43a397f50abe50dbff7657c23c5[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Thu Jan 7 19:53:06 2021 +0800
+
+    refactor: Add eslint & editorconfig
+
+[33mcommit 9575f15a34f1a7385e5e3ebeb924132d2b241c38[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Thu Jan 7 04:28:25 2021 +0800
+
+    chore: Split build tsconfig.json
+    
+    Split tsconfig.json into build & general in order to add path alias into
+     tests.
+    Update build.sh to fit build.tsconfig.json.
+
+[33mcommit c14216cfe14530e67ae032956a12dba05e6987dd[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Thu Jan 7 04:24:41 2021 +0800
+
+    refactor: Entry contructor
+    
+    Refactor Entry constructor with single param.
+    Add missing nullable default type in entry fields.
+
+[33mcommit b679b8f33f2541e0dcfe5576ecc9c8ce87db3338[m
+Author: YoMin <aaaa1234567891016@gmail.com>
+Date:   Sun Jan 10 14:42:13 2021 +0800
+
+    chore: Post, Patch for Entry fullfill & Add DTO for Patch
+    
+    Complete Controllers & Services & DTO to Post / Patch data to Database.
+
+[33mcommit 0e9ff6813b98c3e15f670105278c26aeef3af381[m
+Author: Cloooode <jackey8616@gmail.com>
+Date:   Thu Jan 7 01:15:31 2021 +0800
+
+    chore: Add utils for tool functions
+    
+    Add utils#filterObjectUndefined for filtering undefined value in object.
+
+[33mcommit 5311289a3de6810d49c14dc2bd8391e89c09a771[m
+Author: YoMin <aaaa1234567891016@gmail.com>
+Date:   Thu Dec 10 01:23:05 2020 +0800
+
+    chore: Get, Del for Entry fullfill & Entry correction
+    
+    Complete Controllers & Services to Read / Delete data from Database.
+    Correct the error type in Entry group_user.
+    Init the Services in app.ts.
+
+[33mcommit 725dca2c68bd510d483c29e888722eefd663934b[m
+Author: YoMin <aaaa1234567891016@gmail.com>
+Date:   Mon Nov 30 03:49:51 2020 +0800
+
+    chore: Entries fullfill & Migration correction
+    
+    Complete entries to match database and correct migration with missing
+    primary key.
+
+[33mcommit ffc93cabc1cc12128d4c24d2e68e71e78df15d61[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Fri Nov 27 01:03:30 2020 +0800
+
+    chore: Update migrations for latest schema
+    
+    Add charset in ormconfig.json.
+    Add test:quick script in package.json.
+    Add current schema of YunNet.
+    Preparing user test cases preset / teardown.
+
+[33mcommit 687b23663b0bd930755947d62c067a3dd42eee84[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Thu Nov 26 13:26:14 2020 +0800
+
+    fix: UserService#getInfo with proper DTO
+
+[33mcommit 6639ae340213ad4f95c3e34ce06b107a9adfa4df[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Thu Nov 26 13:04:15 2020 +0800
+
+    chore: Add example test for express up & down
+    
+    Move service, typeorm, route register / init statments into app.ts.
+
+[33mcommit 2c3c277f31b0e4651d951a633f0112b7a103b9ec[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Thu Nov 26 03:48:49 2020 +0800
+
+    feat: Add migration
+    
+    Split typeorm config into indicate one.
+    Add contributors & update contributors fields in package.json.
+    Fix incorrect unsigned flag in entry/GroupUser.
+    Add database migration Init.
+    Rename db name to YunNet.
+
+[33mcommit 873f11d4854d7cfdb38ceeca6b9af3034dbf5bfc[m
+Author: YoMin Su <aaaa1234567891016@gmail.com>
+Date:   Thu Nov 26 01:45:46 2020 +0800
+
+    feat: Add User entry, DTO, service, controller
+    
+    UserInfoDTO to handle userinfo fetch with group.
+    User's service, controller, entry.
+
+[33mcommit 9c5275defc154044a85dcfada353a8a980715538[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Thu Nov 26 13:06:41 2020 +0800
+
+    chore: Add ts-mocha to support ts path alias
+    
+    Remove includes setup in tsconfig since ts-mocha can directly execute ts
+    tests without build to js first.
+    Add excludes test folder since its no longer need build.
+    Remove strange package.json's build script.
+
+[33mcommit 8642ba1627ece10e7bb5c1de3f31be0c97b07417[m
+Author: clooooode <jackey8616@gmail.com>
+Date:   Thu Nov 26 11:59:44 2020 +0800
+
+    chore: Add mocha & chai test packages
+
+[33mcommit f706fd32ea88cd23bb97aa83c051b2bb32ae6d8c[m
+Author: YoMin Su <aaaa1234567891016@gmail.com>
+Date:   Thu Nov 26 01:41:24 2020 +0800
+
+    Init commit

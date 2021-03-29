@@ -19,3 +19,4 @@ export * from './switch';
 export * from './token';
 export * from './user_permission';
 export * from './variable';
+export * from './teapot';
