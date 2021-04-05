@@ -9,8 +9,15 @@
  *
  * @author Clooooode
  */
-import { Permission } from "@/entry";
+import { Bed, LockType, Permission } from "@/entry";
 
 export const permission: Permission = new Permission({ pid: 1, str: 'first permission' });
+export const bed: Bed = new Bed({
+    bed: 'H1201-1',
+    type: 0,
+    portal: 'H1201',
+    ip: '140.125.207.207'
+});
+export const locktype: LockType = new LockType({ lock_type_id: 0, str: 'TEST' });
 
 // export const somethingmore: SomeType = new SomeType({ ... });
