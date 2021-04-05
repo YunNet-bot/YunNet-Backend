@@ -21,9 +21,10 @@ export type UpdateResultDTO = DeleteResultDTO;
 
 export function filterAddResult(result: InsertResult): AddResultDTO {
   let success = result.raw["affectedRows"] >= 1;
+  let idstr = Object.values(result.identifiers[0])[0];
   let id: Array<number|string>;
 
-  id = [result.raw["insertId"] > 0 ? result.raw["insertId"] : undefined];
+  id = [result.raw["insertId"] > 0 ? result.raw["insertId"] : idstr ];
 
   return success ? {
     success,
