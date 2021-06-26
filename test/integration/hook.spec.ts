@@ -15,11 +15,16 @@
 import { use as chaiUse } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 
-import { PermissionService } from '@/service';
-import { Permission } from '@/entry';
-
+import {
+  PermissionService, GroupService, IpTableService, IpTypeService,
+} from '@/service';
+import {
+  Permission, Group, IpTable, IpType,
+} from '@/entry';
+import {
+  permission, group, iptable, iptype,
+} from '../test_data';
 import TestConnection from '../test_connection';
-import { permission } from '../test_data';
 
 chaiUse(chaiAsPromised);
 
@@ -29,10 +34,16 @@ export const mochaHooks = {
     await conn.create();
 
     PermissionService.init();
+    GroupService.init();
+    IpTableService.init();
+    IpTypeService.init();
     // Service should init at here if they need to be run integration tests.
     // SomeService.init();
 
     await conn.getConn().getRepository(Permission).insert(permission);
+    await conn.getConn().getRepository(Group).insert(group);
+    await conn.getConn().getRepository(IpType).insert(iptype);
+    //await conn.getConn().getRepository(IpTable).insert(iptable);
     // await conn.getConn().getRepository(SomeType).insert(someVariableFromTestData);
   },
   afterAll(): void {

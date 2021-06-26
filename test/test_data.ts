@@ -9,8 +9,30 @@
  *
  * @author Clooooode
  */
-import { Permission } from "@/entry";
+import { Permission, IpTable, Group, IpType } from '@/entry';
 
 export const permission: Permission = new Permission({ pid: 1, str: 'first permission' });
-
+export const group: Group = new Group({
+  gid: 123,
+  name: 'test_group',
+  description: 'this is a test group.',
+});
+export const iptype: IpType = new IpType({
+  ip_type_id: 137,
+  type: 'iptype from test data',
+});
+export const iptable: IpTable = new IpTable({
+  ip: '111.112.113.114',
+  ip_type_id: 1,
+  is_unlimited: 2,
+  switch_id: 3,
+  port: 4,
+  port_type: 5,
+  mac: 'a',
+  is_updated: 1,
+  uid: 1,
+  gid: 123,
+  description: 'hi',
+  lock_id: 1,
+});
 // export const somethingmore: SomeType = new SomeType({ ... });
