@@ -2,7 +2,7 @@
 // Entries
 import {
   Iptable, IpType, Lock,
-  LockType, Switch, User
+  LockType, Switch, User,
 } from '@/entry';
 // Migrations
 import { Init1606331057077, RefactorBase1642703686145 } from '@/migration';
@@ -18,7 +18,7 @@ export default {
   dropSchema: false,
   entities: [
     Iptable, IpType, Lock,
-    LockType, Switch, User
+    LockType, Switch, User,
   ],
   migrationsRun: false,
   migrations: [Init1606331057077, RefactorBase1642703686145],
