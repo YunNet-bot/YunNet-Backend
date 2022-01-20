@@ -1,14 +1,11 @@
 // src/config/production.ts
 // Entries
 import {
-  Announcement, BackupMac, Bed, Group,
-  GroupInherit, GroupManagedBy, GroupPermission, GroupUser,
-  IpTable, IpTableTest, IpType, Lock,
-  LockType, Netflow, Permission, Switch,
-  Token, User, UserPermission, Variable,
+  Iptable, IpType, Lock,
+  LockType, Switch, User
 } from '@/entry';
 // Migrations
-import { Init1606331057077 } from '@/migration';
+import { Init1606331057077, RefactorBase1642703686145 } from '@/migration';
 import { ConnectionOptions } from 'typeorm';
 
 export default {
@@ -20,13 +17,11 @@ export default {
   database: 'YunNet',
   dropSchema: false,
   entities: [
-    Announcement, BackupMac, Bed, GroupInherit, Group,
-    GroupManagedBy, GroupPermission, GroupUser, IpType,
-    IpTableTest, IpTable, LockType, Lock, Netflow, Permission,
-    Switch, Token, UserPermission, User, Variable,
+    Iptable, IpType, Lock,
+    LockType, Switch, User
   ],
   migrationsRun: false,
-  migrations: [Init1606331057077],
+  migrations: [Init1606331057077, RefactorBase1642703686145],
   extra: {
     charset: 'utf8_unicode_ci',
   },

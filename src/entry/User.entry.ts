@@ -8,8 +8,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Iptable } from "./Iptable";
-import { Lock } from "./Lock";
+import { Iptable } from "./Iptable.entry";
+import { Lock } from "./Lock.entry";
 
 @Index("uid_UNIQUE", ["uid"], { unique: true })
 @Index("account_UNIQUE", ["account"], { unique: true })

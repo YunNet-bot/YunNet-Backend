@@ -1,7 +1,7 @@
 // src/entry/index.tsA
-export * from './Iptable';
-export * from './IpType';
-export * from './Lock';
-export * from './LockType';
-export * from './Switch';
-export * from './User';
+export * from './Iptable.entry';
+export * from './IpType.entry';
+export * from './Lock.entry';
+export * from './LockType.entry';
+export * from './Switch.entry';
+export * from './User.entry';

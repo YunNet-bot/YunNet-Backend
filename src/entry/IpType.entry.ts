@@ -1,6 +1,6 @@
 // src/entry/IpType.ts
 import { Column, Entity, OneToMany } from "typeorm";
-import { Iptable } from "./Iptable";
+import { Iptable } from "./Iptable.entry";
 
 @Entity("ip_type", { schema: "YunNet" })
 export class IpType {

@@ -1,6 +1,6 @@
 // src/entry/LockType.ts
 import { Column, Entity, OneToMany } from "typeorm";
-import { Lock } from "./Lock";
+import { Lock } from "./Lock.entry";
 
 @Entity("lock_type", { schema: "YunNet" })
 export class LockType {

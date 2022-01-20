@@ -1,8 +1,8 @@
 // src/entry/Iptable.ts
 import { Column, Entity, Index, JoinColumn, ManyToOne, OneToOne } from "typeorm";
-import { IpType } from './IpType'
-import { Switch } from './Switch'
-import { User } from './User'
+import { IpType } from './IpType.entry'
+import { Switch } from './Switch.entry'
+import { User } from './User.entry'
 
 @Index("mac", ["mac",], { unique: true })
 @Index("iptable_fk_ip_type", ["ipTid",], {})

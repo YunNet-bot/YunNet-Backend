@@ -1,6 +1,6 @@
 // src/entry/Switch.ts
 import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm";
-import { Iptable } from './Iptable'
+import { Iptable } from './Iptable.entry'
 
 
 @Index("switch_fk_self_upper_switch_idx", ["upperSwitch",], {})

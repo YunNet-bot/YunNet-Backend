@@ -7,8 +7,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { LockType } from "./LockType";
-import { User } from "./User";
+import { LockType } from "./LockType.entry";
+import { User } from "./User.entry";
 
 @Index("lock_fk_ip_idx", ["ip"], {})
 @Index("lock_fk_lock_type_idx", ["lockTid"], {})
