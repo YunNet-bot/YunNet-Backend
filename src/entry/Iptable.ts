@@ -4,7 +4,6 @@ import { IpType } from './IpType'
 import { Switch } from './Switch'
 import { User } from './User'
 
-
 @Index("mac", ["mac",], { unique: true })
 @Index("iptable_fk_ip_type", ["ipTid",], {})
 @Index("iptable_fk_switch", ["sid",], {})
@@ -13,53 +12,51 @@ import { User } from './User'
 export class Iptable {
 
   @Column("varchar", { primary: true, name: "ip", length: 32 })
-  ip?: string;
+  ip!: string;
 
   @Column("int", { name: "ip_tid", nullable: true, unsigned: true, width: 11 })
-  ipTid?: number | null;
+  ipTid!: number | null;
 
   @Column("tinyint", { name: "is_unlimited", width: 1, default: () => "'0'", })
-  isUnlimited?: boolean;
+  isUnlimited!: boolean;
 
   @Column("int", { name: "sid", nullable: true, width: 11 })
-  sid?: number | null;
+  sid!: number | null;
 
   @Column("int", { name: "port", width: 11 })
-  port?: number;
+  port!: number;
 
   @Column("int", { name: "port_type", width: 11 })
-  portType?: number;
+  portType!: number;
 
   @Column("varchar", { name: "mac", nullable: true, unique: true, length: 18 })
-  mac?: string | null;
+  mac!: string | null;
 
   @Column("tinyint", { name: "is_updated", width: 1, default: () => "'0'", })
-  isUpdated?: boolean;
+  isUpdated!: boolean;
 
   @Column("int", { name: "uid", unsigned: true, width: 11 })
-  uid?: number;
+  uid!: number;
 
   @Column("text", { name: "description" })
-  description?: string;
+  description!: string;
 
   @Column("int", { name: "lid", nullable: true, unsigned: true, width: 10 })
-  lid?: number | null;
+  lid!: number | null;
 
   @ManyToOne(() => IpType, ipType => ipType.iptables, { onDelete: "RESTRICT", onUpdate: "RESTRICT" })
   @JoinColumn([{ name: "ip_tid", referencedColumnName: "ipTid" },
   ])
-  ipT?: IpType;
+  ipT!: IpType;
 
-  @ManyToOne(() => Switch,switch=>switch.iptables, { onDelete: "RESTRICT", onUpdate: "RESTRICT" })
-@JoinColumn([{ name: "sid", referencedColumnName: "id" },
+  @ManyToOne(() => Switch, sw => sw.iptables, { onDelete: "RESTRICT", onUpdate: "RESTRICT" })
+  @JoinColumn([{ name: "sid", referencedColumnName: "id" },
   ])
+  s!: Switch;
 
-s: Switch;
-
-@ManyToOne(() => User, user => user.iptables, { onDelete: "RESTRICT", onUpdate: "RESTRICT" })
-@JoinColumn([{ name: "uid", referencedColumnName: "uid" },
-])
-
-u: User;
+  @ManyToOne(() => User, user => user.iptables, { onDelete: "RESTRICT", onUpdate: "RESTRICT" })
+  @JoinColumn([{ name: "uid", referencedColumnName: "uid" },
+  ])
+  u!: User;
 
 }

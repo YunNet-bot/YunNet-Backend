@@ -10,51 +10,36 @@ import {
 } from "typeorm";
 import { Iptable } from "./Iptable";
 import { Lock } from "./Lock";
-import { Announcement } from "./Announcement";
-import { Token } from "./Token";
-import { UserPermission } from "./UserPermission";
-import { Group } from "./Group";
 
 @Index("uid_UNIQUE", ["uid"], { unique: true })
 @Index("account_UNIQUE", ["account"], { unique: true })
 @Entity("user", { schema: "YunNet" })
 export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "uid", unsigned: true })
-  uid?: number;
+  uid!: number;
 
   @Column("varchar", { name: "account", unique: true, length: 20 })
-  account?: string;
+  account!: string;
 
   @Column("mediumtext", { name: "password", nullable: true })
-  password?: string | null;
+  password!: string | null;
 
   @Column("mediumtext", { name: "name", nullable: true })
-  name?: string | null;
+  name!: string | null;
 
   @Column("mediumtext", { name: "department", nullable: true })
-  department?: string | null;
+  department!: string | null;
 
   @Column("mediumtext", { name: "mail", nullable: true })
-  mail?: string | null;
+  mail!: string | null;
 
   @Column("tinyint", { name: "isAdmin", width: 1, default: () => "'0'" })
-  isAdmin?: boolean;
+  isAdmin!: boolean;
 
   @OneToMany(() => Iptable, (iptable) => iptable.u)
-  iptables?: Iptable[];
+  iptables!: Iptable[];
 
   @OneToMany(() => Lock, (lock) => lock.lockByU)
-  locks?: Lock[];
+  locks!: Lock[];
 
-  @OneToMany(() => Announcement, (announcement) => announcement.u)
-  announcements?: Announcement[];
-
-  @OneToOne(() => Token, (token) => token.u)
-  token?: Token;
-
-  @OneToMany(() => UserPermission, (userPermission) => userPermission.u)
-  userPermissions?: UserPermission[];
-
-  @ManyToMany(() => Group, (group) => group.users)
-  groups?: Group[];
 }
