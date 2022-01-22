@@ -18,7 +18,7 @@ export class IptableInfra {
     return this.INSTANCE;
   }
 
-  constructor() {
+  private constructor() {
     this.IptableRepo = getRepository(Iptable);
   }
 

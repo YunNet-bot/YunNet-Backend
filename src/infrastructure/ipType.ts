@@ -38,7 +38,8 @@ export class IpTypeInfra {
     const entity = this.ipTypeRepo.create({
       type,
     });
-    return this.ipTypeRepo.save(entity);
+    const result = await this.ipTypeRepo.save(entity);
+    return result;
   }
 
   public async updateByIpTid(ipTid:number, type:string):Promise<IpType> {
