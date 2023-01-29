@@ -1,6 +1,5 @@
 // src/entry/dto/index.ts
 export * from './announcement';
-export * from './api';
 export * from './backup_mac';
 export * from './bed';
 export * from './group_inherit';
