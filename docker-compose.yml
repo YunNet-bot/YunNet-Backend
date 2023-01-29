@@ -1,21 +1,87 @@
+# https://medium.com/@kinghuang/docker-compose-anchors-aliases-extensions-a1e4105d70bd
 version: "3.6"
 
-services:
-  mysql:
-    image: mysql:latest
-    environment:
-      MYSQL_DATABASE: 'YunNet'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: '1234'
-      MYSQL_ROOT_PASSWORD: 'root'
-    ports:
-      - "0.0.0.0:3306:3306"
-  phpmyadmin:
-    depends_on:
-       - mysql
-    image: phpmyadmin/phpmyadmin:latest
-    ports:
-      - "0.0.0.0:3001:80"
-    environment:
-        PMA_HOST: mysql
+x-postgres: &postgres
+  image: postgres:latest
+  ports:
+    - 127.0.0.1:5432:5432
 
+x-pgadmin: &pgadmin
+  image: dpage/pgadmin4
+  ports:
+    - 127.0.0.1:5050:80
+  environment:
+    PGADMIN_DEFAULT_EMAIL: admin@admin.com
+    PGADMIN_DEFAULT_PASSWORD: root
+
+services:
+  postgres-test:
+    <<: *postgres
+    profiles: ["test", "all"]
+    environment:
+      POSTGRES_DB: 'test'
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: '1234'
+
+  postgres-dev:
+    <<: *postgres
+    profiles: ["dev", "all"]
+    environment:
+      POSTGRES_DB: 'dev'
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: '1234'
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+    volumes:
+      - postgresdb:/var/lib/postgresql/data
+
+  postgres-prod:
+    <<: *postgres
+    profiles: ["prod", "all"]
+    environment:
+      POSTGRES_DB: 'YongCing'
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: '1234'
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+    volumes:
+      - postgresdb:/var/lib/postgresql/data
+
+  pgadmin-test:
+    <<: *pgadmin
+    profiles: ["test", "all"]
+    depends_on:
+      - postgres-test
+
+  pgadmin-dev:
+    <<: *pgadmin
+    profiles: ["dev", "all"]
+    depends_on:
+      - postgres-dev
+
+  pgadmin-prod:
+    <<: *pgadmin
+    profiles: ["prod", "all"]
+    depends_on:
+      - postgres-prod
+
+  redis:
+    profiles: ["prod", "dev", "test", "all"]
+    image: redis:alpine
+    command: redis-server --requirepass test-password
+    ports:
+      - 127.0.0.1:6379:6379
+
+  redisAdmin-dev:
+    profiles: ["dev", "test", "all"]
+    image: erikdubbelboer/phpredisadmin
+    depends_on:
+      - redis
+    ports:
+      - 127.0.0.1:8111:80
+    environment:
+      REDIS_1_HOST: redis
+      REDIS_1_PORT: 6379
+      REDIS_1_AUTH: test-password
+
+volumes:
+  postgresdb:
+    driver: local

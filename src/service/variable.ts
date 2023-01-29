@@ -6,9 +6,10 @@ import {
 import { Variable } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class VariableService {
   private static INSTANCE: VariableService;
@@ -30,11 +31,11 @@ export class VariableService {
   }
 
   public async getByName(name: string): Promise<Variable> {
-    const variable: Variable | undefined = await this.variableRepo.findOne({
+    const variable: Variable | null = await this.variableRepo.findOneBy({
       name,
     });
 
-    if (variable === undefined) {
+    if (variable === null) {
       throw new Error(`No such Variable with name: ${name}.`);
     }
 

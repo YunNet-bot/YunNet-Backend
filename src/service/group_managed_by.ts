@@ -6,9 +6,9 @@ import {
 import { GroupManagedBy } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult, filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class GroupManagedByService {
   private static INSTANCE: GroupManagedByService;
@@ -30,11 +30,11 @@ export class GroupManagedByService {
   }
 
   public async getByGid(gid: number): Promise<GroupManagedBy> {
-    const groupmanagedby: GroupManagedBy | undefined = await this.groupmanagedbyRepo.findOne({
+    const groupmanagedby: GroupManagedBy | null = await this.groupmanagedbyRepo.findOneBy({
       gid,
     });
 
-    if (groupmanagedby === undefined) {
+    if (groupmanagedby === null) {
       throw new Error(`No such GroupManageBy with Gid: ${gid}.`);
     }
     return groupmanagedby;

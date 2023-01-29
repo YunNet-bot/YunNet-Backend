@@ -5,10 +5,10 @@ import {
 
 import { Netflow } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateNetflowDTO,
-  UpdateResultDTO,
+  AddResultDTO, UpdateNetflowDTO,
 } from '@/entry/dto';
 import { NetflowService } from '@/service';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Netflow')
 @Route('netflow')

@@ -6,9 +6,10 @@ import {
 import { GroupUser } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class GroupUserService {
   private static INSTANCE: GroupUserService;
@@ -30,11 +31,11 @@ export class GroupUserService {
   }
 
   public async getByUid(uid: number): Promise<GroupUser> {
-    const groupuser: GroupUser | undefined = await this.groupuserRepo.findOne({
+    const groupuser: GroupUser | null = await this.groupuserRepo.findOneBy({
       uid,
     });
 
-    if (groupuser === undefined) {
+    if (groupuser === null) {
       throw new Error(`No such GroupUser with Uid: ${uid}.`);
     }
 
@@ -42,11 +43,11 @@ export class GroupUserService {
   }
 
   public async getByGid(gid: number): Promise<GroupUser> {
-    const groupuser: GroupUser | undefined = await this.groupuserRepo.findOne({
+    const groupuser: GroupUser | null = await this.groupuserRepo.findOneBy({
       gid,
     });
 
-    if (groupuser === undefined) {
+    if (groupuser === null) {
       throw new Error(`No such GroupUser with Gid: ${gid}.`);
     }
 

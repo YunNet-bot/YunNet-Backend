@@ -6,9 +6,10 @@ import {
 import { IpTableTest } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class IpTableTestService {
   private static INSTANCE: IpTableTestService;
@@ -30,11 +31,11 @@ export class IpTableTestService {
   }
 
   public async getByIp(ip: string): Promise<IpTableTest> {
-    const iptabletest: IpTableTest | undefined = await this.iptabletestRepo.findOne({
+    const iptabletest: IpTableTest | null = await this.iptabletestRepo.findOneBy({
       ip,
     });
 
-    if (iptabletest === undefined) {
+    if (iptabletest === null) {
       throw new Error(`No such IpTableTest with ip: ${ip}.`);
     }
     return iptabletest;

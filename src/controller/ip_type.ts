@@ -5,10 +5,10 @@ import {
 
 import { IpType } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateIpTypeDTO,
-  UpdateResultDTO,
+  AddResultDTO, UpdateIpTypeDTO,
 } from '@/entry/dto';
 import { IpTypeService } from '@/service';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Ip Type')
 @Route('ip_type')

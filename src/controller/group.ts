@@ -5,10 +5,11 @@ import {
 
 import { Group } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, GroupDTO,
-  UpdateGroupDTO, UpdateResultDTO,
+  AddResultDTO, GroupDTO,
+  UpdateGroupDTO,
 } from '@/entry/dto';
 import { GroupService } from '@/service';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Group')
 @Route('group')

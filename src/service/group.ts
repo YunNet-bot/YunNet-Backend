@@ -6,9 +6,10 @@ import {
 import { Group } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class GroupService {
   private static INSTANCE: GroupService;
@@ -30,11 +31,11 @@ export class GroupService {
   }
 
   public async getByGid(gid: number): Promise<Group> {
-    const group: Group | undefined = await this.groupRepo.findOne({
+    const group: Group | null = await this.groupRepo.findOneBy({
       gid,
     });
 
-    if (group === undefined) {
+    if (group === null) {
       throw new Error(`No such Group with Gid: ${gid}.`);
     }
     return group;

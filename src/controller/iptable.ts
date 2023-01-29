@@ -5,10 +5,10 @@ import {
 
 import { IpTable } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateIptableDTO,
-  UpdateResultDTO,
+  AddResultDTO, UpdateIptableDTO,
 } from '@/entry/dto';
 import { IpTableService } from '@/service';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('IpTable')
 @Route('iptable')

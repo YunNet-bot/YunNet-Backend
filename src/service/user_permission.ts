@@ -6,9 +6,10 @@ import {
 import { UserPermission } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class UserPermissionService {
   private static INSTANCE: UserPermissionService;
@@ -30,11 +31,11 @@ export class UserPermissionService {
   }
 
   public async getByUid(uid: number): Promise<UserPermission> {
-    const userperm: UserPermission | undefined = await this.userpermissionRepo.findOne({
+    const userperm: UserPermission | null = await this.userpermissionRepo.findOneBy({
       uid,
     });
 
-    if (userperm === undefined) {
+    if (userperm === null) {
       throw new Error(`No such UserPermission with Uid: ${uid}.`);
     }
 
@@ -42,11 +43,11 @@ export class UserPermissionService {
   }
 
   public async getByPid(pid: number): Promise<UserPermission> {
-    const userperm: UserPermission | undefined = await this.userpermissionRepo.findOne({
+    const userperm: UserPermission | null = await this.userpermissionRepo.findOneBy({
       pid,
     });
 
-    if (userperm === undefined) {
+    if (userperm === null) {
       throw new Error(`No such UserPermission with Pid: ${pid}.`);
     }
 

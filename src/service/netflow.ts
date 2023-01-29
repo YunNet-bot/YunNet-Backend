@@ -6,9 +6,10 @@ import {
 import { Netflow } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class NetflowService {
   private static INSTANCE: NetflowService;
@@ -30,11 +31,11 @@ export class NetflowService {
   }
 
   public async getByIp(ip: number): Promise<Netflow> {
-    const netflow: Netflow | undefined = await this.netflowRepo.findOne({
+    const netflow: Netflow | null = await this.netflowRepo.findOneBy({
       ip,
     });
 
-    if (netflow === undefined) {
+    if (netflow === null) {
       throw new Error(`No such Netflow with ip: ${ip}.`);
     }
     return netflow;

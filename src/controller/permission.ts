@@ -5,10 +5,11 @@ import {
 
 import { Permission } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, PermissionDTO,
-  UpdatePermissionDTO, UpdateResultDTO,
+  AddResultDTO, PermissionDTO,
+  UpdatePermissionDTO,
 } from '@/entry/dto';
 import { PermissionService } from '@/service';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Permission')
 @Route('permission')

@@ -6,9 +6,10 @@ import {
 import { Switch } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class SwitchService {
   private static INSTANCE: SwitchService;
@@ -30,11 +31,11 @@ export class SwitchService {
   }
 
   public async getById(id: number): Promise<Switch> {
-    const switchid: Switch | undefined = await this.switchRepo.findOne({
+    const switchid: Switch | null = await this.switchRepo.findOneBy({
       id,
     });
 
-    if (switchid === undefined) {
+    if (switchid === null) {
       throw new Error(`No such Switch with id: ${id}.`);
     }
     return switchid;

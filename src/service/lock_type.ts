@@ -6,9 +6,10 @@ import {
 import { LockType } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class LockTypeService {
   private static INSTANCE: LockTypeService;
@@ -30,11 +31,11 @@ export class LockTypeService {
   }
 
   public async getById(lockid: number): Promise<LockType> {
-    const locktype: LockType | undefined = await this.locktypeRepo.findOne({
+    const locktype: LockType | null = await this.locktypeRepo.findOneBy({
       lock_type_id: lockid,
     });
 
-    if (locktype === undefined) {
+    if (locktype === null) {
       throw new Error(`No such LockType with lockid: ${lockid}.`);
     }
     return locktype;

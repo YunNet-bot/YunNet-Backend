@@ -6,9 +6,10 @@ import {
 import { Lock } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class LockService {
   private static INSTANCE: LockService;
@@ -30,11 +31,11 @@ export class LockService {
   }
 
   public async getById(lockid: number): Promise<Lock> {
-    const lock: Lock | undefined = await this.lockRepo.findOne({
+    const lock: Lock | null = await this.lockRepo.findOneBy({
       lock_id: lockid,
     });
 
-    if (lock === undefined) {
+    if (lock === null) {
       throw new Error(`No such Lock with id: ${lockid}.`);
     }
     return lock;

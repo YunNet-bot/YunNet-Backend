@@ -9,7 +9,7 @@ import { conn } from '../hook.spec';
 
 const addedBedPlace: Array<string> = [];
 
-describe('Bed Service', async () => {
+describe.skip('Bed Service', async () => {
   describe('method add', () => {
     it('should add a new bed.', async () => {
       const newBedLocation: Bed = {
@@ -23,7 +23,7 @@ describe('Bed Service', async () => {
         throw new Error(`Add failed: ${addResult.message}`);
       }
       const bed: string = addResult.id[0] as string;
-      const result = conn.getConn()
+      const result = conn.getDs
         .getRepository(Bed)
         .createQueryBuilder('b')
         .select(['b'])

@@ -6,9 +6,10 @@ import {
 import { IpType } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class IpTypeService {
   private static INSTANCE: IpTypeService;
@@ -30,11 +31,11 @@ export class IpTypeService {
   }
 
   public async getById(iptypeId: number): Promise<IpType> {
-    const iptype: IpType | undefined = await this.iptypeRepo.findOne({
+    const iptype: IpType | null = await this.iptypeRepo.findOneBy({
       ip_type_id: iptypeId,
     });
 
-    if (iptype === undefined) {
+    if (iptype === null) {
       throw new Error(`No such IpType with iptypeId: ${iptypeId}.`);
     }
     return iptype;

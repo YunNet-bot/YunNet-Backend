@@ -5,10 +5,11 @@ import {
 
 import { Token } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateResultDTO,
+  AddResultDTO,
   UpdateTokenDTO,
 } from '@/entry/dto';
 import { TokenService } from '@/service';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Token')
 @Route('token')

@@ -6,9 +6,9 @@ import {
 import { Announcement } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateResultDTO,
-  filterAddResult, filterDeleteResult, filterUpdateResult,
+  AddResultDTO, filterAddResult, filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class AnnouncementService {
   private static INSTANCE: AnnouncementService;
@@ -30,11 +30,11 @@ export class AnnouncementService {
   }
 
   public async getById(announcementId: number): Promise<Announcement> {
-    const announcement: Announcement | undefined = await this.announcementRepo.findOne({
+    const announcement: Announcement | null = await this.announcementRepo.findOneBy({
       announcement_id: announcementId,
     });
 
-    if (announcement === undefined) {
+    if (announcement === null) {
       throw new Error(`No such announcement with announcement_id: ${announcementId}.`);
     }
     return announcement;

@@ -6,9 +6,9 @@ import {
 import { Bed } from '@/entry';
 import { BedService } from '@/service';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateBedDTO,
-  UpdateResultDTO,
+  AddResultDTO, UpdateBedDTO,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Bed')
 @Route('bed')

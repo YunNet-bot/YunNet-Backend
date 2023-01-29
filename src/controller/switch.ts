@@ -5,10 +5,11 @@ import {
 
 import { Switch } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateResultDTO,
+  AddResultDTO,
   UpdateSwitchDTO,
 } from '@/entry/dto';
 import { SwitchService } from '@/service';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Switch')
 @Route('switch')

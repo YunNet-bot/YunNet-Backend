@@ -1,9 +1,9 @@
 // src/app.ts
-import { ConnectionOptions, createConnection } from 'typeorm';
-import express, { Express, Request, Response } from 'express';
-import bodyParser from 'body-parser';
+import { EntityManager } from 'typeorm';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
+import bodyParser from 'body-parser';
 
 // Services
 import {
@@ -15,28 +15,35 @@ import {
   PermissionService, SwitchService, TokenService,
   UserPermissionService, VariableService,
 } from '@/service';
-// Route generate by tsoa
-import { RegisterRoutes } from '@/routes';
+import { Database, initInfrastructures, initPlans, initMultiTenancy, Tenant, TenantPlanInfo } from '@yunology/ts-multi-tenancy';
+import { UserInfrastructure } from './infrastructure/user';
+import Preloader from './preloader';
+import { User } from './entity';
+import { UserTable1674994800644 } from './migration/1674994800644-UserTable';
 
 const app = express();
+export const tenantHeaderName = 'X-NMS-TENANT-ID';
 
-export default function appInit(typeormConifg: ConnectionOptions): Promise<Express> {
-  return new Promise(async (resolve) => {
-    app.use(cors({
-      origin: '*',
-      methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
-    }));
-    // Use body parser to read sent json payloads
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
+export function initNMSPlans(): void {
+  initPlans(() => ({
+    standard: new TenantPlanInfo(
+      'standard',
+      [UserService],
+      [Tenant, Database, User],
+      [UserTable1674994800644],
+    ),
+  }));
+}
 
-    const swaggerHtml = swaggerUi.generateHTML(await import('./swagger.json'));
-    app.use('/docs', swaggerUi.serve, (_: Request, res: Response) => res.send(swaggerHtml));
-
-    await createConnection(typeormConifg);
-
-    UserService.init();
+export async function initTenancyPlatform(
+  preloader: Preloader,
+  preCreateSystemDatasFunction?: (manager: EntityManager) => Promise<void>,
+  preCreateTenantDatasFunction?: () => Promise<void>,
+): Promise<void> {
+  const { logging } = preloader;
+  await initInfrastructures(async () => {
+    UserInfrastructure.init();
+    /*
     AnnouncementService.init();
     BackupMacService.init();
     BedService.init();
@@ -56,9 +63,81 @@ export default function appInit(typeormConifg: ConnectionOptions): Promise<Expre
     TokenService.init();
     UserPermissionService.init();
     VariableService.init();
-
-    RegisterRoutes(app);
-
-    return resolve(app);
+    */
   });
+  await initMultiTenancy(
+    async () => ({
+      [UserService.name]: new UserService(),
+    }),
+    preCreateSystemDatasFunction,
+    preCreateTenantDatasFunction,
+    tenantHeaderName,
+    logging,
+  );
+}
+
+export async function initNMSBackend(
+  preloader: Preloader,
+): Promise<Express> {
+  const {
+    redisUrl, isProduction, isSwagger, swaggerJson,
+  } = preloader;
+  app.set('trust proxy', true);
+  app.use(cors({
+    origin: [
+      'http://localhost:8080',
+      'https://localhost:8080',
+    ],
+    methods: ['GET', 'POST', 'DELETE', 'PATCH'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorizations', tenantHeaderName],
+    exposedHeaders: ['Content-Disposition'],
+  }));
+
+  // Use body parser to read sent json payloads
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+
+  /*
+  const sessionRedisClient = createClient({ url: redisUrl, legacyMode: true });
+  await sessionRedisClient.connect();
+  sessionRedis = new RedisStore({ client: sessionRedisClient });
+
+  app.use(session({
+    cookie: {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'none',
+    },
+    secret: 'i-love-husky',
+    resave: false,
+    saveUninitialized: true,
+    store: sessionRedis,
+  }));
+  app.use((req, res, next) => {
+    const tenantId = req.header(tenantHeaderName);
+    req.tenant = getTenantService().getTenantByInfo(tenantId);
+    next();
+  });
+  */
+
+  if (isSwagger === true) {
+    app.use('/docs', swaggerUi.serve as any, swaggerUi.setup(swaggerJson) as any);
+  }
+
+  const routesPath = '@/routes';
+  const tsoaRouter = await import(routesPath);
+  tsoaRouter.RegisterRoutes(app);
+
+  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error(err);
+    res
+      .status(400)
+      .json({
+        status: 'fail',
+        message: err.message,
+      });
+  });
+
+  return app;
 }

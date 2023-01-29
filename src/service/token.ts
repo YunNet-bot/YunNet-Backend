@@ -6,9 +6,10 @@ import {
 import { Token } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult,
+  filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class TokenService {
   private static INSTANCE: TokenService;
@@ -30,11 +31,11 @@ export class TokenService {
   }
 
   public async getByUid(uid: number): Promise<Token> {
-    const token: Token | undefined = await this.tokenRepo.findOne({
+    const token: Token | null = await this.tokenRepo.findOneBy({
       uid,
     });
 
-    if (token === undefined) {
+    if (token === null) {
       throw new Error(`No such Token with uid: ${uid}.`);
     }
     return token;

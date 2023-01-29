@@ -6,9 +6,9 @@ import {
 import { BackupMac } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, filterAddResult,
-  filterDeleteResult, filterUpdateResult, UpdateResultDTO,
+  AddResultDTO, filterAddResult, filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class BackupMacService {
   private static INSTANCE: BackupMacService;
@@ -30,11 +30,11 @@ export class BackupMacService {
   }
 
   public async getByIp(backupmacIp: string): Promise<BackupMac> {
-    const backupmac: BackupMac | undefined = await this.backupmacRepo.findOne({
+    const backupmac: BackupMac | null = await this.backupmacRepo.findOneBy({
       ip: backupmacIp,
     });
 
-    if (backupmac === undefined) {
+    if (backupmac === null) {
       throw new Error(`No such Backup_Mac with backupmac_ip: ${backupmacIp}.`);
     }
     return backupmac;
