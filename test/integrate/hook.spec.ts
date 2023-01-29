@@ -36,6 +36,7 @@ chaiUse(chaiAsPromised);
 
 export const conn = new TestConnection();
 export let app: Express.Application;
+export let testAdmin: User;
 export const mochaHooks = {
   async beforeAll(): Promise<void> {
     /*
@@ -69,8 +70,17 @@ export const mochaHooks = {
       },
     );
     app = await initNMSBackend(preloader);
+    testAdmin = await conn.getDs.manager.getRepository(User).save({
+      tenantId: tenant.id,
+      username: 'test_admin',
+      passwordHash: 'has',
+      nick: 'test admin',
+    });
   },
   afterAll(): void {
-    conn.destroy();
+    setTimeout(async () => {
+      await conn.clear();
+      await conn.destroy();
+    }, 1000);
   },
 };
