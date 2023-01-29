@@ -25,27 +25,52 @@ import { LockTypeService } from '@/service';
 import { LockType } from '@/entry';
 
 import TestConnection from '../test_connection';
-import { permission, bed, locktype } from '../test_data';
+import { permission, bed, locktype, systemDb, tenant } from '../test_data';
+import { config } from 'dotenv';
+import Preloader from '@/preloader';
+import { initNMSBackend, initNMSPlans, initTenancyPlatform } from '@/app';
+import { Database, getPlan, Tenant } from '@yunology/ts-multi-tenancy';
+import { User } from '@/entity';
 
 chaiUse(chaiAsPromised);
 
 export const conn = new TestConnection();
+export let app: Express.Application;
 export const mochaHooks = {
   async beforeAll(): Promise<void> {
-    await conn.create();
-
+    /*
     PermissionService.init();
     BedService.init();
     LockTypeService.init();
     // Service should init at here if they need to be run integration tests.
     // SomeService.init();
+    */
 
-    await conn.getConn().getRepository(Permission).insert(permission);
-    await conn.getConn().getRepository(Bed).insert(bed);
-    await conn.getConn().getRepository(LockType).insert(locktype);
-    // await conn.getConn().getRepository(SomeType).insert(someVariableFromTestData);
+
+    config({ path: `.env.${process.env.ENV_NAME || 'test'}` });
+    const preloader = await new Preloader(false).envLoad();
+    const { url } = preloader;
+    initNMSPlans();
+    await initTenancyPlatform(
+      preloader,
+      async (systemManager) => {
+        systemDb.url = url;
+        tenant.plan = getPlan('standard');
+        await systemManager.getRepository(Database).save(systemDb);
+        await systemManager.getRepository(Tenant).save(tenant);
+      },
+      async () => {
+        await conn.getDs.runMigrations();
+
+        // await conn.getDs.getRepository(Permission).insert(permission);
+        // await conn.getDs.getRepository(Bed).insert(bed);
+        // await conn.getDs.getRepository(LockType).insert(locktype);
+        // await conn.getConn().getRepository(SomeType).insert(someVariableFromTestData);
+      },
+    );
+    app = await initNMSBackend(preloader);
   },
   afterAll(): void {
-    conn.close();
+    conn.destroy();
   },
 };

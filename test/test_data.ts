@@ -10,6 +10,19 @@
  * @author Clooooode
  */
 import { Bed, LockType, Permission } from "@/entry";
+import { Database, Tenant } from "@yunology/ts-multi-tenancy";
+import { v4 } from "uuid";
+
+export const systemDb: Database = new Database();
+systemDb.id = v4();
+systemDb.name = 'yunnet-test';
+
+export const tenant: Tenant = new Tenant();
+tenant.name = 'test';
+tenant.orgName = 'yunnet';
+tenant.activate = true;
+tenant.config = { database: systemDb.id };
+
 
 export const permission: Permission = new Permission({ pid: 1, str: 'first permission' });
 export const bed: Bed = new Bed({

@@ -3,6 +3,8 @@ dist/
 .nyc_output/
 coverage/
 
+src/swagger.json
+src/routes.ts
 .DS_Store
 *.log
 *.sql

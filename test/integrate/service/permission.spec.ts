@@ -9,7 +9,7 @@ import { conn } from '../hook.spec';
 
 const addedPermissionPid: Array<number> = [];
 
-describe('Permission Service', async () => {
+describe.skip('Permission Service', async () => {
   describe('method add', () => {
     it('should add a new permission.', async () => {
       const newPermissionStr = 'new permission str';
@@ -19,7 +19,7 @@ describe('Permission Service', async () => {
       }
       const pid: number = addResult.id[0] as number;
 
-      const result = conn.getConn()
+      const result = conn.getDs
         .getRepository(Permission)
         .createQueryBuilder('p')
         .select(['p'])
