@@ -40,7 +40,7 @@ jobs:
         flag-name: Unit(Node-${{ matrix.node-version }})
         parallel: true
     - name: Integration Test
-      run: yarn test integration:coverage
+      run: yarn test integrate:coverage
     - name: Integration Test Coveralls
       uses: coverallsapp/github-action@master
       with:
