@@ -30,11 +30,11 @@ export class AnnouncementService {
   }
 
   public async getById(announcementId: number): Promise<Announcement> {
-    const announcement: Announcement | undefined = await this.announcementRepo.findOne({
+    const announcement: Announcement | null = await this.announcementRepo.findOneBy({
       announcement_id: announcementId,
     });
 
-    if (announcement === undefined) {
+    if (announcement === null) {
       throw new Error(`No such announcement with announcement_id: ${announcementId}.`);
     }
     return announcement;

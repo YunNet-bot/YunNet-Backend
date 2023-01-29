@@ -30,11 +30,11 @@ export class BedService {
   }
 
   public async getByBed(bed: string): Promise<Bed> {
-    const b: Bed | undefined = await this.bedRepo.findOne({
+    const b: Bed | null = await this.bedRepo.findOneBy({
       bed,
     });
 
-    if (b === undefined) {
+    if (b === null) {
       throw new Error(`No such Bed with Bed Position: ${bed}.`);
     }
     return b;

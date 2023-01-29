@@ -30,11 +30,11 @@ export class LockService {
   }
 
   public async getById(lockid: number): Promise<Lock> {
-    const lock: Lock | undefined = await this.lockRepo.findOne({
+    const lock: Lock | null = await this.lockRepo.findOneBy({
       lock_id: lockid,
     });
 
-    if (lock === undefined) {
+    if (lock === null) {
       throw new Error(`No such Lock with id: ${lockid}.`);
     }
     return lock;

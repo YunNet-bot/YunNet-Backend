@@ -30,11 +30,11 @@ export class GroupService {
   }
 
   public async getByGid(gid: number): Promise<Group> {
-    const group: Group | undefined = await this.groupRepo.findOne({
+    const group: Group | null = await this.groupRepo.findOneBy({
       gid,
     });
 
-    if (group === undefined) {
+    if (group === null) {
       throw new Error(`No such Group with Gid: ${gid}.`);
     }
     return group;

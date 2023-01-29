@@ -30,11 +30,11 @@ export class GroupUserService {
   }
 
   public async getByUid(uid: number): Promise<GroupUser> {
-    const groupuser: GroupUser | undefined = await this.groupuserRepo.findOne({
+    const groupuser: GroupUser | null = await this.groupuserRepo.findOneBy({
       uid,
     });
 
-    if (groupuser === undefined) {
+    if (groupuser === null) {
       throw new Error(`No such GroupUser with Uid: ${uid}.`);
     }
 
@@ -42,11 +42,11 @@ export class GroupUserService {
   }
 
   public async getByGid(gid: number): Promise<GroupUser> {
-    const groupuser: GroupUser | undefined = await this.groupuserRepo.findOne({
+    const groupuser: GroupUser | null = await this.groupuserRepo.findOneBy({
       gid,
     });
 
-    if (groupuser === undefined) {
+    if (groupuser === null) {
       throw new Error(`No such GroupUser with Gid: ${gid}.`);
     }
 

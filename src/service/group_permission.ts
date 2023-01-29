@@ -30,22 +30,22 @@ export class GroupPermissionService {
   }
 
   public async getByGid(gid: number): Promise<GroupPermission> {
-    const grouppermission: GroupPermission | undefined = await this.grouppermissionRepo.findOne({
+    const grouppermission: GroupPermission | null = await this.grouppermissionRepo.findOneBy({
       gid,
     });
 
-    if (grouppermission === undefined) {
+    if (grouppermission === null) {
       throw new Error(`No such GroupPermission with Gid: ${gid}.`);
     }
     return grouppermission;
   }
 
   public async getByPid(pid: number): Promise<GroupPermission> {
-    const grouppermission: GroupPermission | undefined = await this.grouppermissionRepo.findOne({
+    const grouppermission: GroupPermission | null = await this.grouppermissionRepo.findOneBy({
       pid,
     });
 
-    if (grouppermission === undefined) {
+    if (grouppermission === null) {
       throw new Error(`No such GroupPermission with Pid: ${pid}.`);
     }
     return grouppermission;

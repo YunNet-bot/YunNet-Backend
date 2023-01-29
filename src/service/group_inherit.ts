@@ -30,22 +30,22 @@ export class GroupInheritService {
   }
 
   public async getByGid(gid: number): Promise<GroupInherit> {
-    const groupinherit: GroupInherit | undefined = await this.groupinheritRepo.findOne({
+    const groupinherit: GroupInherit | null = await this.groupinheritRepo.findOneBy({
       gid,
     });
 
-    if (groupinherit === undefined) {
+    if (groupinherit === null) {
       throw new Error(`No such GroupInherit with Gid: ${gid}.`);
     }
     return groupinherit;
   }
 
   public async getByParentGid(parent_gid: number): Promise<GroupInherit> {
-    const groupinherit: GroupInherit | undefined = await this.groupinheritRepo.findOne({
+    const groupinherit: GroupInherit | null = await this.groupinheritRepo.findOneBy({
       parent_gid,
     });
 
-    if (groupinherit === undefined) {
+    if (groupinherit === null) {
       throw new Error(`No such GroupInherit with Gid: ${parent_gid}.`);
     }
     return groupinherit;

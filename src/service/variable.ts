@@ -30,11 +30,11 @@ export class VariableService {
   }
 
   public async getByName(name: string): Promise<Variable> {
-    const variable: Variable | undefined = await this.variableRepo.findOne({
+    const variable: Variable | null = await this.variableRepo.findOneBy({
       name,
     });
 
-    if (variable === undefined) {
+    if (variable === null) {
       throw new Error(`No such Variable with name: ${name}.`);
     }
 

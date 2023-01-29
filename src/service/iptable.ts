@@ -30,11 +30,11 @@ export class IpTableService {
   }
 
   public async getByIp(ip: string): Promise<IpTable> {
-    const iptable: IpTable | undefined = await this.iptableRepo.findOne({
+    const iptable: IpTable | null = await this.iptableRepo.findOneBy({
       ip,
     });
 
-    if (iptable === undefined) {
+    if (iptable === null) {
       throw new Error(`No such IpTable with ip: ${ip}.`);
     }
     return iptable;

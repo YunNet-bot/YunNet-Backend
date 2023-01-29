@@ -30,11 +30,11 @@ export class GroupManagedByService {
   }
 
   public async getByGid(gid: number): Promise<GroupManagedBy> {
-    const groupmanagedby: GroupManagedBy | undefined = await this.groupmanagedbyRepo.findOne({
+    const groupmanagedby: GroupManagedBy | null = await this.groupmanagedbyRepo.findOneBy({
       gid,
     });
 
-    if (groupmanagedby === undefined) {
+    if (groupmanagedby === null) {
       throw new Error(`No such GroupManageBy with Gid: ${gid}.`);
     }
     return groupmanagedby;

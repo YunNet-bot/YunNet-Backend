@@ -30,11 +30,11 @@ export class BackupMacService {
   }
 
   public async getByIp(backupmacIp: string): Promise<BackupMac> {
-    const backupmac: BackupMac | undefined = await this.backupmacRepo.findOne({
+    const backupmac: BackupMac | null = await this.backupmacRepo.findOneBy({
       ip: backupmacIp,
     });
 
-    if (backupmac === undefined) {
+    if (backupmac === null) {
       throw new Error(`No such Backup_Mac with backupmac_ip: ${backupmacIp}.`);
     }
     return backupmac;

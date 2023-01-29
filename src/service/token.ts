@@ -30,11 +30,11 @@ export class TokenService {
   }
 
   public async getByUid(uid: number): Promise<Token> {
-    const token: Token | undefined = await this.tokenRepo.findOne({
+    const token: Token | null = await this.tokenRepo.findOneBy({
       uid,
     });
 
-    if (token === undefined) {
+    if (token === null) {
       throw new Error(`No such Token with uid: ${uid}.`);
     }
     return token;

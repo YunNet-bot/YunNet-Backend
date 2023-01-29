@@ -26,11 +26,11 @@ export class UserService {
   }
 
   public async getByUsername(username: string): Promise<User> {
-    const user: User | undefined = await this.userRepo.findOne({
+    const user: User | null = await this.userRepo.findOneBy({
       username,
     });
 
-    if (user === undefined) {
+    if (user === null) {
       throw new Error(`No such user with username: ${username}.`);
     }
     return user;

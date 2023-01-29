@@ -30,11 +30,11 @@ export class PermissionService {
   }
 
   public async getByPid(pid: number): Promise<Permission> {
-    const permission: Permission | undefined = await this.permissionRepo.findOne({
+    const permission: Permission | null = await this.permissionRepo.findOneBy({
       pid,
     });
 
-    if (permission === undefined) {
+    if (permission === null) {
       throw new Error(`No such Permission with Pid: ${pid}.`);
     }
 

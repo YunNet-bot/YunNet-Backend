@@ -30,11 +30,11 @@ export class IpTypeService {
   }
 
   public async getById(iptypeId: number): Promise<IpType> {
-    const iptype: IpType | undefined = await this.iptypeRepo.findOne({
+    const iptype: IpType | null = await this.iptypeRepo.findOneBy({
       ip_type_id: iptypeId,
     });
 
-    if (iptype === undefined) {
+    if (iptype === null) {
       throw new Error(`No such IpType with iptypeId: ${iptypeId}.`);
     }
     return iptype;

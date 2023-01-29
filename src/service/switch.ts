@@ -30,11 +30,11 @@ export class SwitchService {
   }
 
   public async getById(id: number): Promise<Switch> {
-    const switchid: Switch | undefined = await this.switchRepo.findOne({
+    const switchid: Switch | null = await this.switchRepo.findOneBy({
       id,
     });
 
-    if (switchid === undefined) {
+    if (switchid === null) {
       throw new Error(`No such Switch with id: ${id}.`);
     }
     return switchid;
