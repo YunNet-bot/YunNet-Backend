@@ -45,7 +45,7 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./coverage/integration/lcov.info
+        path-to-lcov: ./coverage/integrate/lcov.info
         flag-name: Integration(Node-${{ matrix.node-version }})
         parallel: true
   finish:
