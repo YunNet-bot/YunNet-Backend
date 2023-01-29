@@ -5,10 +5,11 @@ import {
 
 import { Variable } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateResultDTO,
+  AddResultDTO,
   UpdateVariableDTO,
 } from '@/entry/dto';
 import { VariableService } from '@/service/variable';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Variable')
 @Route('variable')

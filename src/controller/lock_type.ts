@@ -5,10 +5,10 @@ import {
 
 import { LockType } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateLockTypeDTO,
-  UpdateResultDTO,
+  AddResultDTO, UpdateLockTypeDTO,
 } from '@/entry/dto';
 import { LockTypeService } from '@/service';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('LockType')
 @Route('lock_type')

@@ -1,6 +1,6 @@
 // src/entry/dto/ormresult.ts
-import { APIResult } from "./api";
 import { DeleteResult, InsertResult, UpdateResult } from "typeorm";
+import { APIResult, UpdateResultDTO, DeleteResultDTO } from "@yunology/ts-multi-tenancy";
 
 export type AddResultDTO = APIResult & ({
   success: true,
@@ -9,15 +9,6 @@ export type AddResultDTO = APIResult & ({
   success: false,
   message: string,
 });
-
-export type DeleteResultDTO = APIResult & ({
-  success: true,
-} | {
-  success: false,
-  message: string,
-});
-
-export type UpdateResultDTO = DeleteResultDTO;
 
 export function filterAddResult(result: InsertResult): AddResultDTO {
   let success = result.raw["affectedRows"] >= 1;

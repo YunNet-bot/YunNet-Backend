@@ -5,10 +5,11 @@ import {
 
 import { GroupPermission } from '@/entry';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateGroupPermissionGidDTO,
-  UpdateGroupPermissionPidDTO, UpdateResultDTO,
+  AddResultDTO, UpdateGroupPermissionGidDTO,
+  UpdateGroupPermissionPidDTO,
 } from '@/entry/dto';
 import { GroupPermissionService } from '@/service';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Group Permission')
 @Route('group_permission')

@@ -6,9 +6,9 @@ import {
 import { BackupMac } from '@/entry';
 import { BackupMacService } from '@/service';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateBackupMacDTO,
-  UpdateResultDTO,
+  AddResultDTO, UpdateBackupMacDTO,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Backup Mac')
 @Route('backup_mac')

@@ -6,9 +6,9 @@ import {
 import { Announcement } from '@/entry';
 import { filterObjectUndefined } from '@/utils';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateResultDTO,
-  filterAddResult, filterDeleteResult, filterUpdateResult,
+  AddResultDTO, filterAddResult, filterDeleteResult, filterUpdateResult,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 export class AnnouncementService {
   private static INSTANCE: AnnouncementService;

@@ -6,9 +6,10 @@ import {
 import { GroupInherit } from '@/entry';
 import { GroupInheritService } from '@/service';
 import {
-  AddResultDTO, DeleteResultDTO, UpdateGroupInheritGidDTO,
-  UpdateGroupInheritParentGidDTO, UpdateResultDTO,
+  AddResultDTO, UpdateGroupInheritGidDTO,
+  UpdateGroupInheritParentGidDTO,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Group Inherit')
 @Route('group_inherit')

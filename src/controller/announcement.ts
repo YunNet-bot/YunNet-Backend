@@ -6,9 +6,10 @@ import {
 import { Announcement } from '@/entry';
 import { AnnouncementService } from '@/service';
 import {
-  AddResultDTO, AnnouncementDTO, DeleteResultDTO,
-  UpdateAnnouncementDTO, UpdateResultDTO,
+  AddResultDTO, AnnouncementDTO,
+  UpdateAnnouncementDTO,
 } from '@/entry/dto';
+import { UpdateResultDTO, DeleteResultDTO } from '@yunology/ts-multi-tenancy';
 
 @Tags('Announcement')
 @Route('announcements')
